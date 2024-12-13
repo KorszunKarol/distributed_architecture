@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{enumitem}
+
+\begin{document}
+
+\section*{EXERCISE 2: QUESTIONNAIRE ABOUT THREADS AND CONCURRENCY}
+
+\subsection*{1. Advantages and Disadvantages of Parallel vs Distributed Programming}
+
+\textbf{Parallel Programming (Shared Memory):}
+\begin{itemize}
+    \item Advantages:
+    \begin{itemize}
+        \item Lower latency due to direct memory access
+        \item Simpler programming model
+        \item More efficient data sharing
+        \item Lower communication overhead
+    \end{itemize}
+    \item Disadvantages:
+    \begin{itemize}
+        \item Limited scalability (bound by hardware)
+        \item Higher risk of race conditions
+        \item Complex debugging
+        \item Hardware cost for high-performance systems
+    \end{itemize}
+\end{itemize}
+
+\textbf{Distributed Programming (Shared Nothing):}
+\begin{itemize}
+    \item Advantages:
+    \begin{itemize}
+        \item Better scalability
+        \item Higher fault tolerance
+        \item Cost-effective scaling
+        \item Geographic distribution possible
+    \end{itemize}
+    \item Disadvantages:
+    \begin{itemize}
+        \item Higher latency
+        \item Network dependency
+        \item Complex system coordination
+        \item Data consistency challenges
+    \end{itemize}
+\end{itemize}
+
+\subsection*{2. Real-World Applications}
+
+\textbf{Parallel Programming Applications:}
+\begin{enumerate}
+    \item Scientific simulation software (molecular dynamics)
+    \item Real-time image processing in medical equipment
+    \item Financial market analysis systems
+\end{enumerate}
+
+\textbf{Distributed Programming Applications:}
+\begin{enumerate}
+    \item Social media platforms
+    \item Global content delivery networks (CDN)
+    \item Distributed gaming servers
+\end{enumerate}
+
+\subsection*{6. Difference between run() and start()}
+
+The key difference between run() and start() methods lies in their execution context:
+
+\begin{itemize}
+    \item \textbf{start()} method:
+    \begin{itemize}
+        \item Creates a new thread and executes run() in that thread
+        \item Allows true parallel execution
+        \item Can only be called once per Thread instance
+    \end{itemize}
+    \item \textbf{run()} method:
+    \begin{itemize}
+        \item Executes in the current thread when called directly
+        \item Behaves like a normal method call
+        \item No new thread is created
+        \item Can be called multiple times
+    \end{itemize}
+\end{itemize}
+
+\end{document}

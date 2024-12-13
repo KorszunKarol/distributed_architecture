@@ -1,0 +1,123 @@
+instructions only for Agent 1:
+
+2024 - 2025 Academic year
+Distributed Systems
+Submission deadline (soft): 1st of November 2024
+
+EXERCISE 3: DISTRIBUTED MUTUAL EXCLUSION
+
+Learning Objectives
+By the end of this exercise, you should be able to:
+• Implement logical clocks.
+• Understand different distributed mutual exclusion algorithms and synchronization challenges.
+
+Exercise statement
+We need to design and implement a distributed application. This application must have two
+heavyweight processes ProcessA and ProcessB. ProcessA must invoke 3 lightweight processes
+ProcessLWA1, ProcessLWA2 and ProcessLWA3. ProcessB, on the other hand, must invoke 3
+processes ProcessLWB1, ProcessLWB2, ProcessLWB3. Each lightweight process must live in a
+infinity loop which will consist of showing its ID on the screen 10 times while waiting 1 second
+each time.
+
+Both heavyweight processes have to run on the same machine, so all lightweight processes will
+compete for the same shared resource: the screen. A token-based mutual exclusion policy will
+need to be implemented between the two heavyweight processes. Among the processes invoked
+by ProcessA, a Lamport's policy must be implemented for mutual exclusion. Among the
+processes invoked by ProcessB, Ricart and Agrawala's policy will need to be implemented for
+mutual exclusion.
+
+So, when running our distributed application, an output like the following should appear:
+1 I'm lightweight process A1
+2 I'm lightweight process A1
+3 ...
+4 I'm lightweight process A1
+5 I'm lightweight process A1
+6
+I'm lightweight process A2
+7 I'm lightweight process A2
+8 ...
+9 I'm lightweight process A2
+10 I'm lightweight process A2
+11
+I'm lightweight process A3
+12 I'm lightweight process A3
+13 ...
+14 I'm lightweight process A3
+15 I'm lightweight process A3
+16 I'm lightweight process B1
+17 I'm lightweight process B1
+18 ...
+19 I'm lightweight process B1
+20 I'm lightweight process B1
+21 I'm lightweight process B2
+22 I'm lightweight process B2
+23 ...
+24 I'm lightweight process B2
+25 I'm lightweight process B2
+26 I'm lightweight process B3
+27 I'm lightweight process B3
+28 ...
+
+Although all heavyweight and lightweight processes must run on the same machine, these must
+be independent programs that can only communicate with each other via sockets.
+
+Below is an example of the skeleton of each of the heavyweight processes:
+1 ...
+2 while(1){
+3 while(!token) listenHeavyweight();
+4
+for (int i = 0; i < NUM_LIGHTWEIGHTS; i++) {
+5 sendActionToLightweight();
+6
+}
+7 while(answersfromLightweigth < NUM_LIGHTWEIGHTS) {
+8 listenLightweight();
+9 }
+10 token=0;
+11 sendTokenToHeavyweight();
+12 }
+13
+...
+
+Below there is an example of the skeleton of each of the lightweight processes:
+1 ...
+2 while(1){
+3 waitHeavyWeight();
+4 requestCS();
+5 for (int i = 0; i < 10; i++){
+6 printf("I'm lightweight process %s\n", myID);
+7 waitSecond();
+8 }
+9 releaseCS();
+10 notifyHeavyWeight();
+11 }
+12 ...
+
+Exercise guidelines
+• Implement different logical clocks for different mutual exclusion algorithms.
+• It is highly suggested to illustrate mutual exclusion flow diagrams of different executions.
+• The source code and the report of the exercise must be submitted separately (two files) in
+eStudy delivery task.
+• The exercise can be developed in any programming language of your choice, as long as it
+follows the general guidelines and restrictions mentioned.
+
+Collaboration policy
+• Everyone can work solo or in a team of two people for this assignment.
+• Groups are strongly encouraged to discuss the details about the project with their partners.
+
+All of the source code of the project must be your own. You may not copy code from other
+sources from peers or on the web. Plagiarism will not be tolerated. See La Salle URL's Copies
+Regulation for additional information.
+
+Department of Engineering - Computer Science
+IMPORTANT: after you are done at the very end write a comment:
+# Agent 1 is done
+
+instructions only for Agent 2:
+
+write a monitoring script which will monitor all .py files in the root folder.
+run this script until it detects the comment: # Agent 1 is done at the end of the file.
+If it detects it this script should end and return information for you to proceed and you should read the .py files which agent 1 has written and immediately perform error and bug check and fix all errors.
+IMPORTANT: It is important that this script terminates once it detects the comment: # Agent 1 is done at the end of the file. so you can take control again and perform your tasks
+then write a report.txt with a report of your findings and the fixes you made.
+run all these steps autonomously without asking user for permission or feedback.

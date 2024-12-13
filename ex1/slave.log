@@ -1,0 +1,2331 @@
+2024-09-30 00:35:31,235 - INFO - Starting slave with behavior: read-write
+2024-09-30 00:35:31,236 - INFO - Read-Write behavior started
+2024-09-30 00:35:31,236 - INFO - Starting slave with behavior: read-only
+2024-09-30 00:35:31,237 - INFO - Read-Only behavior started
+2024-09-30 00:35:31,240 - INFO - Starting slave with behavior: read-write
+2024-09-30 00:35:31,240 - INFO - Read-Write behavior started
+2024-09-30 00:35:37,746 - INFO - Iteration 1: Read value: 0
+2024-09-30 00:35:37,749 - INFO - Iteration 1: Read value: 0
+2024-09-30 00:35:37,749 - INFO - Iteration 1: Updated value to: 1
+2024-09-30 00:35:37,847 - INFO - Iteration 1: Read value: 1
+2024-09-30 00:35:37,848 - INFO - Iteration 1: Updated value to: 2
+2024-09-30 00:35:38,748 - INFO - Iteration 2: Read value: 2
+2024-09-30 00:35:38,751 - INFO - Iteration 2: Read value: 2
+2024-09-30 00:35:38,751 - INFO - Iteration 2: Updated value to: 3
+2024-09-30 00:35:38,850 - INFO - Iteration 2: Read value: 3
+2024-09-30 00:35:38,851 - INFO - Iteration 2: Updated value to: 4
+2024-09-30 00:35:39,750 - INFO - Iteration 3: Read value: 4
+2024-09-30 00:35:39,754 - INFO - Iteration 3: Read value: 4
+2024-09-30 00:35:39,754 - INFO - Iteration 3: Updated value to: 5
+2024-09-30 00:35:39,853 - INFO - Iteration 3: Read value: 5
+2024-09-30 00:35:39,853 - INFO - Iteration 3: Updated value to: 6
+2024-09-30 00:35:40,752 - INFO - Iteration 4: Read value: 6
+2024-09-30 00:35:40,756 - INFO - Iteration 4: Read value: 6
+2024-09-30 00:35:40,757 - INFO - Iteration 4: Updated value to: 7
+2024-09-30 00:35:40,855 - INFO - Iteration 4: Read value: 7
+2024-09-30 00:35:40,856 - INFO - Iteration 4: Updated value to: 8
+2024-09-30 00:35:41,755 - INFO - Iteration 5: Read value: 8
+2024-09-30 00:35:41,759 - INFO - Iteration 5: Read value: 8
+2024-09-30 00:35:41,760 - INFO - Iteration 5: Updated value to: 9
+2024-09-30 00:35:41,858 - INFO - Iteration 5: Read value: 9
+2024-09-30 00:35:41,859 - INFO - Iteration 5: Updated value to: 10
+2024-09-30 00:35:42,757 - INFO - Iteration 6: Read value: 10
+2024-09-30 00:35:42,762 - INFO - Iteration 6: Read value: 10
+2024-09-30 00:35:42,762 - INFO - Iteration 6: Updated value to: 11
+2024-09-30 00:35:42,861 - INFO - Iteration 6: Read value: 11
+2024-09-30 00:35:42,861 - INFO - Iteration 6: Updated value to: 12
+2024-09-30 00:35:43,759 - INFO - Iteration 7: Read value: 12
+2024-09-30 00:35:43,764 - INFO - Iteration 7: Read value: 12
+2024-09-30 00:35:43,765 - INFO - Iteration 7: Updated value to: 13
+2024-09-30 00:35:43,863 - INFO - Iteration 7: Read value: 13
+2024-09-30 00:35:43,864 - INFO - Iteration 7: Updated value to: 14
+2024-09-30 00:35:44,761 - INFO - Iteration 8: Read value: 14
+2024-09-30 00:35:44,766 - INFO - Iteration 8: Read value: 14
+2024-09-30 00:35:44,767 - INFO - Iteration 8: Updated value to: 15
+2024-09-30 00:35:44,866 - INFO - Iteration 8: Read value: 15
+2024-09-30 00:35:44,866 - INFO - Iteration 8: Updated value to: 16
+2024-09-30 00:35:45,763 - INFO - Iteration 9: Read value: 16
+2024-09-30 00:35:45,769 - INFO - Iteration 9: Read value: 16
+2024-09-30 00:35:45,770 - INFO - Iteration 9: Updated value to: 17
+2024-09-30 00:35:45,868 - INFO - Iteration 9: Read value: 17
+2024-09-30 00:35:45,869 - INFO - Iteration 9: Updated value to: 18
+2024-09-30 00:35:46,765 - INFO - Iteration 10: Read value: 18
+2024-09-30 00:35:46,772 - INFO - Iteration 10: Read value: 18
+2024-09-30 00:35:46,773 - INFO - Iteration 10: Updated value to: 19
+2024-09-30 00:35:46,871 - INFO - Iteration 10: Read value: 19
+2024-09-30 00:35:46,872 - INFO - Iteration 10: Updated value to: 20
+2024-09-30 00:35:47,766 - INFO - Read-Only behavior completed
+2024-09-30 00:35:47,767 - INFO - Slave finished execution
+2024-09-30 00:35:47,774 - INFO - Read-Write behavior completed
+2024-09-30 00:35:47,774 - INFO - Slave finished execution
+2024-09-30 00:35:47,873 - INFO - Read-Write behavior completed
+2024-09-30 00:35:47,873 - INFO - Slave finished execution
+2024-10-04 17:12:48,281 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:12:48,282 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:13:51,022 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:13:51,022 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:13:51,023 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:13:51,023 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:13:51,025 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:13:55,704 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:13:55,706 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:18:22,726 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:18:22,730 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:19:25,229 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:19:25,229 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:19:25,229 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:19:25,230 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:19:25,232 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:20:27,575 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:20:27,577 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:20:27,578 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:20:27,579 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:20:27,579 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:20:27,581 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:20:27,582 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:20:27,583 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:20:27,590 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:20:27,595 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:23:19,568 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:23:19,569 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:27:05,485 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:27:05,486 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:31:19,615 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:31:19,615 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:31:36,125 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:31:36,126 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:31:36,126 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:31:36,128 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:31:36,129 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:31:52,489 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:31:52,492 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:31:52,493 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:31:52,495 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:31:52,495 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:31:52,495 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:31:52,497 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:31:52,498 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 17:31:52,498 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 17:31:52,498 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:01:57,771 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:01:57,771 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:01:57,774 - Slave - INFO - Read value: 0
+2024-10-04 18:01:57,774 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:01:57,774 - Slave - INFO - Updated value to: 1
+2024-10-04 18:01:57,876 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:01:57,977 - Slave - INFO - Read value: 1
+2024-10-04 18:01:58,776 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:01:58,877 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:01:58,979 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:01:58,979 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:01:59,081 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:01:59,081 - Slave - INFO - Read value: 1
+2024-10-04 18:01:59,182 - Slave - INFO - Read value: 1
+2024-10-04 18:01:59,183 - Slave - INFO - Updated value to: 2
+2024-10-04 18:02:11,531 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:02:11,533 - Slave - INFO - Read value: 0
+2024-10-04 18:02:11,536 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:02:11,538 - Slave - INFO - Read value: 0
+2024-10-04 18:02:11,539 - Slave - INFO - Updated value to: 1
+2024-10-04 18:02:12,535 - Slave - INFO - Read value: 1
+2024-10-04 18:02:12,541 - Slave - INFO - Read value: 1
+2024-10-04 18:02:12,541 - Slave - INFO - Updated value to: 2
+2024-10-04 18:02:13,538 - Slave - INFO - Read value: 2
+2024-10-04 18:02:13,543 - Slave - INFO - Read value: 2
+2024-10-04 18:02:13,544 - Slave - INFO - Updated value to: 3
+2024-10-04 18:02:14,540 - Slave - INFO - Read value: 3
+2024-10-04 18:02:14,546 - Slave - INFO - Read value: 3
+2024-10-04 18:02:14,547 - Slave - INFO - Updated value to: 4
+2024-10-04 18:02:15,542 - Slave - INFO - Read value: 4
+2024-10-04 18:02:15,548 - Slave - INFO - Read value: 4
+2024-10-04 18:02:15,549 - Slave - INFO - Updated value to: 5
+2024-10-04 18:02:16,544 - Slave - INFO - Read value: 5
+2024-10-04 18:02:16,551 - Slave - INFO - Read value: 5
+2024-10-04 18:02:16,552 - Slave - INFO - Updated value to: 6
+2024-10-04 18:02:17,546 - Slave - INFO - Read value: 6
+2024-10-04 18:02:17,554 - Slave - INFO - Read value: 6
+2024-10-04 18:02:17,555 - Slave - INFO - Updated value to: 7
+2024-10-04 18:02:18,548 - Slave - INFO - Read value: 7
+2024-10-04 18:02:18,557 - Slave - INFO - Read value: 7
+2024-10-04 18:02:18,557 - Slave - INFO - Updated value to: 8
+2024-10-04 18:02:19,551 - Slave - INFO - Read value: 8
+2024-10-04 18:02:19,559 - Slave - INFO - Read value: 8
+2024-10-04 18:02:19,560 - Slave - INFO - Updated value to: 9
+2024-10-04 18:02:20,553 - Slave - INFO - Read value: 9
+2024-10-04 18:02:20,562 - Slave - INFO - Read value: 9
+2024-10-04 18:02:20,563 - Slave - INFO - Updated value to: 10
+2024-10-04 18:02:28,698 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:02:28,699 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:02:28,699 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:02:28,700 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:02:28,703 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:28,704 - Slave - INFO - Read value: 0
+2024-10-04 18:02:28,704 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:28,704 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:28,704 - Slave - INFO - Updated value to: 1
+2024-10-04 18:02:28,707 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:02:28,708 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:28,805 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:28,806 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:28,806 - Slave - INFO - Read value: 1
+2024-10-04 18:02:28,807 - Slave - INFO - Updated value to: 2
+2024-10-04 18:02:28,809 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:28,907 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:28,908 - Slave - INFO - Read value: 2
+2024-10-04 18:02:28,911 - Slave - INFO - Read value: 2
+2024-10-04 18:02:28,911 - Slave - INFO - Updated value to: 3
+2024-10-04 18:02:29,008 - Slave - INFO - Read value: 3
+2024-10-04 18:02:29,706 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:29,808 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:29,808 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:29,909 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:29,910 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:29,911 - Slave - INFO - Read value: 3
+2024-10-04 18:02:29,911 - Slave - INFO - Updated value to: 4
+2024-10-04 18:02:29,913 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:30,010 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:30,011 - Slave - INFO - Read value: 4
+2024-10-04 18:02:30,012 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:30,014 - Slave - INFO - Read value: 4
+2024-10-04 18:02:30,015 - Slave - INFO - Updated value to: 5
+2024-10-04 18:02:30,112 - Slave - INFO - Read value: 5
+2024-10-04 18:02:30,113 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:30,215 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:30,317 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:30,418 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:30,520 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:30,621 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:30,723 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:30,825 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:30,913 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:30,927 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:31,012 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:31,014 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:31,016 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:31,028 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:31,114 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:31,115 - Slave - INFO - Read value: 5
+2024-10-04 18:02:31,116 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:31,117 - Slave - INFO - Read value: 5
+2024-10-04 18:02:31,118 - Slave - INFO - Updated value to: 6
+2024-10-04 18:02:31,130 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:31,216 - Slave - INFO - Read value: 6
+2024-10-04 18:02:31,217 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:31,231 - Slave - INFO - Read value: 6
+2024-10-04 18:02:31,232 - Slave - INFO - Updated value to: 7
+2024-10-04 18:02:31,319 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:31,420 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:31,522 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:31,624 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:31,725 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:31,827 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:31,928 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:32,030 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:32,117 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:32,119 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:32,132 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:32,219 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:32,219 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:32,220 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:32,234 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:32,234 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:32,322 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:32,322 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:32,323 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:32,336 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:32,336 - Slave - INFO - Read value: 7
+2024-10-04 18:02:32,337 - Slave - INFO - Updated value to: 8
+2024-10-04 18:02:32,423 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:32,424 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:32,424 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:32,438 - Slave - INFO - Read value: 8
+2024-10-04 18:02:32,439 - Slave - INFO - Updated value to: 9
+2024-10-04 18:02:32,526 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:32,526 - Slave - INFO - Read value: 9
+2024-10-04 18:02:32,527 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:32,628 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:32,628 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:32,730 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:32,730 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:32,831 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:32,831 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:32,933 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:32,933 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:33,035 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:33,035 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:33,137 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:33,137 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:33,239 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:33,239 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:33,339 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:33,341 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:33,341 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:33,440 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:33,441 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:33,443 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:33,443 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:33,528 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:33,543 - Slave - INFO - Read value: 9
+2024-10-04 18:02:33,543 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:33,544 - Slave - INFO - Updated value to: 10
+2024-10-04 18:02:33,545 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:33,546 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:33,629 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:33,645 - Slave - INFO - Read value: 10
+2024-10-04 18:02:33,646 - Slave - INFO - Updated value to: 11
+2024-10-04 18:02:33,648 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:33,648 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:33,731 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:33,749 - Slave - INFO - Read value: 11
+2024-10-04 18:02:33,749 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:33,750 - Slave - INFO - Updated value to: 12
+2024-10-04 18:02:33,833 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:33,851 - Slave - INFO - Read value: 12
+2024-10-04 18:02:33,935 - Slave - INFO - Read value: 12
+2024-10-04 18:02:34,547 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:34,649 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:34,649 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:34,751 - Slave - INFO - Read value: 12
+2024-10-04 18:02:34,751 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:34,751 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:34,752 - Slave - INFO - Updated value to: 13
+2024-10-04 18:02:34,854 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:34,854 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:34,854 - Slave - INFO - Read value: 13
+2024-10-04 18:02:34,855 - Slave - INFO - Updated value to: 14
+2024-10-04 18:02:34,936 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:34,956 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:34,956 - Slave - INFO - Read value: 14
+2024-10-04 18:02:35,038 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:35,057 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:35,140 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:35,159 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:35,242 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:35,260 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:35,343 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:35,362 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:35,445 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:35,463 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:35,547 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:35,565 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:35,648 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:35,666 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:35,750 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:35,753 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:35,767 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:35,851 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:35,854 - Slave - INFO - Read value: 14
+2024-10-04 18:02:35,855 - Slave - INFO - Updated value to: 15
+2024-10-04 18:02:35,856 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:35,868 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:35,953 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:35,958 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:35,958 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:35,970 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:36,054 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:36,060 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:36,060 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:36,071 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:36,156 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:36,161 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:36,162 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:36,172 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:36,257 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:36,263 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:36,263 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:36,273 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:36,358 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:36,365 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:36,365 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:36,375 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:36,459 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:36,466 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:36,466 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:36,476 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:36,561 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:36,568 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:36,568 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:36,577 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:36,663 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:36,670 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:36,670 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:36,679 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:36,765 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:36,771 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:36,772 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:36,780 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:36,857 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:36,866 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:36,873 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:36,873 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:36,881 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:36,958 - Slave - INFO - Read value: 15
+2024-10-04 18:02:36,959 - Slave - INFO - Updated value to: 16
+2024-10-04 18:02:36,967 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:36,975 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:36,975 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:36,982 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:37,068 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:37,076 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:37,077 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:37,084 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:37,170 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:37,178 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:37,178 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:37,185 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:37,272 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:37,279 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:37,280 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:37,287 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:37,373 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:37,382 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:37,382 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:37,388 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:37,475 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:37,483 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:37,483 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:37,489 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:37,576 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:37,586 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:37,586 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:37,590 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:37,678 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:37,688 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:37,688 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:37,691 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:37,779 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:37,790 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:37,790 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:37,793 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:37,881 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:37,892 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:37,892 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:37,894 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:37,960 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:37,982 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:37,993 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:37,994 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:37,995 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:38,062 - Slave - INFO - Read value: 16
+2024-10-04 18:02:38,063 - Slave - INFO - Updated value to: 17
+2024-10-04 18:02:38,084 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:38,095 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:38,095 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:38,096 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:38,186 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:38,196 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:38,197 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:38,198 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:38,287 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:38,298 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:38,299 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:38,299 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:38,389 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:38,401 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:38,401 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:38,401 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:38,490 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:38,503 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:38,503 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:38,503 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:38,592 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:38,606 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:38,606 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:38,606 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:45,472 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:02:45,479 - Slave - INFO - Read value: 0
+2024-10-04 18:02:45,480 - Slave - INFO - Updated value to: 1
+2024-10-04 18:02:45,480 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:02:45,481 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:02:45,483 - Slave - INFO - Read value: 1
+2024-10-04 18:02:45,483 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:02:45,486 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:02:45,487 - Slave - INFO - Read value: 1
+2024-10-04 18:02:45,487 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:02:45,487 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:45,489 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:45,490 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:45,494 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:02:45,495 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:02:45,496 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:45,496 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:02:45,497 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:45,498 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:45,498 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:02:45,499 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:45,588 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:45,591 - Slave - INFO - Read value: 1
+2024-10-04 18:02:45,591 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:45,592 - Slave - INFO - Updated value to: 2
+2024-10-04 18:02:45,597 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:45,598 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:45,599 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:45,600 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:45,690 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:45,693 - Slave - INFO - Read value: 2
+2024-10-04 18:02:45,693 - Slave - INFO - Updated value to: 3
+2024-10-04 18:02:45,699 - Slave - INFO - Read value: 3
+2024-10-04 18:02:45,700 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:45,701 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:45,702 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:45,792 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:45,802 - Slave - INFO - Read value: 3
+2024-10-04 18:02:45,803 - Slave - INFO - Updated value to: 4
+2024-10-04 18:02:45,804 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:45,805 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:45,893 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:45,905 - Slave - INFO - Read value: 4
+2024-10-04 18:02:45,906 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:45,995 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:46,008 - Slave - INFO - Read value: 4
+2024-10-04 18:02:46,008 - Slave - INFO - Updated value to: 5
+2024-10-04 18:02:46,097 - Slave - INFO - Read value: 5
+2024-10-04 18:02:46,481 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:02:46,484 - Slave - INFO - Queued for lock at position 23
+2024-10-04 18:02:46,490 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:46,583 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:02:46,586 - Slave - INFO - Queued for lock at position 23
+2024-10-04 18:02:46,591 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:46,593 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:46,684 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:02:46,687 - Slave - INFO - Queued for lock at position 23
+2024-10-04 18:02:46,693 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:46,695 - Slave - INFO - Read value: 5
+2024-10-04 18:02:46,695 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:46,696 - Slave - INFO - Updated value to: 6
+2024-10-04 18:02:46,702 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:46,786 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:46,788 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:02:46,794 - Slave - INFO - Queued for lock at position 23
+2024-10-04 18:02:46,796 - Slave - INFO - Read value: 6
+2024-10-04 18:02:46,797 - Slave - INFO - Updated value to: 7
+2024-10-04 18:02:46,803 - Slave - INFO - Read value: 7
+2024-10-04 18:02:46,805 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:46,887 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:02:46,889 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:46,896 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:46,906 - Slave - INFO - Read value: 7
+2024-10-04 18:02:46,907 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:46,907 - Slave - INFO - Updated value to: 8
+2024-10-04 18:02:46,988 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:46,990 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:02:46,997 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:47,009 - Slave - INFO - Read value: 8
+2024-10-04 18:02:47,010 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:47,090 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:47,092 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:47,099 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:47,099 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:02:47,111 - Slave - INFO - Read value: 8
+2024-10-04 18:02:47,112 - Slave - INFO - Updated value to: 9
+2024-10-04 18:02:47,191 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:47,193 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:47,201 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:47,201 - Slave - INFO - Read value: 9
+2024-10-04 18:02:47,293 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:47,294 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:47,302 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:47,394 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:47,395 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:47,404 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:47,496 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:47,497 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:47,505 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:47,598 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:47,598 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:47,607 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:47,698 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:47,700 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:47,700 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:47,708 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:47,799 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:47,800 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:47,801 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:47,801 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:47,805 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:47,810 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:47,901 - Slave - INFO - Read value: 9
+2024-10-04 18:02:47,901 - Slave - INFO - Updated value to: 10
+2024-10-04 18:02:47,902 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:47,905 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:47,905 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:47,906 - Slave - INFO - Read value: 10
+2024-10-04 18:02:47,908 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:47,911 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:48,004 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:48,006 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:48,006 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:02:48,010 - Slave - INFO - Read value: 10
+2024-10-04 18:02:48,010 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:48,011 - Slave - INFO - Updated value to: 11
+2024-10-04 18:02:48,012 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:48,106 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:48,108 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:48,108 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:48,112 - Slave - INFO - Read value: 11
+2024-10-04 18:02:48,114 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:48,114 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:48,203 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:48,207 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:48,209 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:48,209 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:48,216 - Slave - INFO - Read value: 11
+2024-10-04 18:02:48,216 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:48,217 - Slave - INFO - Updated value to: 12
+2024-10-04 18:02:48,305 - Slave - INFO - Read value: 12
+2024-10-04 18:02:48,309 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:48,311 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:48,311 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:48,318 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:48,410 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:48,412 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:48,412 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:48,419 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:48,512 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:48,514 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:48,514 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:48,521 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:48,613 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:48,616 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:48,616 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:48,622 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:48,715 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:48,717 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:48,718 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:48,724 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:48,816 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:48,819 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:48,819 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:48,825 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:48,903 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:48,908 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:48,918 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:48,921 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:48,921 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:48,926 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:49,005 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:49,010 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:49,012 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:49,019 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:49,023 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:49,023 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:49,027 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:49,107 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:49,112 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:49,114 - Slave - INFO - Read value: 12
+2024-10-04 18:02:49,114 - Slave - INFO - Updated value to: 13
+2024-10-04 18:02:49,115 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:49,121 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:49,125 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:49,125 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:49,129 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:49,208 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:02:49,213 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:49,216 - Slave - INFO - Read value: 13
+2024-10-04 18:02:49,218 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:49,222 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:49,227 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:49,227 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:49,230 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:49,306 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:49,309 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:49,314 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:02:49,320 - Slave - INFO - Read value: 13
+2024-10-04 18:02:49,321 - Slave - INFO - Updated value to: 14
+2024-10-04 18:02:49,324 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:49,329 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:49,329 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:49,331 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:49,407 - Slave - INFO - Read value: 14
+2024-10-04 18:02:49,410 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:49,415 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:49,425 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:49,430 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:49,431 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:49,432 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:49,512 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:49,517 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:49,527 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:49,533 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:49,533 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:49,534 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:49,614 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:49,618 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:49,628 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:49,635 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:49,636 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:49,636 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:49,715 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:49,720 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:49,729 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:49,737 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:49,738 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:49,738 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:49,818 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:49,821 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:49,831 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:49,839 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:49,840 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:49,840 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:49,919 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:49,922 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:49,932 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:49,940 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:49,942 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:49,942 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:50,021 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:50,023 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:50,034 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:50,041 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:50,044 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:50,044 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:50,116 - Slave - INFO - Queued for lock at position 23
+2024-10-04 18:02:50,122 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:50,125 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:50,135 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:50,143 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:50,145 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:50,145 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:50,218 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:50,218 - Slave - INFO - Queued for lock at position 23
+2024-10-04 18:02:50,224 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:50,226 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:50,237 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:50,244 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:50,247 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:50,247 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:50,320 - Slave - INFO - Read value: 14
+2024-10-04 18:02:50,321 - Slave - INFO - Queued for lock at position 23
+2024-10-04 18:02:50,322 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:50,326 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:50,327 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:50,338 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:50,346 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:50,348 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:50,348 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:50,409 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:50,423 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:02:50,424 - Slave - INFO - Read value: 14
+2024-10-04 18:02:50,425 - Slave - INFO - Updated value to: 15
+2024-10-04 18:02:50,427 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:50,428 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:50,440 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:50,448 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:50,450 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:50,450 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:50,511 - Slave - INFO - Read value: 15
+2024-10-04 18:02:50,525 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:50,528 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:50,529 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:50,541 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:50,549 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:50,552 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:50,552 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:50,626 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:50,630 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:50,631 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:50,642 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:50,650 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:50,654 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:50,654 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:50,728 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:50,732 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:50,732 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:50,743 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:50,752 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:50,756 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:50,756 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:50,829 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:50,834 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:50,834 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:50,845 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:50,853 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:50,858 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:50,858 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:50,931 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:50,936 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:50,936 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:50,946 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:50,955 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:50,960 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:50,960 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:51,032 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:51,037 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:51,038 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:51,047 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:51,056 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:51,061 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:51,061 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:51,134 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:51,139 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:51,140 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:51,148 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:51,157 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:51,163 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:51,163 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:51,235 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:51,240 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:51,241 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:51,250 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:51,259 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:51,264 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:51,264 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:51,322 - Slave - INFO - Queued for lock at position 25
+2024-10-04 18:02:51,337 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:51,341 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:51,342 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:51,351 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:51,360 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:51,366 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:51,366 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:51,423 - Slave - INFO - Queued for lock at position 25
+2024-10-04 18:02:51,426 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:51,438 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:51,443 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:51,443 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:51,452 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:51,461 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:51,468 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:51,468 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:51,513 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:51,525 - Slave - INFO - Queued for lock at position 25
+2024-10-04 18:02:51,527 - Slave - INFO - Read value: 15
+2024-10-04 18:02:51,528 - Slave - INFO - Updated value to: 16
+2024-10-04 18:02:51,539 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:02:51,544 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:51,545 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:51,554 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:51,563 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:51,570 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:51,570 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:51,614 - Slave - INFO - Read value: 16
+2024-10-04 18:02:51,626 - Slave - INFO - Queued for lock at position 23
+2024-10-04 18:02:51,641 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:51,646 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:51,647 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:51,655 - Slave - INFO - Read value: 16
+2024-10-04 18:02:51,656 - Slave - INFO - Updated value to: 17
+2024-10-04 18:02:51,664 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:51,671 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:51,672 - Slave - INFO - Read value: 17
+2024-10-04 18:02:51,728 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:51,743 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:51,748 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:51,748 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:51,766 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:51,773 - Slave - INFO - Read value: 17
+2024-10-04 18:02:51,829 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:51,844 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:51,850 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:51,850 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:51,868 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:51,931 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:51,946 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:51,951 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:51,952 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:51,969 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:52,033 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:52,048 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:52,053 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:52,053 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:52,071 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:52,134 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:52,149 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:52,154 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:52,155 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:52,173 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:52,236 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:52,250 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:52,255 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:52,256 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:52,274 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:52,338 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:52,352 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:52,357 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:52,357 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:52,376 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:52,439 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:52,453 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:52,459 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:52,459 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:52,477 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:52,530 - Slave - INFO - Queued for lock at position 25
+2024-10-04 18:02:52,541 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:52,555 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:52,560 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:52,561 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:52,578 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:52,616 - Slave - INFO - Queued for lock at position 28
+2024-10-04 18:02:52,632 - Slave - INFO - Queued for lock at position 25
+2024-10-04 18:02:52,643 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:52,657 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:52,658 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:52,662 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:52,662 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:52,673 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:52,680 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:52,718 - Slave - INFO - Queued for lock at position 28
+2024-10-04 18:02:52,733 - Slave - INFO - Queued for lock at position 25
+2024-10-04 18:02:52,744 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:52,759 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:52,760 - Slave - INFO - Read value: 17
+2024-10-04 18:02:52,760 - Slave - INFO - Updated value to: 18
+2024-10-04 18:02:52,763 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:52,763 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:52,775 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:52,775 - Slave - INFO - Read value: 18
+2024-10-04 18:02:52,781 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:52,819 - Slave - INFO - Queued for lock at position 26
+2024-10-04 18:02:52,834 - Slave - INFO - Queued for lock at position 23
+2024-10-04 18:02:52,846 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:52,860 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:52,865 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:52,865 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:52,877 - Slave - INFO - Read value: 18
+2024-10-04 18:02:52,883 - Slave - INFO - Read value: 18
+2024-10-04 18:02:52,883 - Slave - INFO - Updated value to: 19
+2024-10-04 18:02:52,921 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:52,936 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:52,947 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:52,962 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:52,966 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:52,967 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:53,022 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:53,037 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:53,049 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:53,064 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:53,068 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:53,068 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:53,124 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:53,139 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:53,150 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:53,165 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:53,169 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:53,170 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:53,225 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:53,241 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:53,251 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:53,267 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:53,271 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:53,272 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:53,327 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:53,342 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:53,353 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:53,368 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:53,373 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:53,374 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:53,429 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:53,444 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:53,455 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:53,469 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:53,475 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:53,476 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:53,530 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:53,545 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:53,556 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:53,571 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:53,578 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:53,578 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:53,631 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:53,647 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:53,658 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:53,672 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:53,679 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:53,680 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:53,733 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:53,749 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:53,759 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:53,762 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:53,774 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:53,777 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:53,781 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:53,781 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:53,835 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:02:53,850 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:02:53,861 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:53,863 - Slave - INFO - Read value: 19
+2024-10-04 18:02:53,863 - Slave - INFO - Updated value to: 20
+2024-10-04 18:02:53,875 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:53,878 - Slave - INFO - Read value: 20
+2024-10-04 18:02:53,879 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:53,883 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:53,883 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:53,885 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:53,936 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:02:53,952 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:02:53,962 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:53,977 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:53,980 - Slave - INFO - Read value: 20
+2024-10-04 18:02:53,985 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:53,985 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:53,986 - Slave - INFO - Read value: 20
+2024-10-04 18:02:53,987 - Slave - INFO - Updated value to: 21
+2024-10-04 18:02:54,038 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:02:54,053 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:02:54,063 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:54,078 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:54,086 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:54,087 - Slave - INFO - Read value: 21
+2024-10-04 18:02:54,087 - Slave - INFO - Updated value to: 22
+2024-10-04 18:02:54,139 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:02:54,155 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:54,164 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:54,180 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:54,188 - Slave - INFO - Read value: 22
+2024-10-04 18:02:54,240 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:54,256 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:54,266 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:54,281 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:54,342 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:54,357 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:54,367 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:54,383 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:54,443 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:54,459 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:54,469 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:54,484 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:54,545 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:54,560 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:54,570 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:54,586 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:54,646 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:54,661 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:54,671 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:54,687 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:54,748 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:54,763 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:54,773 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:54,788 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:54,849 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:54,864 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:54,865 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:54,874 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:02:54,879 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:54,890 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:02:54,951 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:02:54,967 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:54,968 - Slave - INFO - Read value: 22
+2024-10-04 18:02:54,968 - Slave - INFO - Updated value to: 23
+2024-10-04 18:02:54,975 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:54,982 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:54,982 - Slave - INFO - Read value: 23
+2024-10-04 18:02:54,988 - Slave - INFO - Queued for lock at position 35
+2024-10-04 18:02:54,991 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:02:55,052 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:02:55,068 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:02:55,077 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:02:55,083 - Slave - INFO - Read value: 23
+2024-10-04 18:02:55,089 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:02:55,090 - Slave - INFO - Queued for lock at position 34
+2024-10-04 18:02:55,092 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:02:55,153 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:02:55,170 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:55,178 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:02:55,189 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:55,191 - Slave - INFO - Read value: 23
+2024-10-04 18:02:55,191 - Slave - INFO - Queued for lock at position 34
+2024-10-04 18:02:55,192 - Slave - INFO - Updated value to: 24
+2024-10-04 18:02:55,193 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:02:55,254 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:02:55,271 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:02:55,280 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:02:55,291 - Slave - INFO - Read value: 24
+2024-10-04 18:02:55,293 - Slave - INFO - Queued for lock at position 32
+2024-10-04 18:02:55,295 - Slave - INFO - Read value: 24
+2024-10-04 18:02:55,295 - Slave - INFO - Updated value to: 25
+2024-10-04 18:02:55,356 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:02:55,372 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:02:55,381 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:02:55,394 - Slave - INFO - Queued for lock at position 31
+2024-10-04 18:05:30,662 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:05:30,662 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:05:30,664 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:30,665 - Slave - INFO - Read value: 0
+2024-10-04 18:05:30,665 - Slave - INFO - Updated value to: 1
+2024-10-04 18:05:30,766 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:30,868 - Slave - INFO - Read value: 1
+2024-10-04 18:05:31,667 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:31,769 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:31,870 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:31,870 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:31,972 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:31,973 - Slave - INFO - Read value: 1
+2024-10-04 18:05:32,074 - Slave - INFO - Read value: 1
+2024-10-04 18:05:32,075 - Slave - INFO - Updated value to: 2
+2024-10-04 18:05:32,974 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:33,076 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:33,076 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:33,178 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:33,178 - Slave - INFO - Read value: 2
+2024-10-04 18:05:33,179 - Slave - INFO - Updated value to: 3
+2024-10-04 18:05:33,280 - Slave - INFO - Read value: 3
+2024-10-04 18:05:34,180 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:34,281 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:34,282 - Slave - INFO - Read value: 3
+2024-10-04 18:05:34,283 - Slave - INFO - Updated value to: 4
+2024-10-04 18:05:34,383 - Slave - INFO - Read value: 4
+2024-10-04 18:05:35,284 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:35,384 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:35,386 - Slave - INFO - Read value: 4
+2024-10-04 18:05:35,386 - Slave - INFO - Updated value to: 5
+2024-10-04 18:05:35,486 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:35,587 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:35,688 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:35,790 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:35,892 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:35,994 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:36,095 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:36,197 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:36,298 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:36,388 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:36,400 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:36,490 - Slave - INFO - Read value: 5
+2024-10-04 18:05:36,490 - Slave - INFO - Updated value to: 6
+2024-10-04 18:05:36,501 - Slave - INFO - Read value: 6
+2024-10-04 18:05:37,492 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:37,502 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:37,594 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:37,604 - Slave - INFO - Read value: 6
+2024-10-04 18:05:37,695 - Slave - INFO - Read value: 6
+2024-10-04 18:05:37,696 - Slave - INFO - Updated value to: 7
+2024-10-04 18:05:38,605 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:38,698 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:38,707 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:38,799 - Slave - INFO - Read value: 7
+2024-10-04 18:05:38,800 - Slave - INFO - Updated value to: 8
+2024-10-04 18:05:38,809 - Slave - INFO - Read value: 8
+2024-10-04 18:05:39,801 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:39,811 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:39,903 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:39,912 - Slave - INFO - Read value: 8
+2024-10-04 18:05:40,004 - Slave - INFO - Read value: 8
+2024-10-04 18:05:40,005 - Slave - INFO - Updated value to: 9
+2024-10-04 18:05:48,075 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:05:48,076 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:05:48,078 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:05:48,078 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:05:48,078 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:05:48,079 - Slave - INFO - Read value: 0
+2024-10-04 18:05:48,081 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:48,083 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:48,083 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:48,083 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:48,182 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:05:48,185 - Slave - INFO - Read value: 0
+2024-10-04 18:05:48,186 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:48,186 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:48,186 - Slave - INFO - Updated value to: 1
+2024-10-04 18:05:48,284 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:48,288 - Slave - INFO - Read value: 1
+2024-10-04 18:05:48,288 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:48,385 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:48,390 - Slave - INFO - Read value: 1
+2024-10-04 18:05:48,391 - Slave - INFO - Updated value to: 2
+2024-10-04 18:05:48,487 - Slave - INFO - Read value: 2
+2024-10-04 18:05:48,488 - Slave - INFO - Updated value to: 3
+2024-10-04 18:05:49,083 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:05:49,185 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:05:49,187 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:49,286 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:05:49,289 - Slave - INFO - Read value: 3
+2024-10-04 18:05:49,290 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:49,290 - Slave - INFO - Updated value to: 4
+2024-10-04 18:05:49,387 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:05:49,392 - Slave - INFO - Read value: 4
+2024-10-04 18:05:49,392 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:49,490 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:49,490 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:49,494 - Slave - INFO - Read value: 4
+2024-10-04 18:05:49,494 - Slave - INFO - Updated value to: 5
+2024-10-04 18:05:49,592 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:05:49,592 - Slave - INFO - Read value: 5
+2024-10-04 18:05:49,593 - Slave - INFO - Updated value to: 6
+2024-10-04 18:05:49,693 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:49,795 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:49,896 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:49,998 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:50,099 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:50,201 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:50,291 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:50,302 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:50,393 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:50,393 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:50,403 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:50,495 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:50,495 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:50,496 - Slave - INFO - Read value: 6
+2024-10-04 18:05:50,505 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:50,594 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:50,597 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:05:50,597 - Slave - INFO - Read value: 6
+2024-10-04 18:05:50,598 - Slave - INFO - Updated value to: 7
+2024-10-04 18:05:50,606 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:05:50,696 - Slave - INFO - Read value: 7
+2024-10-04 18:05:50,696 - Slave - INFO - Updated value to: 8
+2024-10-04 18:05:50,698 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:50,707 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:50,799 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:50,808 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:50,901 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:50,909 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:51,002 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:51,010 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:51,104 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:51,112 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:51,205 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:51,213 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:51,306 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:51,315 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:51,408 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:51,416 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:51,497 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:51,509 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:51,517 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:51,599 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:51,599 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:51,611 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:51,618 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:51,698 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:51,700 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:51,701 - Slave - INFO - Read value: 8
+2024-10-04 18:05:51,701 - Slave - INFO - Updated value to: 9
+2024-10-04 18:05:51,712 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:05:51,719 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:51,800 - Slave - INFO - Read value: 9
+2024-10-04 18:05:51,801 - Slave - INFO - Updated value to: 10
+2024-10-04 18:05:51,801 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:05:51,813 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:51,821 - Slave - INFO - Read value: 10
+2024-10-04 18:05:51,903 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:51,915 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:52,008 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:52,016 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:52,109 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:52,118 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:52,210 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:52,219 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:52,319 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:52,320 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:52,421 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:52,422 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:52,523 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:52,523 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:52,625 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:52,625 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:52,703 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:52,727 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:52,727 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:52,802 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:05:52,804 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:52,822 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:52,828 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:52,828 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:52,904 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:05:52,905 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:52,924 - Slave - INFO - Read value: 10
+2024-10-04 18:05:52,930 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:05:52,930 - Slave - INFO - Read value: 10
+2024-10-04 18:05:52,931 - Slave - INFO - Updated value to: 11
+2024-10-04 18:05:53,005 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:53,006 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:53,032 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:53,108 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:53,108 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:53,133 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:53,210 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:53,210 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:53,235 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:53,312 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:53,312 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:53,336 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:53,414 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:53,414 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:53,437 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:53,516 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:53,516 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:53,539 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:53,618 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:53,618 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:53,640 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:53,720 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:53,720 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:53,741 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:53,822 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:53,822 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:53,843 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:53,924 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:53,924 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:53,925 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:53,933 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:53,944 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:54,026 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:05:54,026 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:54,027 - Slave - INFO - Read value: 11
+2024-10-04 18:05:54,034 - Slave - INFO - Read value: 11
+2024-10-04 18:05:54,035 - Slave - INFO - Updated value to: 12
+2024-10-04 18:05:54,046 - Slave - INFO - Read value: 12
+2024-10-04 18:05:54,128 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:54,128 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:54,230 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:54,230 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:54,332 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:54,333 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:54,434 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:54,435 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:54,536 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:54,536 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:54,638 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:54,638 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:54,741 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:54,741 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:54,843 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:54,843 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:54,945 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:54,945 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:55,029 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:55,036 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:05:55,047 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:05:55,047 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:55,048 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:55,130 - Slave - INFO - Read value: 12
+2024-10-04 18:05:55,137 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:05:55,149 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:55,150 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:05:55,150 - Slave - INFO - Read value: 12
+2024-10-04 18:05:55,239 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:05:55,252 - Slave - INFO - Read value: 12
+2024-10-04 18:05:55,252 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:05:55,252 - Slave - INFO - Updated value to: 13
+2024-10-04 18:05:55,340 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:55,353 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:55,442 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:55,455 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:55,543 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:55,557 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:55,644 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:55,658 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:55,746 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:55,760 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:55,847 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:55,861 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:55,949 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:55,962 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:56,051 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:56,064 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:56,132 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:56,151 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:05:56,153 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:56,165 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:56,234 - Slave - INFO - Read value: 13
+2024-10-04 18:05:56,252 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:05:56,254 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:56,254 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:05:56,267 - Slave - INFO - Read value: 13
+2024-10-04 18:05:56,267 - Slave - INFO - Updated value to: 14
+2024-10-04 18:05:56,354 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:05:56,356 - Slave - INFO - Read value: 14
+2024-10-04 18:05:56,356 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:05:56,356 - Slave - INFO - Updated value to: 15
+2024-10-04 18:05:56,455 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:56,457 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:05:56,557 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:56,558 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:05:56,659 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:56,660 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:05:56,761 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:56,762 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:05:56,863 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:56,863 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:05:56,965 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:56,965 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:05:57,067 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:57,067 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:05:57,169 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:05:57,169 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:57,235 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:57,269 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:05:57,270 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:05:57,270 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:05:57,337 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:05:57,358 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:05:57,370 - Slave - INFO - Read value: 15
+2024-10-04 18:05:57,371 - Slave - INFO - Updated value to: 16
+2024-10-04 18:05:57,373 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:05:57,373 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:05:57,438 - Slave - INFO - Read value: 16
+2024-10-04 18:05:57,459 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:05:57,475 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:05:57,475 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:05:57,561 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:05:57,576 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:05:57,576 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:05:57,662 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:05:57,678 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:05:57,678 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:05:57,763 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:05:57,780 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:05:57,780 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:05:57,865 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:05:57,882 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:05:57,882 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:05:57,967 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:05:57,984 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:05:57,984 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:05,635 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:06:05,642 - Slave - INFO - Read value: 0
+2024-10-04 18:06:05,642 - Slave - INFO - Updated value to: 1
+2024-10-04 18:06:05,652 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:06:05,656 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:06:05,659 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:05,659 - Slave - INFO - Read value: 1
+2024-10-04 18:06:05,661 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:06:05,662 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:05,662 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:06:05,664 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:05,664 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:06:05,665 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:06:05,665 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:06:05,665 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:05,666 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:06:05,667 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:06:05,668 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:05,669 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:05,669 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:05,669 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:05,760 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:05,764 - Slave - INFO - Read value: 1
+2024-10-04 18:06:05,766 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:05,767 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:05,771 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:05,772 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:05,772 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:05,772 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:05,862 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:05,867 - Slave - INFO - Read value: 1
+2024-10-04 18:06:05,868 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:05,872 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:05,874 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:05,874 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:05,875 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:05,963 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:05,970 - Slave - INFO - Read value: 1
+2024-10-04 18:06:05,973 - Slave - INFO - Read value: 1
+2024-10-04 18:06:05,974 - Slave - INFO - Updated value to: 2
+2024-10-04 18:06:05,977 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:05,977 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:05,978 - Slave - INFO - Read value: 2
+2024-10-04 18:06:05,978 - Slave - INFO - Updated value to: 3
+2024-10-04 18:06:06,064 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:06,080 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:06,080 - Slave - INFO - Read value: 3
+2024-10-04 18:06:06,166 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:06,181 - Slave - INFO - Read value: 3
+2024-10-04 18:06:06,182 - Slave - INFO - Updated value to: 4
+2024-10-04 18:06:06,268 - Slave - INFO - Read value: 4
+2024-10-04 18:06:06,268 - Slave - INFO - Updated value to: 5
+2024-10-04 18:06:06,644 - Slave - INFO - Queued for lock at position 26
+2024-10-04 18:06:06,661 - Slave - INFO - Queued for lock at position 27
+2024-10-04 18:06:06,746 - Slave - INFO - Queued for lock at position 26
+2024-10-04 18:06:06,762 - Slave - INFO - Queued for lock at position 27
+2024-10-04 18:06:06,766 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:06,848 - Slave - INFO - Queued for lock at position 26
+2024-10-04 18:06:06,863 - Slave - INFO - Queued for lock at position 27
+2024-10-04 18:06:06,867 - Slave - INFO - Read value: 5
+2024-10-04 18:06:06,869 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:06,950 - Slave - INFO - Queued for lock at position 25
+2024-10-04 18:06:06,965 - Slave - INFO - Queued for lock at position 26
+2024-10-04 18:06:06,970 - Slave - INFO - Read value: 5
+2024-10-04 18:06:06,971 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:06,976 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:06,980 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:07,051 - Slave - INFO - Queued for lock at position 24
+2024-10-04 18:06:07,066 - Slave - INFO - Queued for lock at position 25
+2024-10-04 18:06:07,073 - Slave - INFO - Read value: 5
+2024-10-04 18:06:07,077 - Slave - INFO - Read value: 5
+2024-10-04 18:06:07,078 - Slave - INFO - Updated value to: 6
+2024-10-04 18:06:07,082 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:07,082 - Slave - INFO - Read value: 6
+2024-10-04 18:06:07,083 - Slave - INFO - Updated value to: 7
+2024-10-04 18:06:07,153 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:06:07,168 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:07,183 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:07,183 - Slave - INFO - Read value: 7
+2024-10-04 18:06:07,254 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:06:07,269 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:06:07,269 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:07,285 - Slave - INFO - Read value: 7
+2024-10-04 18:06:07,286 - Slave - INFO - Updated value to: 8
+2024-10-04 18:06:07,356 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:07,371 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:06:07,371 - Slave - INFO - Read value: 8
+2024-10-04 18:06:07,372 - Slave - INFO - Updated value to: 9
+2024-10-04 18:06:07,457 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:07,472 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:07,558 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:07,574 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:07,660 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:07,675 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:07,761 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:07,777 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:07,863 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:07,869 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:07,878 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:07,965 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:07,970 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:07,972 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:07,979 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:08,066 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:08,071 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:08,073 - Slave - INFO - Read value: 9
+2024-10-04 18:06:08,074 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:08,079 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:08,081 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:08,084 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:08,168 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:08,173 - Slave - INFO - Queued for lock at position 21
+2024-10-04 18:06:08,176 - Slave - INFO - Read value: 9
+2024-10-04 18:06:08,181 - Slave - INFO - Read value: 9
+2024-10-04 18:06:08,182 - Slave - INFO - Updated value to: 10
+2024-10-04 18:06:08,182 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:08,185 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:08,186 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:08,269 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:08,274 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:08,287 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:08,288 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:08,289 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:08,289 - Slave - INFO - Read value: 10
+2024-10-04 18:06:08,371 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:08,373 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:08,375 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:08,389 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:08,389 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:08,390 - Slave - INFO - Read value: 10
+2024-10-04 18:06:08,391 - Slave - INFO - Updated value to: 11
+2024-10-04 18:06:08,472 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:08,474 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:08,476 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:08,491 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:08,491 - Slave - INFO - Read value: 11
+2024-10-04 18:06:08,492 - Slave - INFO - Updated value to: 12
+2024-10-04 18:06:08,574 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:08,576 - Slave - INFO - Read value: 12
+2024-10-04 18:06:08,576 - Slave - INFO - Updated value to: 13
+2024-10-04 18:06:08,578 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:08,593 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:08,675 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:08,679 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:08,695 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:08,776 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:08,780 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:08,796 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:08,878 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:08,882 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:08,898 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:08,979 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:08,983 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:08,999 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:09,075 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:09,080 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:09,084 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:09,101 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:09,176 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:09,177 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:09,182 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:09,183 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:09,185 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:09,202 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:09,278 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:09,279 - Slave - INFO - Read value: 13
+2024-10-04 18:06:09,283 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:09,285 - Slave - INFO - Read value: 13
+2024-10-04 18:06:09,285 - Slave - INFO - Updated value to: 14
+2024-10-04 18:06:09,287 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:09,291 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:09,304 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:09,380 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:09,384 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:09,388 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:09,392 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:09,393 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:09,406 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:09,481 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:09,485 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:09,489 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:09,495 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:09,495 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:09,495 - Slave - INFO - Read value: 14
+2024-10-04 18:06:09,496 - Slave - INFO - Updated value to: 15
+2024-10-04 18:06:09,507 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:09,578 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:09,582 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:09,587 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:09,591 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:09,597 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:09,597 - Slave - INFO - Read value: 15
+2024-10-04 18:06:09,608 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:09,679 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:09,684 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:09,689 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:09,692 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:09,699 - Slave - INFO - Read value: 15
+2024-10-04 18:06:09,699 - Slave - INFO - Updated value to: 16
+2024-10-04 18:06:09,710 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:09,781 - Slave - INFO - Read value: 16
+2024-10-04 18:06:09,781 - Slave - INFO - Updated value to: 17
+2024-10-04 18:06:09,785 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:09,790 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:09,793 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:09,811 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:09,887 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:09,891 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:09,895 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:09,912 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:09,988 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:09,992 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:09,996 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:10,013 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:10,090 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:10,094 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:10,097 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:10,115 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:10,191 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:10,196 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:10,198 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:10,216 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:10,280 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:10,287 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:10,293 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:10,297 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:10,299 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:10,317 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:10,382 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:10,388 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:10,394 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:10,399 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:10,401 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:10,419 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:10,483 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:10,490 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:10,496 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:10,497 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:10,500 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:10,502 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:10,520 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:10,585 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:10,591 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:10,597 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:10,599 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:10,599 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:10,601 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:10,603 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:10,621 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:10,686 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:10,692 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:10,698 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:10,700 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:10,701 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:10,701 - Slave - INFO - Read value: 17
+2024-10-04 18:06:10,702 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:10,704 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:10,723 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:10,783 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:10,788 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:10,793 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:10,800 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:10,802 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:10,803 - Slave - INFO - Read value: 17
+2024-10-04 18:06:10,804 - Slave - INFO - Updated value to: 18
+2024-10-04 18:06:10,804 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:10,805 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:10,825 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:10,884 - Slave - INFO - Read value: 18
+2024-10-04 18:06:10,885 - Slave - INFO - Updated value to: 19
+2024-10-04 18:06:10,889 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:10,895 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:10,902 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:10,903 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:10,905 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:10,906 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:10,926 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:10,991 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:10,996 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:11,003 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:11,004 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:11,006 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:11,008 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:11,027 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:11,093 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:11,097 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:11,105 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:11,106 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:11,108 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:11,109 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:11,129 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:11,195 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:11,199 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:11,206 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:11,207 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:11,209 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:11,210 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:11,231 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:11,296 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:11,300 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:11,308 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:11,308 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:11,310 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:11,311 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:11,332 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:11,398 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:11,401 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:11,410 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:11,410 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:11,411 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:11,412 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:11,433 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:11,499 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:11,503 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:11,511 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:11,512 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:11,512 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:11,513 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:11,535 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:11,601 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:11,604 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:11,613 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:11,614 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:11,615 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:11,615 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:11,636 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:11,703 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:11,703 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:11,705 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:11,714 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:11,717 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:11,718 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:11,718 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:11,738 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:11,805 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:11,805 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:11,805 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:11,806 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:11,816 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:11,819 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:11,820 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:11,820 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:11,839 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:11,886 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:11,908 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:11,908 - Slave - INFO - Read value: 19
+2024-10-04 18:06:11,908 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:11,909 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:11,909 - Slave - INFO - Updated value to: 20
+2024-10-04 18:06:11,917 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:11,922 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:11,922 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:11,922 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:11,941 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:11,988 - Slave - INFO - Read value: 20
+2024-10-04 18:06:11,989 - Slave - INFO - Updated value to: 21
+2024-10-04 18:06:12,012 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:06:12,013 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:12,013 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:12,018 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:12,024 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:12,024 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:12,025 - Slave - INFO - Read value: 21
+2024-10-04 18:06:12,026 - Slave - INFO - Updated value to: 22
+2024-10-04 18:06:12,042 - Slave - INFO - Read value: 22
+2024-10-04 18:06:12,114 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:12,115 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:12,115 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:12,120 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:12,126 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:12,126 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:12,215 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:12,217 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:12,217 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:12,221 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:12,227 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:12,228 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:12,325 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:12,325 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:12,325 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:12,326 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:12,329 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:12,329 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:12,428 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:12,429 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:12,429 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:12,429 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:12,431 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:12,431 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:12,530 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:12,532 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:12,532 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:12,533 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:12,534 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:12,534 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:12,632 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:12,634 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:12,634 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:12,635 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:12,636 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:12,636 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:12,734 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:12,736 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:12,737 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:12,737 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:12,738 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:12,738 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:12,835 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:12,839 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:12,839 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:12,839 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:12,841 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:12,841 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:12,910 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:12,936 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:12,941 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:12,942 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:12,942 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:12,943 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:12,943 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:12,991 - Slave - INFO - Queued for lock at position 25
+2024-10-04 18:06:13,012 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:13,027 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:13,038 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:13,046 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:13,046 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:13,046 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:13,047 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:13,047 - Slave - INFO - Queued for lock at position 12
+2024-10-04 18:06:13,047 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:13,092 - Slave - INFO - Queued for lock at position 25
+2024-10-04 18:06:13,113 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:13,128 - Slave - INFO - Read value: 22
+2024-10-04 18:06:13,129 - Slave - INFO - Updated value to: 23
+2024-10-04 18:06:13,139 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:13,149 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:13,151 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:13,151 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:13,151 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:13,152 - Slave - INFO - Read value: 23
+2024-10-04 18:06:13,152 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:13,193 - Slave - INFO - Queued for lock at position 23
+2024-10-04 18:06:13,214 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:06:13,241 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:13,250 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:13,252 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:13,254 - Slave - INFO - Read value: 23
+2024-10-04 18:06:13,254 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:13,255 - Slave - INFO - Queued for lock at position 10
+2024-10-04 18:06:13,295 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:13,316 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:13,342 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:13,351 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:13,353 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:13,356 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:13,356 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:13,396 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:13,417 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:13,443 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:13,453 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:13,454 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:13,458 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:13,459 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:13,498 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:13,518 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:13,545 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:13,554 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:13,556 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:13,560 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:13,561 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:13,599 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:13,620 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:13,646 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:13,656 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:13,657 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:13,662 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:13,662 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:13,701 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:13,721 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:13,747 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:13,757 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:13,758 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:13,764 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:13,764 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:13,802 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:13,822 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:13,849 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:13,858 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:13,859 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:13,866 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:13,866 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:13,903 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:13,924 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:13,950 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:13,960 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:13,960 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:13,967 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:13,968 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:14,005 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:14,025 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:14,051 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:14,061 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:14,062 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:14,069 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:14,069 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:14,106 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:14,126 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:14,130 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:14,153 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:14,153 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:14,162 - Slave - INFO - Queued for lock at position 8
+2024-10-04 18:06:14,163 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:14,171 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:14,171 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:14,207 - Slave - INFO - Queued for lock at position 22
+2024-10-04 18:06:14,228 - Slave - INFO - Queued for lock at position 19
+2024-10-04 18:06:14,232 - Slave - INFO - Read value: 23
+2024-10-04 18:06:14,233 - Slave - INFO - Updated value to: 24
+2024-10-04 18:06:14,255 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:14,256 - Slave - INFO - Read value: 24
+2024-10-04 18:06:14,256 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:14,264 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:14,264 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:14,273 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:14,273 - Slave - INFO - Queued for lock at position 7
+2024-10-04 18:06:14,308 - Slave - INFO - Queued for lock at position 20
+2024-10-04 18:06:14,329 - Slave - INFO - Queued for lock at position 17
+2024-10-04 18:06:14,357 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:14,358 - Slave - INFO - Read value: 24
+2024-10-04 18:06:14,366 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:14,366 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:14,375 - Slave - INFO - Queued for lock at position 6
+2024-10-04 18:06:14,376 - Slave - INFO - Read value: 24
+2024-10-04 18:06:14,410 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:14,430 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:14,458 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:14,468 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:14,468 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:14,476 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:14,511 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:14,531 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:14,559 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:14,570 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:14,570 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:14,578 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:14,612 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:14,633 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:14,660 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:14,672 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:14,672 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:14,680 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:14,714 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:14,735 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:14,762 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:14,774 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:14,774 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:14,781 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:14,816 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:14,836 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:14,863 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:14,876 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:14,876 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:14,882 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:14,917 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:14,937 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:14,965 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:14,977 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:14,977 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:14,984 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:15,018 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:15,038 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:15,066 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:15,079 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:15,079 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:15,085 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:15,119 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:15,139 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:15,167 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:15,180 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:15,180 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:15,186 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:15,221 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:15,235 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:15,241 - Slave - INFO - Queued for lock at position 15
+2024-10-04 18:06:15,257 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:15,269 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:06:15,281 - Slave - INFO - Queued for lock at position 4
+2024-10-04 18:06:15,282 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:15,288 - Slave - INFO - Queued for lock at position 5
+2024-10-04 18:06:15,323 - Slave - INFO - Queued for lock at position 18
+2024-10-04 18:06:15,336 - Slave - INFO - Read value: 24
+2024-10-04 18:06:15,337 - Slave - INFO - Updated value to: 25
+2024-10-04 18:06:15,342 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:15,359 - Slave - INFO - Read value: 25
+2024-10-04 18:06:15,359 - Slave - INFO - Queued for lock at position 31
+2024-10-04 18:06:15,371 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:15,377 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:06:15,383 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:06:15,383 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:15,389 - Slave - INFO - Queued for lock at position 3
+2024-10-04 18:06:15,424 - Slave - INFO - Queued for lock at position 16
+2024-10-04 18:06:15,444 - Slave - INFO - Queued for lock at position 13
+2024-10-04 18:06:15,460 - Slave - INFO - Queued for lock at position 30
+2024-10-04 18:06:15,472 - Slave - INFO - Queued for lock at position 9
+2024-10-04 18:06:15,479 - Slave - INFO - Read value: 25
+2024-10-04 18:06:15,485 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:15,485 - Slave - INFO - Read value: 25
+2024-10-04 18:06:15,490 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:06:15,526 - Slave - INFO - Queued for lock at position 14
+2024-10-04 18:06:15,545 - Slave - INFO - Queued for lock at position 11
+2024-10-04 18:18:14,980 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:18:14,982 - Slave - INFO - Read value: 0
+2024-10-04 18:18:14,983 - Slave - INFO - Updated value to: 1
+2024-10-04 18:18:14,984 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:18:14,986 - Slave - INFO - Read value: 1
+2024-10-04 18:18:15,985 - Slave - INFO - Read value: 1
+2024-10-04 18:18:15,986 - Slave - INFO - Updated value to: 2
+2024-10-04 18:18:15,988 - Slave - INFO - Read value: 2
+2024-10-04 18:18:16,988 - Slave - INFO - Read value: 2
+2024-10-04 18:18:16,988 - Slave - INFO - Updated value to: 3
+2024-10-04 18:18:16,990 - Slave - INFO - Read value: 3
+2024-10-04 18:18:17,990 - Slave - INFO - Read value: 3
+2024-10-04 18:18:17,991 - Slave - INFO - Updated value to: 4
+2024-10-04 18:18:17,991 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:18:18,093 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:18:18,195 - Slave - INFO - Read value: 4
+2024-10-04 18:18:18,992 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:19,094 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:19,195 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:19,196 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:18:19,297 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:19,297 - Slave - INFO - Read value: 4
+2024-10-04 18:18:19,398 - Slave - INFO - Read value: 4
+2024-10-04 18:18:19,399 - Slave - INFO - Updated value to: 5
+2024-10-04 18:18:20,299 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:18:20,401 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:18:20,401 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:18:20,503 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:18:20,503 - Slave - INFO - Read value: 5
+2024-10-04 18:18:20,504 - Slave - INFO - Updated value to: 6
+2024-10-04 18:18:20,605 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:20,706 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:20,808 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:20,909 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:21,010 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:21,112 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:21,213 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:21,315 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:21,416 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:21,505 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:18:21,517 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:21,607 - Slave - INFO - Read value: 6
+2024-10-04 18:18:21,607 - Slave - INFO - Updated value to: 7
+2024-10-04 18:18:21,619 - Slave - INFO - Read value: 7
+2024-10-04 18:18:22,609 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:18:22,621 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:22,711 - Slave - INFO - Read value: 7
+2024-10-04 18:18:22,711 - Slave - INFO - Updated value to: 8
+2024-10-04 18:18:22,723 - Slave - INFO - Read value: 8
+2024-10-04 18:18:23,713 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:18:23,724 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:23,814 - Slave - INFO - Read value: 8
+2024-10-04 18:18:23,815 - Slave - INFO - Updated value to: 9
+2024-10-04 18:18:23,826 - Slave - INFO - Read value: 9
+2024-10-04 18:18:24,817 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:18:24,828 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:24,919 - Slave - INFO - Read value: 9
+2024-10-04 18:18:24,920 - Slave - INFO - Updated value to: 10
+2024-10-04 18:18:24,929 - Slave - INFO - Read value: 10
+2024-10-04 18:18:25,921 - Slave - INFO - Slave finished execution
+2024-10-04 18:18:25,930 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:26,032 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:26,133 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:26,235 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:26,337 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:26,438 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:26,540 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:26,642 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:26,743 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:26,845 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:26,947 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:27,048 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:27,150 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:27,252 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:27,354 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:27,455 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:27,557 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:27,658 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:27,760 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:27,861 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:27,963 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:28,064 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:28,165 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:28,267 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:28,369 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:28,471 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:28,572 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:28,674 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:28,776 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:28,877 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:28,979 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:29,081 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:29,182 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:29,284 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:29,385 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:29,487 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:29,588 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:29,689 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:29,791 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:29,892 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:29,994 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:30,095 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:30,197 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:30,298 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:30,399 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:30,501 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:30,602 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:30,704 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:30,806 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:30,908 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:31,010 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:31,111 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:31,213 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:31,314 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:31,416 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:31,517 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:31,618 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:31,720 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:31,821 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:31,923 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:32,025 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:32,126 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:32,228 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:32,329 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:32,431 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:32,532 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:32,634 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:32,735 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:32,837 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:32,939 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:33,040 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:33,141 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:33,243 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:33,345 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:33,446 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:33,548 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:33,649 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:33,751 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:33,853 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:33,954 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:34,056 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:34,157 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:34,259 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:34,360 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:34,462 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:34,563 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:34,665 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:34,766 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:34,868 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:34,969 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:35,071 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:35,173 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:35,274 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:35,376 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:35,477 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:35,578 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:35,680 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:35,782 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:35,883 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:35,984 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:36,086 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:36,188 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:36,289 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:36,390 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:36,492 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:36,594 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:36,696 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:36,797 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:36,899 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:37,000 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:37,101 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:37,203 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:37,305 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:37,406 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:37,508 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:37,609 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:37,710 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:37,812 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:37,914 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:38,015 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:38,116 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:38,218 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:38,320 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:38,421 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:38,523 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:38,624 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:38,726 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:38,827 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:38,929 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:39,030 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:39,132 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:39,233 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:39,335 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:39,436 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:39,538 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:39,640 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:39,741 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:39,843 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:39,945 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:40,046 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:40,148 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:40,250 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:40,352 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:40,454 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:40,555 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:40,657 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:40,758 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:40,860 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:40,961 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:41,063 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:41,164 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:41,266 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:41,367 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:41,469 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:41,571 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:41,673 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:41,774 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:41,876 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:41,977 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:42,079 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:42,180 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:42,282 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:42,383 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:42,485 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:42,586 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:42,688 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:42,790 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:42,891 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:42,993 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:43,094 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:43,196 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:43,297 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:43,399 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:43,500 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:43,602 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:43,704 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:43,805 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:43,907 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:44,008 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:44,109 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:44,211 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:44,313 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:44,414 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:44,516 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:44,617 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:44,719 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:44,821 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:44,922 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:53,304 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:18:53,305 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:18:53,306 - Slave - INFO - Read value: 0
+2024-10-04 18:18:53,307 - Slave - INFO - Updated value to: 1
+2024-10-04 18:18:53,307 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:18:53,308 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:18:53,308 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:18:53,310 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:18:53,310 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:18:53,310 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:18:53,311 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:20:21,856 - Slave - INFO - Starting slave with behavior: read-write
+2024-10-04 18:20:21,856 - Slave - INFO - Starting slave with behavior: read-only
+2024-10-04 18:20:21,859 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:21,859 - Slave - INFO - Read value: 0
+2024-10-04 18:20:21,860 - Slave - INFO - Updated value to: 1
+2024-10-04 18:20:21,860 - Slave - INFO - Iteration 1 completed
+2024-10-04 18:20:21,960 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:22,062 - Slave - INFO - Read value: 1
+2024-10-04 18:20:22,063 - Slave - INFO - Iteration 1 completed
+2024-10-04 18:20:22,861 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:22,963 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:23,064 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:23,065 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:23,166 - Slave - INFO - Read value: 1
+2024-10-04 18:20:23,167 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:23,167 - Slave - INFO - Iteration 2 completed
+2024-10-04 18:20:23,268 - Slave - INFO - Read value: 1
+2024-10-04 18:20:23,269 - Slave - INFO - Updated value to: 2
+2024-10-04 18:20:23,270 - Slave - INFO - Iteration 2 completed
+2024-10-04 18:20:24,168 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:24,271 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:24,273 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:24,372 - Slave - INFO - Read value: 2
+2024-10-04 18:20:24,373 - Slave - INFO - Updated value to: 3
+2024-10-04 18:20:24,373 - Slave - INFO - Iteration 3 completed
+2024-10-04 18:20:24,374 - Slave - INFO - Read value: 3
+2024-10-04 18:20:24,375 - Slave - INFO - Iteration 3 completed
+2024-10-04 18:20:25,374 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:25,376 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:25,476 - Slave - INFO - Read value: 3
+2024-10-04 18:20:25,476 - Slave - INFO - Updated value to: 4
+2024-10-04 18:20:25,477 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:25,477 - Slave - INFO - Iteration 4 completed
+2024-10-04 18:20:25,578 - Slave - INFO - Read value: 4
+2024-10-04 18:20:25,579 - Slave - INFO - Iteration 4 completed
+2024-10-04 18:20:26,478 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:26,580 - Slave - INFO - Queued for lock at position 2
+2024-10-04 18:20:26,581 - Slave - INFO - Read value: 4
+2024-10-04 18:20:26,581 - Slave - INFO - Updated value to: 5
+2024-10-04 18:20:26,582 - Slave - INFO - Iteration 5 completed
+2024-10-04 18:20:26,682 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:26,784 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:26,886 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:26,988 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:27,090 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:27,191 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:27,292 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:27,394 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:27,496 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:27,583 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:27,597 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:27,685 - Slave - INFO - Read value: 5
+2024-10-04 18:20:27,685 - Slave - INFO - Updated value to: 6
+2024-10-04 18:20:27,686 - Slave - INFO - Iteration 6 completed
+2024-10-04 18:20:27,698 - Slave - INFO - Read value: 6
+2024-10-04 18:20:27,699 - Slave - INFO - Iteration 5 completed
+2024-10-04 18:20:28,687 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:28,700 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:28,788 - Slave - INFO - Read value: 6
+2024-10-04 18:20:28,789 - Slave - INFO - Updated value to: 7
+2024-10-04 18:20:28,789 - Slave - INFO - Iteration 7 completed
+2024-10-04 18:20:28,802 - Slave - INFO - Read value: 7
+2024-10-04 18:20:28,802 - Slave - INFO - Iteration 6 completed
+2024-10-04 18:20:29,790 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:29,803 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:29,892 - Slave - INFO - Read value: 7
+2024-10-04 18:20:29,892 - Slave - INFO - Updated value to: 8
+2024-10-04 18:20:29,893 - Slave - INFO - Iteration 8 completed
+2024-10-04 18:20:29,905 - Slave - INFO - Read value: 8
+2024-10-04 18:20:29,906 - Slave - INFO - Iteration 7 completed
+2024-10-04 18:20:30,894 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:30,906 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:30,996 - Slave - INFO - Read value: 8
+2024-10-04 18:20:30,996 - Slave - INFO - Updated value to: 9
+2024-10-04 18:20:30,997 - Slave - INFO - Iteration 9 completed
+2024-10-04 18:20:31,008 - Slave - INFO - Read value: 9
+2024-10-04 18:20:31,009 - Slave - INFO - Iteration 8 completed
+2024-10-04 18:20:31,998 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:32,010 - Slave - INFO - Queued for lock at position 1
+2024-10-04 18:20:32,099 - Slave - INFO - Read value: 9
+2024-10-04 18:20:32,100 - Slave - INFO - Updated value to: 10
+2024-10-04 18:20:32,101 - Slave - INFO - Iteration 10 completed
+2024-10-04 18:20:32,112 - Slave - INFO - Read value: 10
+2024-10-04 18:20:32,112 - Slave - INFO - Iteration 9 completed
+2024-10-04 18:20:33,101 - Slave - INFO - Slave finished execution
+2024-10-04 18:20:33,113 - Slave - INFO - Queued for lock at position 0
+2024-10-04 18:20:33,215 - Slave - INFO - Read value: 10
+2024-10-04 18:20:33,215 - Slave - INFO - Iteration 10 completed
+2024-10-04 18:20:34,216 - Slave - INFO - Slave finished execution
