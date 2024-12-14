@@ -47,6 +47,10 @@ class NetworkConfig:
         LIGHTWEIGHT_A_BASE_PORT: Base port for group A lightweight processes.
         LIGHTWEIGHT_B_BASE_PORT: Base port for group B lightweight processes.
         NUM_LIGHTWEIGHT_PROCESSES: Number of lightweight processes per group.
+        SYSTEM_TIMEOUT: Maximum runtime for the system in seconds.
+        TOKEN_HOLD_TIME: Maximum time to hold token in seconds.
+        RETRY_DELAY: Delay between retries on error in seconds.
+        MESSAGE_TIMEOUT: Message receive timeout in seconds.
     """
     # Network settings
     HOST = "127.0.0.1"
@@ -58,6 +62,10 @@ class NetworkConfig:
     HEARTBEAT_INTERVAL = 1.0
     MONITOR_INTERVAL = 2.0
     TOKEN_TIMEOUT = 5.0
+    SYSTEM_TIMEOUT = 300  # 5 minutes max runtime
+    TOKEN_HOLD_TIME = 5.0  # Maximum time to hold token
+    RETRY_DELAY = 1.0  # Delay between retries on error
+    MESSAGE_TIMEOUT = 2.0  # Message receive timeout
 
     # Port configuration
     BASE_PORT = 5000

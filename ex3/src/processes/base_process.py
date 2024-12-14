@@ -52,7 +52,7 @@ class BaseProcess:
         try:
             self.server = await asyncio.start_server(
                 self._handle_connection,
-                'localhost',
+                NetworkConfig.HOST,
                 self.port
             )
             async with self.server:
@@ -68,10 +68,10 @@ class BaseProcess:
             writer: Stream writer for outgoing data.
         """
         try:
-            data = await reader.read()
+            data = await reader.read(NetworkConfig.BUFFER_SIZE)
             if data:
-                msg_dict = json.loads(data.decode())
-                msg = Message(**msg_dict)
+                json_data = json.loads(data.decode())
+                msg = Message.from_json(json_data)
                 await self._message_queue.put(msg)
         except Exception as e:
             self.logger.error(f"Error handling connection: {e}")
@@ -86,37 +86,46 @@ class BaseProcess:
         """
         raise NotImplementedError("Subclasses must implement _run_loop()")
 
-    async def send_message(self, msg: Message, target_port: int) -> None:
-        """Send a message to another process.
+    async def send_message(self, msg: Message, port: int) -> None:
+        """Send message to specified port.
 
         Args:
-            msg: Message to send.
-            target_port: Port to send message to.
+            msg: Message to send
+            port: Destination port
         """
         try:
-            reader, writer = await asyncio.open_connection('localhost', target_port)
-            msg_data = json.dumps(msg.__dict__).encode()
-            writer.write(msg_data)
+            reader, writer = await asyncio.open_connection(
+                NetworkConfig.HOST,
+                port
+            )
+
+            # Convert message to JSON-serializable format
+            json_data = json.dumps(msg.to_json())
+            writer.write(json_data.encode())
             await writer.drain()
             writer.close()
             await writer.wait_closed()
+
         except Exception as e:
-            self.logger.error(f"Error sending message to port {target_port}: {e}")
+            self.logger.error(f"Error sending message to port {port}: {e}")
 
     async def receive_message(self) -> Optional[Message]:
-        """Receive and handle a message.
+        """Receive and parse incoming message.
 
         Returns:
-            Received message or None if error occurs.
+            Parsed message or None if error/timeout
         """
         try:
-            msg = await self._message_queue.get()
-            if msg and msg.msg_type in self.message_handlers:
-                await self.message_handlers[msg.msg_type](msg)
+            msg = await asyncio.wait_for(
+                self._message_queue.get(),
+                timeout=NetworkConfig.MESSAGE_TIMEOUT
+            )
             return msg
+        except asyncio.TimeoutError:
+            pass
         except Exception as e:
             self.logger.error(f"Error receiving message: {e}")
-            return None
+        return None
 
     def register_handler(self, msg_type: MessageType,
                         handler: Callable[[Message], Awaitable[None]]) -> None:
@@ -133,3 +142,18 @@ class BaseProcess:
         if self.server:
             self.server.close()
             await self.server.wait_closed()
+
+    def _update_process_id(self, process_id: str) -> None:
+        """Update process ID and reinitialize logger.
+
+        Args:
+            process_id: New process ID
+        """
+        self.process_id = process_id
+        # Reinitialize logger with new process ID
+        self.logger = logging.getLogger(self.process_id)
+        self.logger.setLevel(logging.INFO)
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
