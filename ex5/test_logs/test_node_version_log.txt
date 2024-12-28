@@ -1,0 +1,2 @@
+{"timestamp": 1735423222.526734, "node_id": "test_node", "key": 1, "value": 100, "version": 1}
+{"timestamp": 1735423224.067265, "node_id": "test_node", "key": 1, "value": 100, "version": 1}

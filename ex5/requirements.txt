@@ -1,0 +1,4 @@
+pytest
+grpcio
+grpcio-tools
+pytest-asyncio

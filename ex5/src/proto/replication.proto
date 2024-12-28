@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package replication;
+
+service NodeService {
+    rpc PropagateUpdate(UpdateNotification) returns (AckResponse) {}
+    rpc ExecuteTransaction(Transaction) returns (TransactionResponse) {}
+    rpc GetNodeStatus(Empty) returns (NodeStatus) {}
+}
+
+message Empty {}
+
+message DataItem {
+    int32 key = 1;
+    int32 value = 2;
+    int32 version = 3;
+    int64 timestamp = 4;
+}
+
+message Transaction {
+    enum Type {
+        READ_ONLY = 0;
+        UPDATE = 1;
+    }
+    Type type = 1;
+    int32 target_layer = 2;
+    repeated Operation operations = 3;
+}
+
+message Operation {
+    enum Type {
+        READ = 0;
+        WRITE = 1;
+    }
+    Type type = 1;
+    int32 key = 2;
+    optional int32 value = 3;
+}
+
+message UpdateNotification {
+    DataItem data = 1;
+    string source_node = 2;
+}
+
+message AckResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message TransactionResponse {
+    bool success = 1;
+    repeated DataItem results = 2;
+    string error_message = 3;
+}
+
+message NodeStatus {
+    string node_id = 1;
+    int32 layer = 2;
+    int32 update_count = 3;
+    repeated DataItem current_data = 4;
+}
