@@ -10,7 +10,9 @@ class NodeState:
     layer: int
     update_count: int
     current_data: List[Dict]
-    last_update: float
+    last_sync_time: float
+    last_sync_count: int
+    operation_log: List[Dict]
 
     def to_dict(self):
         return asdict(self)

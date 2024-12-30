@@ -1,154 +1,255 @@
+"""Manual test script for the distributed system."""
 import asyncio
+import os
 import grpc
-import aiohttp
+import logging
 from datetime import datetime
-import pathlib
-import time
+from src.node.core_node import CoreNode
+from src.node.second_layer import SecondLayerNode
+from src.node.third_layer import ThirdLayerNode
+from src.proto import replication_pb2, replication_pb2_grpc
+from web.backend.monitor import NodeMonitor, NodeState
+from src.transaction.processor import TransactionProcessor
 
-from node.core_node import CoreNode
-from node.second_layer import SecondLayerNode
-from node.third_layer import ThirdLayerNode
-from proto import replication_pb2, replication_pb2_grpc
-from transaction.parser import TransactionParser
+class TestSystem:
+    def __init__(self, enable_file_logging=False):
+        """
+        Initialize test system with all layers and logging configuration.
 
-async def setup_nodes():
-    core_ports = [50051, 50052, 50053]  # A1, A2, A3
-    core_addresses = [f'localhost:{port}' for port in core_ports]
-    core_nodes = []
+        Args:
+            enable_file_logging (bool): If True, logs will be saved to a file in addition to console output.
+        """
+        self.log_dir = "logs"
+        os.makedirs(self.log_dir, exist_ok=True)
+        self.monitor = NodeMonitor()
 
-    for i, port in enumerate(core_ports):
-        node = CoreNode(
-            node_id=f"A{i+1}",  # A1, A2, A3
-            log_dir="test_logs",
-            port=port,
-            peer_addresses=[addr for addr in core_addresses if addr != f'localhost:{port}']
-        )
-        await node.start()
-        core_nodes.append(node)
+        if enable_file_logging:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            log_file = os.path.join(self.log_dir, f"test_run_{timestamp}.log")
+            logging.basicConfig(
+                level=logging.INFO,
+                format='%(asctime)s - %(levelname)s - %(message)s',
+                handlers=[
+                    logging.FileHandler(log_file),
+                    logging.StreamHandler()
+                ]
+            )
+        else:
+            logging.basicConfig(
+                level=logging.INFO,
+                format='%(asctime)s - %(levelname)s - %(message)s'
+            )
 
-    second_layer_nodes = []
-    for i, port in enumerate([50054, 50055]):  # B1, B2
-        node = SecondLayerNode(
-            node_id=f"B{i+1}",
-            log_dir="test_logs",
-            port=port,
-            core_addresses=core_addresses,
-            primary_core=core_addresses[0]
-        )
-        await node.start()
-        second_layer_nodes.append(node)
+        self.core_addresses = [
+            'localhost:50051',
+            'localhost:50052',
+            'localhost:50053'
+        ]
+        self.core_nodes = []
 
-    third_layer_nodes = []
-    for i, port in enumerate([50056, 50057]):  # C1, C2
-        node = ThirdLayerNode(
-            node_id=f"C{i+1}",
-            log_dir="test_logs",
-            port=port,
-            core_addresses=core_addresses,
-            primary_core=core_addresses[0]
-        )
-        await node.start()
-        third_layer_nodes.append(node)
+        self.second_layer_addresses = [
+            'localhost:50054',
+            'localhost:50055'
+        ]
+        self.second_layer_nodes = []
 
-    return core_nodes, second_layer_nodes, third_layer_nodes
+        self.third_layer_addresses = [
+            'localhost:50056',
+            'localhost:50057'
+        ]
+        self.third_layer_nodes = []
 
-async def cleanup_nodes(core_nodes, second_layer_nodes, third_layer_nodes):
-    tasks = []
-    for node in second_layer_nodes + third_layer_nodes + core_nodes:
-        if hasattr(node, 'server') and node.server:
-            tasks.append(node.server.stop(grace=1))
-    if tasks:
-        await asyncio.gather(*tasks, return_exceptions=True)
+    async def setup_nodes(self):
+        """Set up all nodes in the system across all layers."""
+        logging.info("Setting up core layer...")
+        for i, addr in enumerate(self.core_addresses):
+            port = int(addr.split(':')[1])
+            logging.info(f"Starting core node A{i+1} on port {port}")
+            node = CoreNode(
+                node_id=f'A{i+1}',
+                log_dir=self.log_dir,
+                port=port,
+                peer_addresses=[a for a in self.core_addresses if a != addr]
+            )
+            await node.start()
+            self.core_nodes.append(node)
+            logging.info(f"Core node A{i+1} started")
 
-async def send_node_status(node, session):
-    try:
-        status = await node.GetNodeStatus(replication_pb2.Empty())
-        state = {
-            "node_id": status.node_id,
-            "layer": status.layer,
-            "update_count": status.update_count,
-            "current_data": [
-                {
-                    "key": item.key,
-                    "value": item.value,
-                    "version": item.version,
-                    "timestamp": item.timestamp
-                }
-                for item in status.current_data
-            ],
-            "last_update": time.time()
-        }
-        print(f"Sending state for {status.node_id}:", state)  
-        async with session.post(f"http://localhost:8000/node/{status.node_id}/state", json=state) as response:
-            print(f"Response for {status.node_id}:", await response.json())
-    except Exception as e:
-        print(f"Error sending status for {node.node_id}: {e}")
+        logging.info("Setting up second layer...")
+        for i, addr in enumerate(self.second_layer_addresses):
+            port = int(addr.split(':')[1])
+            is_primary = (i == 0)
+            role = "primary" if is_primary else "backup"
+            logging.info(f"Starting second layer node B{i+1} ({role}) on port {port}")
+            node = SecondLayerNode(
+                node_id=f'B{i+1}',
+                log_dir=self.log_dir,
+                port=port,
+                primary_core_address=self.core_addresses[0],
+                is_primary=is_primary,
+                backup_addresses=self.second_layer_addresses
+            )
+            await node.start()
+            self.second_layer_nodes.append(node)
+            logging.info(f"Second layer node B{i+1} started")
 
-async def monitor_nodes(core_nodes, second_layer_nodes, third_layer_nodes):
-    async with aiohttp.ClientSession() as session:
+        logging.info("Setting up third layer...")
+        for i, addr in enumerate(self.third_layer_addresses):
+            port = int(addr.split(':')[1])
+            is_primary = (i == 0)
+            role = "primary" if is_primary else "backup"
+            logging.info(f"Starting third layer node C{i+1} ({role}) on port {port}")
+            node = ThirdLayerNode(
+                node_id=f'C{i+1}',
+                log_dir=self.log_dir,
+                port=port,
+                primary_core_address=self.core_addresses[0],
+                is_primary=is_primary,
+                backup_addresses=self.third_layer_addresses
+            )
+            await node.start()
+            self.third_layer_nodes.append(node)
+            logging.info(f"Third layer node C{i+1} started")
+
+    async def update_monitor(self):
+        """Update monitor with current node states continuously."""
         while True:
-            for node in core_nodes + second_layer_nodes + third_layer_nodes:
-                try:
-                    await send_node_status(node, session)
-                except Exception as e:
-                    print(f"Error sending status for {node.node_id}: {e}")
+            try:
+                for node in self.core_nodes:
+                    context = grpc.aio.ServicerContext(None)
+                    status = await node.GetNodeStatus(replication_pb2.Empty(), context)
+                    state = NodeState(
+                        node_id=node.node_id,
+                        layer=0,
+                        update_count=len(status.current_data),
+                        current_data=[{
+                            'key': item.key,
+                            'value': item.value,
+                            'version': item.version,
+                            'timestamp': item.timestamp
+                        } for item in status.current_data],
+                        last_sync_time=0,
+                        last_sync_count=0,
+                        operation_log=[]
+                    )
+                    await self.monitor.update_node_state(node.node_id, state)
+
+                for node in self.second_layer_nodes:
+                    context = grpc.aio.ServicerContext(None)
+                    status = await node.GetNodeStatus(replication_pb2.Empty(), context)
+                    state = NodeState(
+                        node_id=node.node_id,
+                        layer=1,
+                        update_count=len(status.current_data),
+                        current_data=[{
+                            'key': item.key,
+                            'value': item.value,
+                            'version': item.version,
+                            'timestamp': item.timestamp
+                        } for item in status.current_data],
+                        last_sync_time=0,
+                        last_sync_count=getattr(node, 'last_update_count', 0),
+                        operation_log=[]
+                    )
+                    await self.monitor.update_node_state(node.node_id, state)
+
+                for node in self.third_layer_nodes:
+                    context = grpc.aio.ServicerContext(None)
+                    status = await node.GetNodeStatus(replication_pb2.Empty(), context)
+                    state = NodeState(
+                        node_id=node.node_id,
+                        layer=2,
+                        update_count=len(status.current_data),
+                        current_data=[{
+                            'key': item.key,
+                            'value': item.value,
+                            'version': item.version,
+                            'timestamp': item.timestamp
+                        } for item in status.current_data],
+                        last_sync_time=getattr(node, 'last_sync_time', 0),
+                        last_sync_count=0,
+                        operation_log=[]
+                    )
+                    await self.monitor.update_node_state(node.node_id, state)
+
+            except Exception as e:
+                logging.error(f"Error updating monitor: {e}")
+
             await asyncio.sleep(1)
 
-async def test_transactions(core_nodes, second_layer_nodes, third_layer_nodes):
-    parser = TransactionParser()
+    async def run_test(self):
+        """Execute test scenarios and monitor system behavior."""
+        logging.info("Starting nodes...")
+        channel = None
+        monitor_task = None
+        processor = TransactionProcessor()
 
-    transactions = [
-        "b0, r(1), r(2), c",
-        "b, r(1), w(2,200), c",
-        "b1, r(2), r(3), c",
-        "b2, r(1), r(2), c",
-    ]
-
-    channel = grpc.aio.insecure_channel(f'localhost:{core_nodes[0].port}')
-    stub = replication_pb2_grpc.NodeServiceStub(channel)
-
-    for tx_str in transactions:
         try:
-            transaction = parser.parse_transaction(tx_str)
-            parser.validate_transaction(transaction)
+            await self.setup_nodes()
+            logging.info("All nodes started successfully")
 
-            print(f"\nExecuting transaction: {tx_str}")
-            response = await stub.ExecuteTransaction(transaction)
-            print(f"Response: {response}")
+            monitor_task = asyncio.create_task(self.update_monitor())
 
-            await asyncio.sleep(2)
+            logging.info("Executing test transactions...")
+            test_transactions = [
+                "b0,r(1),r(2),c",
+                "b,w(1,100),w(2,200),c",
+                "b1,r(1),r(2),c",
+                "b2,r(1),r(2),c",
+                "b,w(3,300),w(4,400),c"
+            ]
+
+            channel = grpc.aio.insecure_channel(self.core_addresses[0])
+            stub = replication_pb2_grpc.NodeServiceStub(channel)
+
+            for tx_str in test_transactions:
+                logging.info(f"Executing: {tx_str}")
+                try:
+                    parsed_tx = processor.parse_transaction(tx_str)
+                    grpc_tx = processor.create_grpc_transaction(parsed_tx)
+                    response = await stub.ExecuteTransaction(grpc_tx)
+                    logging.info(f"Response: {response}")
+                except ValueError as e:
+                    logging.error(f"Transaction parsing failed: {e}")
+                except Exception as e:
+                    logging.error(f"Transaction execution failed: {e}")
+
+                await asyncio.sleep(2)
+
+            logging.info("Waiting to observe replication...")
+            await asyncio.sleep(15)
+            logging.info("Test completed")
 
         except Exception as e:
-            print(f"Error processing transaction '{tx_str}': {e}")
+            logging.error(f"Error during test: {e}")
+            raise
+        finally:
+            if monitor_task:
+                monitor_task.cancel()
+                try:
+                    await monitor_task
+                except asyncio.CancelledError:
+                    pass
+            if channel:
+                await channel.close()
+            await self.cleanup()
 
-async def test_replication():
-    core_nodes, second_layer_nodes, third_layer_nodes = await setup_nodes()
-    monitor_task = None
-    channel = None
+    async def cleanup(self):
+        """Clean up and stop all nodes."""
+        for node in self.core_nodes:
+            await node.stop()
+        for node in self.second_layer_nodes:
+            await node.stop()
+        for node in self.third_layer_nodes:
+            await node.stop()
 
-    try:
-        monitor_task = asyncio.create_task(
-            monitor_nodes(core_nodes, second_layer_nodes, third_layer_nodes)
-        )
-
-        await test_transactions(core_nodes, second_layer_nodes, third_layer_nodes)
-        await asyncio.sleep(15)
-
-    finally:
-        if monitor_task:
-            monitor_task.cancel()
-            try:
-                await monitor_task
-            except asyncio.CancelledError:
-                pass
-
-        await cleanup_nodes(core_nodes, second_layer_nodes, third_layer_nodes)
-
-        if channel:
-            await channel.close()
+async def main():
+    """Execute the main test sequence."""
+    test_system = TestSystem(enable_file_logging=True)
+    await test_system.run_test()
 
 if __name__ == "__main__":
     try:
-        asyncio.run(test_replication())
+        asyncio.run(main())
     except KeyboardInterrupt:
-        print("\nShutting down gracefully...")
+        logging.info("Test interrupted by user")

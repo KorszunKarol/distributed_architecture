@@ -1,92 +1,106 @@
 import { NodeData } from '../../types/node'
-import { Paper, Title, Text, Group, Stack } from '@mantine/core'
+import { Paper, Title, Text, Group, Stack, Badge, Timeline, Card } from '@mantine/core'
 
 interface Props {
     nodes: Record<string, NodeData>
 }
 
-export const Dashboard = ({ nodes }: Props) => {
-    const formatTimestamp = (timestamp: number) => {
-        const date = new Date(timestamp * 1000)
-        return date.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        })
+interface VersionEntry {
+    timestamp: string
+    operation: 'READ' | 'UPDATE'
+    key: number
+    value: number
+    version: number
+}
+
+const NodeStatusCard = ({ nodeId, data }: { nodeId: string, data: NodeData }) => {
+    const getLayerInfo = (layer: number) => {
+        switch(layer) {
+            case 0:
+                return { color: 'red', label: 'Core', syncInfo: 'Immediate Replication' }
+            case 1:
+                return {
+                    color: 'blue',
+                    label: 'Second',
+                    syncInfo: `Syncs every 10 updates (${data.last_sync_count}/10)`
+                }
+            case 2:
+                return {
+                    color: 'green',
+                    label: 'Third',
+                    syncInfo: `Syncs every 10s (${Math.round(10 - (Date.now()/1000 - data.last_sync_time))}s remaining)`
+                }
+        }
     }
 
-    const getVersionDiff = (nodeData: NodeData) => {
-        if (!nodeData.current_data.length) return 0
-        const latestVersion = Math.max(...nodeData.current_data.map(d => d.version))
-        const oldestVersion = Math.min(...nodeData.current_data.map(d => d.version))
-        return latestVersion - oldestVersion
-    }
+    const layerInfo = getLayerInfo(data.layer)
 
     return (
+        <Card withBorder shadow="sm" radius="md" className="mb-4">
+            <Group position="apart" mb="xs">
+                <Title order={3}>{nodeId}</Title>
+                <Badge color={layerInfo.color}>{layerInfo.label} Layer</Badge>
+            </Group>
+
+            <Stack spacing="xs">
+                <Text size="sm" color="dimmed">{layerInfo.syncInfo}</Text>
+                <Text>Updates: {data.update_count}</Text>
+
+                <div className="mt-2">
+                    <Text weight={500} size="sm" mb="xs">Current Data:</Text>
+                    {data.current_data.map((item) => (
+                        <Text key={item.key} size="sm" color="dimmed">
+                            Key {item.key}: {item.value} (v{item.version})
+                        </Text>
+                    ))}
+                </div>
+
+                {data.operation_log && (
+                    <div className="mt-2">
+                        <Text weight={500} size="sm" mb="xs">Recent Operations:</Text>
+                        <Timeline bulletSize={24} lineWidth={2}>
+                            {data.operation_log.slice(-3).map((op, i) => (
+                                <Timeline.Item
+                                    key={i}
+                                    bullet={op.operation === 'UPDATE' ? '⟳' : '👁️'}
+                                    title={op.operation}
+                                >
+                                    <Text size="xs" mt={4}>
+                                        Key {op.key}: {op.operation === 'UPDATE' ? `→ ${op.value} (v${op.version})` : `read v${op.version}`}
+                                    </Text>
+                                    <Text size="xs" color="dimmed">
+                                        {new Date(op.timestamp).toLocaleTimeString()}
+                                    </Text>
+                                </Timeline.Item>
+                            ))}
+                        </Timeline>
+                    </div>
+                )}
+            </Stack>
+        </Card>
+    )
+}
+
+export const Dashboard = ({ nodes }: Props) => {
+    return (
         <div className="space-y-4">
-            {/* Layer Status Overview */}
             <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="p-4 bg-red-50 rounded-lg">
-                    <h3 className="font-semibold text-red-700">Core Layer</h3>
-                    <p className="text-sm text-red-600">Active Replication</p>
-                </div>
-                <div className="p-4 bg-blue-50 rounded-lg">
-                    <h3 className="font-semibold text-blue-700">Second Layer</h3>
-                    <p className="text-sm text-blue-600">Lazy (10 updates)</p>
-                </div>
-                <div className="p-4 bg-green-50 rounded-lg">
-                    <h3 className="font-semibold text-green-700">Third Layer</h3>
-                    <p className="text-sm text-green-600">Lazy (10s)</p>
-                </div>
+                <Paper p="md" className="bg-red-50">
+                    <Title order={4} className="text-red-700">Core Layer</Title>
+                    <Text size="sm" className="text-red-600">Active Replication</Text>
+                </Paper>
+                <Paper p="md" className="bg-blue-50">
+                    <Title order={4} className="text-blue-700">Second Layer</Title>
+                    <Text size="sm" className="text-blue-600">Lazy (10 updates)</Text>
+                </Paper>
+                <Paper p="md" className="bg-green-50">
+                    <Title order={4} className="text-green-700">Third Layer</Title>
+                    <Text size="sm" className="text-green-600">Lazy (10s)</Text>
+                </Paper>
             </div>
 
-            {/* Node Details */}
             {Object.entries(nodes).map(([nodeId, data]) => (
-                <div key={nodeId} className="p-4 bg-white rounded-lg border border-gray-200">
-                    <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-lg font-medium text-gray-800">{nodeId}</h3>
-                        <span className={`px-2 py-1 rounded-full text-xs ${
-                            data.layer === 0 ? 'bg-red-100 text-red-800' :
-                            data.layer === 1 ? 'bg-blue-100 text-blue-800' :
-                            'bg-green-100 text-green-800'
-                        }`}>
-                            Layer {data.layer}
-                        </span>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 mt-4 text-sm">
-                        <div className="bg-gray-50 p-3 rounded">
-                            <p className="text-gray-500 mb-1">Updates</p>
-                            <p className="font-medium text-gray-900">{data.update_count}</p>
-                        </div>
-                        <div className="bg-gray-50 p-3 rounded">
-                            <p className="text-gray-500 mb-1">Data Items</p>
-                            <p className="font-medium text-gray-900">{data.current_data.length}</p>
-                        </div>
-                        <div className="bg-gray-50 p-3 rounded">
-                            <p className="text-gray-500 mb-1">Version Range</p>
-                            <p className="font-medium text-gray-900">{getVersionDiff(data)}</p>
-                        </div>
-                        <div className="bg-gray-50 p-3 rounded">
-                            <p className="text-gray-500 mb-1">Last Update</p>
-                            <p className="font-medium text-gray-900">{formatTimestamp(data.last_update)}</p>
-                        </div>
-                    </div>
-
-                    {/* Latest Updates */}
-                    <div className="mt-4 bg-gray-50 p-3 rounded">
-                        <p className="text-gray-500 mb-2">Latest Data</p>
-                        <div className="space-y-1 max-h-32 overflow-auto">
-                            {data.current_data.slice(-3).reverse().map((item, idx) => (
-                                <div key={idx} className="text-xs text-gray-600 flex justify-between">
-                                    <span>Key {item.key} = {item.value}</span>
-                                    <span>v{item.version}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                <NodeStatusCard key={nodeId} nodeId={nodeId} data={data} />
             ))}
         </div>
     )

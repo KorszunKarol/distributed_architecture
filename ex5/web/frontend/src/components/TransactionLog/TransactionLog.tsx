@@ -1,20 +1,74 @@
+import { Card, Title, Text, Timeline, Badge, Group } from '@mantine/core'
 import { NodeData } from '../../types/node'
-import { Paper, Title, Text, Stack, ScrollArea } from '@mantine/core'
 
 interface Props {
     nodes: Record<string, NodeData>
 }
 
+interface Transaction {
+    timestamp: string
+    command: string
+    status: 'success' | 'failed'
+    error?: string
+    targetLayer?: number
+}
+
 export const TransactionLog = ({ nodes }: Props) => {
+    // In real app, this would come from the backend
+    const recentTransactions: Transaction[] = [
+        {
+            timestamp: new Date().toISOString(),
+            command: 'b0, r(1), r(2), c',
+            status: 'success',
+            targetLayer: 0
+        },
+        {
+            timestamp: new Date().toISOString(),
+            command: 'b, r(1), w(2,200), c',
+            status: 'success'
+        },
+        {
+            timestamp: new Date().toISOString(),
+            command: 'b2, r(1), r(2), c',
+            status: 'failed',
+            error: 'Invalid layer',
+            targetLayer: 2
+        }
+    ]
+
     return (
-        <div className="space-y-2">
-            {Object.entries(nodes).map(([nodeId, data]) =>
-                data.current_data.map((item, idx) => (
-                    <div key={`${nodeId}-${idx}`} className="text-sm text-gray-600 p-2 bg-gray-50 rounded">
-                        {nodeId}: Key {item.key} = {item.value} (v{item.version})
-                    </div>
-                ))
-            )}
-        </div>
+        <Card withBorder shadow="sm" radius="md">
+            <Title order={3} mb="md">Transaction Log</Title>
+
+            <Timeline bulletSize={24} lineWidth={2}>
+                {recentTransactions.map((tx, i) => (
+                    <Timeline.Item
+                        key={i}
+                        bullet={tx.status === 'success' ? '✓' : '✗'}
+                        title={
+                            <Group spacing="xs">
+                                <Text size="sm" weight={500}>{tx.command}</Text>
+                                <Badge
+                                    color={tx.status === 'success' ? 'green' : 'red'}
+                                    size="sm"
+                                >
+                                    {tx.status}
+                                </Badge>
+                            </Group>
+                        }
+                    >
+                        {tx.targetLayer !== undefined && (
+                            <Text size="xs" color="dimmed">Target Layer: {tx.targetLayer}</Text>
+                        )}
+                        {tx.error && (
+                            <Text size="xs" color="red">{tx.error}</Text>
+                        )}
+                        <Text size="xs" color="dimmed">
+                            {new Date(tx.timestamp).toLocaleTimeString()}
+                        </Text>
+                    </Timeline.Item>
+                ))}
+            </Timeline>
+        </Card>
     )
 }
