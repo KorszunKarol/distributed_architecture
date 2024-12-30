@@ -5,11 +5,11 @@ import grpc
 import logging
 from datetime import datetime
 from src.node.core_node import CoreNode
+from src.node.first_layer import FirstLayerNode
 from src.node.second_layer import SecondLayerNode
-from src.node.third_layer import ThirdLayerNode
 from src.proto import replication_pb2, replication_pb2_grpc
 from web.backend.monitor import NodeMonitor, NodeState
-from src.transaction.processor import TransactionProcessor
+from src.transaction.parser import TransactionParser, Operation, OperationType
 
 class TestSystem:
     def __init__(self, enable_file_logging=False):
@@ -22,6 +22,7 @@ class TestSystem:
         self.log_dir = "logs"
         os.makedirs(self.log_dir, exist_ok=True)
         self.monitor = NodeMonitor()
+        self.parser = TransactionParser()
 
         if enable_file_logging:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -47,17 +48,42 @@ class TestSystem:
         ]
         self.core_nodes = []
 
-        self.second_layer_addresses = [
+        self.first_layer_addresses = [
             'localhost:50054',
             'localhost:50055'
         ]
-        self.second_layer_nodes = []
+        self.first_layer_nodes = []
 
-        self.third_layer_addresses = [
+        self.second_layer_addresses = [
             'localhost:50056',
             'localhost:50057'
         ]
-        self.third_layer_nodes = []
+        self.second_layer_nodes = []
+
+    def create_grpc_transaction(self, operations: list[Operation]) -> replication_pb2.Transaction:
+        grpc_operations = []
+        for op in operations:
+            if op.type == OperationType.READ:
+                grpc_operations.append(replication_pb2.Operation(
+                    type=replication_pb2.Operation.READ,
+                    key=op.key
+                ))
+            elif op.type == OperationType.WRITE:
+                grpc_operations.append(replication_pb2.Operation(
+                    type=replication_pb2.Operation.WRITE,
+                    key=op.key,
+                    value=op.value
+                ))
+
+        is_read_only = all(op.type == OperationType.READ
+                          for op in operations
+                          if op.type not in (OperationType.BEGIN, OperationType.COMMIT))
+
+        return replication_pb2.Transaction(
+            type=replication_pb2.Transaction.READ_ONLY if is_read_only else replication_pb2.Transaction.UPDATE,
+            target_layer=operations[0].layer,  # Layer from BEGIN operation
+            operations=grpc_operations
+        )
 
     async def setup_nodes(self):
         """Set up all nodes in the system across all layers."""
@@ -75,14 +101,32 @@ class TestSystem:
             self.core_nodes.append(node)
             logging.info(f"Core node A{i+1} started")
 
+        logging.info("Setting up first layer...")
+        for i, addr in enumerate(self.first_layer_addresses):
+            port = int(addr.split(':')[1])
+            is_primary = (i == 0)
+            role = "primary" if is_primary else "backup"
+            logging.info(f"Starting first layer node B{i+1} ({role}) on port {port}")
+            node = FirstLayerNode(
+                node_id=f'B{i+1}',
+                log_dir=self.log_dir,
+                port=port,
+                primary_core_address=self.core_addresses[0],
+                is_primary=is_primary,
+                backup_addresses=self.first_layer_addresses
+            )
+            await node.start()
+            self.first_layer_nodes.append(node)
+            logging.info(f"First layer node B{i+1} started")
+
         logging.info("Setting up second layer...")
         for i, addr in enumerate(self.second_layer_addresses):
             port = int(addr.split(':')[1])
             is_primary = (i == 0)
             role = "primary" if is_primary else "backup"
-            logging.info(f"Starting second layer node B{i+1} ({role}) on port {port}")
+            logging.info(f"Starting second layer node C{i+1} ({role}) on port {port}")
             node = SecondLayerNode(
-                node_id=f'B{i+1}',
+                node_id=f'C{i+1}',
                 log_dir=self.log_dir,
                 port=port,
                 primary_core_address=self.core_addresses[0],
@@ -91,33 +135,14 @@ class TestSystem:
             )
             await node.start()
             self.second_layer_nodes.append(node)
-            logging.info(f"Second layer node B{i+1} started")
-
-        logging.info("Setting up third layer...")
-        for i, addr in enumerate(self.third_layer_addresses):
-            port = int(addr.split(':')[1])
-            is_primary = (i == 0)
-            role = "primary" if is_primary else "backup"
-            logging.info(f"Starting third layer node C{i+1} ({role}) on port {port}")
-            node = ThirdLayerNode(
-                node_id=f'C{i+1}',
-                log_dir=self.log_dir,
-                port=port,
-                primary_core_address=self.core_addresses[0],
-                is_primary=is_primary,
-                backup_addresses=self.third_layer_addresses
-            )
-            await node.start()
-            self.third_layer_nodes.append(node)
-            logging.info(f"Third layer node C{i+1} started")
+            logging.info(f"Second layer node C{i+1} started")
 
     async def update_monitor(self):
         """Update monitor with current node states continuously."""
         while True:
             try:
                 for node in self.core_nodes:
-                    context = grpc.aio.ServicerContext(None)
-                    status = await node.GetNodeStatus(replication_pb2.Empty(), context)
+                    status = await node.GetNodeStatus(replication_pb2.Empty(), None)
                     state = NodeState(
                         node_id=node.node_id,
                         layer=0,
@@ -134,9 +159,8 @@ class TestSystem:
                     )
                     await self.monitor.update_node_state(node.node_id, state)
 
-                for node in self.second_layer_nodes:
-                    context = grpc.aio.ServicerContext(None)
-                    status = await node.GetNodeStatus(replication_pb2.Empty(), context)
+                for node in self.first_layer_nodes:
+                    status = await node.GetNodeStatus(replication_pb2.Empty(), None)
                     state = NodeState(
                         node_id=node.node_id,
                         layer=1,
@@ -153,9 +177,8 @@ class TestSystem:
                     )
                     await self.monitor.update_node_state(node.node_id, state)
 
-                for node in self.third_layer_nodes:
-                    context = grpc.aio.ServicerContext(None)
-                    status = await node.GetNodeStatus(replication_pb2.Empty(), context)
+                for node in self.second_layer_nodes:
+                    status = await node.GetNodeStatus(replication_pb2.Empty(), None)
                     state = NodeState(
                         node_id=node.node_id,
                         layer=2,
@@ -182,7 +205,6 @@ class TestSystem:
         logging.info("Starting nodes...")
         channel = None
         monitor_task = None
-        processor = TransactionProcessor()
 
         try:
             await self.setup_nodes()
@@ -205,8 +227,8 @@ class TestSystem:
             for tx_str in test_transactions:
                 logging.info(f"Executing: {tx_str}")
                 try:
-                    parsed_tx = processor.parse_transaction(tx_str)
-                    grpc_tx = processor.create_grpc_transaction(parsed_tx)
+                    operations = self.parser.parse(tx_str)
+                    grpc_tx = self.create_grpc_transaction(operations)
                     response = await stub.ExecuteTransaction(grpc_tx)
                     logging.info(f"Response: {response}")
                 except ValueError as e:
@@ -238,9 +260,9 @@ class TestSystem:
         """Clean up and stop all nodes."""
         for node in self.core_nodes:
             await node.stop()
-        for node in self.second_layer_nodes:
+        for node in self.first_layer_nodes:
             await node.stop()
-        for node in self.third_layer_nodes:
+        for node in self.second_layer_nodes:
             await node.stop()
 
 async def main():

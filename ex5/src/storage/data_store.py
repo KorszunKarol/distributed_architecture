@@ -1,6 +1,6 @@
 """Data store implementation for version management."""
 from dataclasses import dataclass
-from typing import Dict, Optional
+from typing import Dict, Optional, List
 import time
 from pathlib import Path
 import json
@@ -28,11 +28,35 @@ class DataStore:
         self._log_file.parent.mkdir(parents=True, exist_ok=True)
 
     def get(self, key: int) -> Optional[DataItem]:
-        """Get data item by key."""
+        """Get data item by key.
+
+        Args:
+            key: Key of the data item
+
+        Returns:
+            DataItem if found, None otherwise
+        """
         return self._data.get(key)
 
+    def get_all(self) -> List[DataItem]:
+        """Get all items in the store.
+
+        Returns:
+            List of all DataItems in the store
+        """
+        return list(self._data.values())
+
     async def update(self, key: int, value: int, version: int) -> DataItem:
-        """Update or create data item."""
+        """Update or create a data item.
+
+        Args:
+            key: Key of the data item
+            value: Value to store
+            version: Version number of the update
+
+        Returns:
+            Updated DataItem
+        """
         item = DataItem(
             key=key,
             value=value,
@@ -41,7 +65,6 @@ class DataStore:
         )
         self._data[key] = item
 
-        # Log the update
         with self._log_file.open('a') as f:
             json.dump({
                 'key': item.key,
@@ -53,6 +76,3 @@ class DataStore:
 
         return item
 
-    def items(self):
-        """Get all stored items."""
-        return self._data.items()

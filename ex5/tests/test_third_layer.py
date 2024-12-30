@@ -3,7 +3,7 @@ import asyncio
 import grpc
 from datetime import datetime
 from src.node.core_node import CoreNode
-from src.node.third_layer import ThirdLayerNode
+from src.node.second_layer import ThirdLayerNode
 from src.proto import replication_pb2, replication_pb2_grpc
 
 @pytest.fixture

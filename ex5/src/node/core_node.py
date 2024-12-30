@@ -143,6 +143,42 @@ class CoreNode(BaseNode):
                 message=error_msg
             )
 
+    async def GetNodeStatus(
+        self,
+        request: replication_pb2.Empty,
+        context: grpc.aio.ServicerContext
+    ) -> replication_pb2.NodeStatus:
+        """Get current status of the node.
+
+        Args:
+            request: Empty request
+            context: gRPC context
+
+        Returns:
+            NodeStatus containing current data and metadata
+        """
+        try:
+            current_data = []
+            for item in self.store.get_all():
+                current_data.append(replication_pb2.DataItem(
+                    key=item.key,
+                    value=item.value,
+                    version=item.version,
+                    timestamp=int(item.timestamp)
+                ))
+
+            return replication_pb2.NodeStatus(
+                node_id=self.node_id,
+                current_data=current_data,
+                update_count=self.update_count
+            )
+        except Exception as e:
+            print(f"Error getting node status: {e}")
+            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(f"Internal error: {str(e)}")
+            raise
+
+
     async def ExecuteTransaction(
         self,
         request: replication_pb2.Transaction,
