@@ -26,6 +26,10 @@ class DataStore:
         self._data: Dict[int, DataItem] = {}
         self._log_file = Path(log_dir) / f"{node_id}_version_log.jsonl"
         self._log_file.parent.mkdir(parents=True, exist_ok=True)
+        self.node_id = node_id
+        self.log_dir = log_dir
+        self.data = {}
+        self.current_version = 0
 
     def get(self, key: int) -> Optional[DataItem]:
         """Get data item by key.
@@ -75,4 +79,14 @@ class DataStore:
             f.write('\n')
 
         return item
+
+    def get_next_version(self) -> int:
+        """Get the next version number for updates."""
+        self.current_version += 1
+        return self.current_version
+
+    async def close(self):
+        """Cleanup resources."""
+        # Add any cleanup code here if needed
+        pass
 

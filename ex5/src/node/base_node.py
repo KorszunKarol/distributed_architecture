@@ -5,6 +5,7 @@ import grpc
 from src.storage.data_store import DataStore
 from src.proto import replication_pb2, replication_pb2_grpc
 from src.replication.base_replication import BaseReplication
+import logging
 
 class BaseNode(replication_pb2_grpc.NodeServiceServicer):
     """Base node class with common functionality for all nodes.
@@ -45,12 +46,27 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
         return self
 
     async def stop(self):
-        """Stop the node and cleanup."""
-        self._closed = True
-        await self.replication.stop()
-        if self.server:
-            await self.server.stop(grace=None)
-            self.server = None
+        """Stop the node and cleanup resources."""
+        try:
+            if hasattr(self, 'server'):
+                await self.server.stop(5)  # 5 second timeout
+
+            # Close any gRPC channels
+            if hasattr(self, '_stubs'):
+                for stub in self._stubs.values():
+                    if hasattr(stub, 'channel') and stub.channel:
+                        await stub.channel.close()
+
+            # Additional cleanup
+            if hasattr(self, 'store'):
+                await self.store.close()
+
+            if hasattr(self, 'replication'):
+                await self.replication.stop()
+
+        except Exception as e:
+            logging.error(f"Error during node shutdown: {e}")
+            raise
 
     async def GetNodeStatus(
         self,
@@ -72,3 +88,44 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
             layer=self.layer,
             current_data=current_data
         )
+
+    async def ExecuteTransaction(
+        self,
+        request: replication_pb2.Transaction,
+        context: grpc.aio.ServicerContext
+    ) -> replication_pb2.TransactionResponse:
+        """Execute a transaction."""
+        try:
+            if request.type == replication_pb2.Transaction.READ_ONLY:
+                results = []
+                for operation in request.operations:
+                    if operation.type == replication_pb2.Operation.READ:
+                        data = self.store.get(operation.key)
+                        if data:
+                            results.append(replication_pb2.DataItem(
+                                key=data.key,
+                                value=data.value,
+                                version=data.version,
+                                timestamp=int(data.timestamp)
+                            ))
+                return replication_pb2.TransactionResponse(
+                    success=True,
+                    results=results
+                )
+            else:
+                # Handle write transaction
+                for operation in request.operations:
+                    if operation.type == replication_pb2.Operation.WRITE:
+                        version = self.store.get_next_version()
+                        await self.replication.handle_write(
+                            operation.key,
+                            operation.value,
+                            version,
+                            int(operation.timestamp)
+                        )
+                return replication_pb2.TransactionResponse(success=True)
+        except Exception as e:
+            return replication_pb2.TransactionResponse(
+                success=False,
+                error_message=str(e)
+            )
