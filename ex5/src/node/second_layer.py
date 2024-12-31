@@ -3,7 +3,7 @@ import asyncio
 import grpc
 from src.node.base_node import BaseNode
 from src.proto import replication_pb2, replication_pb2_grpc
-
+from src.replication.time_based_replication import TimeBasedReplication
 class SecondLayerNode(BaseNode):
     """Second layer node that receives updates every 10 updates through passive replication.
 
@@ -54,7 +54,7 @@ class SecondLayerNode(BaseNode):
         Raises:
             ValueError: If required parameters are invalid
         """
-        super().__init__(node_id, layer=1, log_dir=log_dir, port=port)
+        super().__init__(node_id, layer=1, log_dir=log_dir, port=port, replication_strategy=TimeBasedReplication())
         self.primary_core_address = primary_core_address
         self.is_primary = is_primary
         self.backup_addresses = backup_addresses or []
@@ -183,39 +183,52 @@ class SecondLayerNode(BaseNode):
             try:
                 if self.is_primary:
                     if not self.primary_stub:
+                        print(f"Node {self.node_id}: No connection to core node yet")
                         await asyncio.sleep(1)
                         continue
 
                     status = await self.primary_stub.GetNodeStatus(replication_pb2.Empty())
+                    print(f"Node {self.node_id}: Core status received - update count: {status.update_count}, current count: {self.last_update_count}")
+
                     if status.update_count >= self.last_update_count + 10:
+                        print(f"Node {self.node_id}: Sync threshold reached, initiating sync")
                         await self._sync_as_primary()
                         self.last_update_count = status.update_count
+                        print(f"Node {self.node_id}: Sync completed, new count: {self.last_update_count}")
                 else:
                     if not self.primary_node_stub:
+                        print(f"Node {self.node_id}: No connection to primary node yet")
                         await asyncio.sleep(1)
                         continue
 
                     status = await self.primary_node_stub.GetNodeStatus(replication_pb2.Empty())
+                    print(f"Node {self.node_id}: Primary status received - update count: {status.update_count}, current count: {self.last_update_count}")
+
                     if status.update_count >= self.last_update_count + 10:
+                        print(f"Node {self.node_id}: Sync threshold reached, initiating sync")
                         await self._sync_as_backup()
                         self.last_update_count = status.update_count
+                        print(f"Node {self.node_id}: Sync completed, new count: {self.last_update_count}")
 
             except Exception as e:
-                print(f"Error in sync loop: {e}")
+                print(f"Node {self.node_id}: Error in sync loop: {e}")
 
             await asyncio.sleep(1)
 
     async def _sync_as_primary(self):
         """Synchronize updates as primary node."""
         if not self.primary_stub:
+            print(f"Node {self.node_id}: Cannot sync - no connection to core")
             return
 
+        print(f"Node {self.node_id}: Starting sync as primary")
         status = await self.primary_stub.GetNodeStatus(replication_pb2.Empty())
         updates = []
 
         for item in status.current_data:
             current_item = self.store.get(item.key)
             if not current_item or current_item.version < item.version:
+                print(f"Node {self.node_id}: Updating item {item.key} from version {current_item.version if current_item else 'none'} to {item.version}")
                 await self.store.update(
                     key=item.key,
                     value=item.value,
@@ -224,7 +237,10 @@ class SecondLayerNode(BaseNode):
                 updates.append(item)
 
         if updates:
+            print(f"Node {self.node_id}: Propagating {len(updates)} updates to backups")
             await self._propagate_to_backups(updates)
+        else:
+            print(f"Node {self.node_id}: No updates to propagate")
 
     async def _sync_as_backup(self):
         """Synchronize updates as backup node."""
@@ -240,6 +256,68 @@ class SecondLayerNode(BaseNode):
                     value=item.value,
                     version=item.version
                 )
+
+    async def PropagateUpdate(
+        self,
+        request: replication_pb2.UpdateNotification,
+        context: grpc.aio.ServicerContext
+    ) -> replication_pb2.AckResponse:
+        """Handle update propagation from primary node.
+
+        Args:
+            request: Update notification containing the data to replicate
+            context: gRPC service context
+
+        Returns:
+            AckResponse indicating success/failure
+
+        Raises:
+            ValueError: If update validation fails
+            IOError: If storage operation fails
+        """
+        try:
+            print(f"Node {self.node_id}: Received update from {request.source_node} for key {request.data.key}")
+            await self.store.update(
+                key=request.data.key,
+                value=request.data.value,
+                version=request.data.version
+            )
+            print(f"Node {self.node_id}: Successfully applied update for key {request.data.key}")
+
+            return replication_pb2.AckResponse(
+                success=True,
+                message=f"Update from {request.source_node} applied successfully"
+            )
+
+        except ValueError as e:
+            error_msg = f"Validation error: {str(e)}"
+            print(error_msg)
+            context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+            context.set_details(error_msg)
+            return replication_pb2.AckResponse(
+                success=False,
+                message=error_msg
+            )
+
+        except IOError as e:
+            error_msg = f"Storage error: {str(e)}"
+            print(error_msg)
+            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(error_msg)
+            return replication_pb2.AckResponse(
+                success=False,
+                message=error_msg
+            )
+
+        except Exception as e:
+            error_msg = f"Unexpected error during update: {str(e)}"
+            print(error_msg)
+            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(error_msg)
+            return replication_pb2.AckResponse(
+                success=False,
+                message=error_msg
+            )
 
     async def _propagate_to_backups(self, updates: list[replication_pb2.DataItem]):
         """Propagate updates to backup nodes.

@@ -3,11 +3,11 @@ syntax = "proto3";
 package replication;
 
 service NodeService {
-    rpc PropagateUpdate(UpdateNotification) returns (AckResponse) {}
     rpc ExecuteTransaction(Transaction) returns (TransactionResponse) {}
+    rpc PropagateUpdate(UpdateNotification) returns (AckResponse) {}
+    rpc SyncUpdates(UpdateGroup) returns (AckResponse) {}
+    rpc NotifyLayerSync(LayerSyncNotification) returns (AckResponse) {}
     rpc GetNodeStatus(Empty) returns (NodeStatus) {}
-    rpc PropagateUpdateBatch(UpdateBatchNotification) returns (AckResponse) {}
-    rpc SyncLayer(LayerSyncRequest) returns (LayerSyncResponse) {}
 }
 
 message Empty {}
@@ -44,6 +44,21 @@ message UpdateNotification {
     string source_node = 2;
 }
 
+message UpdateGroup {
+    repeated DataItem updates = 1;
+    string source_node = 2;
+    int32 layer = 3;
+    int32 update_count = 4;
+}
+
+message LayerSyncNotification {
+    int32 source_layer = 1;
+    int32 target_layer = 2;
+    repeated DataItem updates = 3;
+    int32 update_count = 4;
+    int64 sync_timestamp = 5;
+}
+
 message AckResponse {
     bool success = 1;
     string message = 2;
@@ -60,23 +75,4 @@ message NodeStatus {
     int32 layer = 2;
     int32 update_count = 3;
     repeated DataItem current_data = 4;
-}
-
-message UpdateBatchNotification {
-    repeated DataItem updates = 1;
-    string source_node = 2;
-    int32 layer = 3;
-}
-
-message LayerSyncRequest {
-    int32 layer = 1;
-    int32 last_update_count = 2;  // For first layer
-    int64 last_sync_time = 3;     // For second layer
-}
-
-message LayerSyncResponse {
-    bool success = 1;
-    repeated DataItem updates = 2;
-    int32 current_update_count = 3;
-    string message = 4;
 }

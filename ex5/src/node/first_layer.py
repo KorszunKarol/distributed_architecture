@@ -3,7 +3,7 @@ import asyncio
 import grpc
 from src.node.base_node import BaseNode
 from src.proto import replication_pb2, replication_pb2_grpc
-
+from src.replication.update_count_based_replication import UpdateCountBasedReplication
 class FirstLayerNode(BaseNode):
     """First layer node that receives updates every 10 updates through passive replication.
 
@@ -52,7 +52,7 @@ class FirstLayerNode(BaseNode):
         Raises:
             ValueError: If required parameters are invalid
         """
-        super().__init__(node_id, layer=1, log_dir=log_dir, port=port)
+        super().__init__(node_id, layer=1, log_dir=log_dir, port=port, replication_strategy=UpdateCountBasedReplication())
         self.primary_core_address = primary_core_address
         self.is_primary = is_primary
         self.backup_addresses = backup_addresses or []

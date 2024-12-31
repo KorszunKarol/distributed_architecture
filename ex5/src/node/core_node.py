@@ -1,253 +1,144 @@
-from typing import List, Dict
 import asyncio
+import logging
+from typing import List, Dict, Optional
 import grpc
-from node.base_node import BaseNode
-from proto import replication_pb2, replication_pb2_grpc
+from src.node.base_node import BaseNode
+from src.proto import replication_pb2, replication_pb2_grpc
+from src.replication.eager_replication import EagerReplication
 
 class CoreNode(BaseNode):
     """Core layer node implementing eager, active, update-everywhere replication.
+
     This node belongs to layer 0 (core layer) and implements:
     - Update everywhere: Any node can accept updates
-    - Active replication: All nodes process same operations in the same order
+    - Active replication: All nodes process same operations
     - Eager replication: Waits for all acknowledgments before proceeding
     """
 
-    def __init__(self, node_id: str, log_dir: str, port: int, peer_addresses: List[str]):
-        """Initialize core node."""
-        super().__init__(node_id, layer=0, log_dir=log_dir, port=port)
+    def __init__(
+        self,
+        node_id: str,
+        log_dir: str,
+        port: int,
+        peer_addresses: List[str],
+        is_first_node: bool = False,
+        first_layer_address: Optional[str] = None
+    ):
+        """Initialize core node.
+
+        Args:
+            node_id: Unique identifier for this node
+            log_dir: Directory for storing version logs
+            port: Port to listen on
+            peer_addresses: Addresses of other core nodes
+            is_first_node: Whether this is the designated first node (A1)
+            first_layer_address: Address of B1 (only used if is_first_node)
+        """
+        super().__init__(
+            node_id=node_id,
+            layer=0,
+            log_dir=log_dir,
+            port=port,
+            replication_strategy=EagerReplication()
+        )
         self.peer_addresses = peer_addresses
         self.peer_stubs: Dict[str, replication_pb2_grpc.NodeServiceStub] = {}
-        self.peer_channels: Dict[str, grpc.aio.Channel] = {}
-        self.update_count = 0  # Only needed by core nodes
-        self.sequence_number = 0  # For ordering transactions
-        self.transaction_lock = asyncio.Lock()
+        self.is_first_node = is_first_node
+        self.first_layer_address = first_layer_address
+        self.first_layer_stub = None
+        self._update_counter = 0
+        self._logger = logging.getLogger(f"node.core.{node_id}")
 
-    async def start(self):
-        """Start the node and establish connections to peers."""
-        print(f"Starting core node {self.node_id}")
+    async def start(self) -> None:
+        """Start the node and establish connections."""
         await super().start()
-        print(f"Core node {self.node_id} server started")
+        self._logger.info(f"Starting core node {self.node_id}")
+        await self._connect_to_peers()
+        if self.is_first_node and self.first_layer_address:
+            await self._connect_to_first_layer()
 
-        # Don't wait for peer connections during startup
-        asyncio.create_task(self._connect_to_peers())
-        print(f"Core node {self.node_id} connection task created")
-        return self
-
-    async def stop(self):
-        """Stop the node and cleanup connections."""
-        for addr, channel in self.peer_channels.items():
-            try:
-                await channel.close()
-            except Exception as e:
-                print(f"Error closing channel to {addr}: {e}")
-        self.peer_channels.clear()
-        self.peer_stubs.clear()
-
+    async def stop(self) -> None:
+        """Stop the node and clean up connections."""
+        self._logger.info(f"Stopping core node {self.node_id}")
+        for channel in self.peer_stubs.values():
+            await channel.channel.close()
+        if self.first_layer_stub:
+            await self.first_layer_stub.channel.close()
         await super().stop()
 
-    async def _connect_to_peers(self):
-        """Establish gRPC connections with all peer nodes."""
-        while not hasattr(self, '_closed') or not self._closed:
-            for addr in self.peer_addresses:
-                if addr != f'localhost:{self.port}' and addr not in self.peer_stubs:
-                    try:
-                        channel = grpc.aio.insecure_channel(addr)
-                        # Set a timeout for channel ready
-                        try:
-                            await asyncio.wait_for(channel.channel_ready(), timeout=2.0)
-                            self.peer_channels[addr] = channel
-                            self.peer_stubs[addr] = replication_pb2_grpc.NodeServiceStub(channel)
-                            print(f"Node {self.node_id} successfully connected to peer {addr}")
-                        except asyncio.TimeoutError:
-                            print(f"Node {self.node_id} timeout connecting to {addr}, will retry")
-                            continue
-                    except Exception as e:
-                        print(f"Node {self.node_id} failed to connect to peer {addr}: {e}")
+    async def _connect_to_peers(self) -> None:
+        """Establish connections to peer core nodes."""
+        for addr in self.peer_addresses:
+            try:
+                channel = grpc.aio.insecure_channel(addr)
+                self.peer_stubs[addr] = replication_pb2_grpc.NodeServiceStub(channel)
+                self._logger.info(f"Connected to peer at {addr}")
+            except Exception as e:
+                self._logger.error(f"Failed to connect to peer {addr}: {e}")
 
-            # If we have all peers connected, break
-            if len(self.peer_stubs) == len(self.peer_addresses) - 1:
-                print(f"Node {self.node_id} connected to all peers")
-                break
-
-            # Wait before retry
-            await asyncio.sleep(1)
-
-    async def _propagate_to_peers(self, data_item: replication_pb2.DataItem) -> bool:
-        """Propagate an update to all peers eagerly.
-
-        Args:
-            data_item: The data item to propagate to peers
-
-        Returns:
-            bool: True if all peers acknowledged the update
-        """
-        notification = replication_pb2.UpdateNotification(
-            data=data_item,
-            source_node=self.node_id
-        )
-
+    async def _connect_to_first_layer(self) -> None:
+        """Establish connection to first layer primary node (B1)."""
         try:
-            responses = await asyncio.gather(*[
-                stub.PropagateUpdate(
-                    notification,
-                    timeout=5.0
-                )
-                for stub in self.peer_stubs.values()
-            ], return_exceptions=True)
-
-            for i, response in enumerate(responses):
-                if isinstance(response, Exception):
-                    if isinstance(response, grpc.RpcError):
-                        print(f"RPC failed for peer {list(self.peer_stubs.keys())[i]}: "
-                              f"{response.code()}, {response.details()}")
-                    else:
-                        print(f"Error propagating to peer {list(self.peer_stubs.keys())[i]}: {response}")
-                    return False
-                elif not response.success:
-                    print(f"Peer {list(self.peer_stubs.keys())[i]} rejected update: {response.message}")
-                    return False
-
-            return True
-
+            channel = grpc.aio.insecure_channel(self.first_layer_address)
+            self.first_layer_stub = replication_pb2_grpc.NodeServiceStub(channel)
+            self._logger.info(f"Connected to first layer at {self.first_layer_address}")
         except Exception as e:
-            print(f"Unexpected error during propagation: {e}")
-            return False
-
-    async def PropagateUpdate(
-        self,
-        request: replication_pb2.UpdateNotification,
-        context: grpc.aio.ServicerContext
-    ) -> replication_pb2.AckResponse:
-        """Handle update propagation from peers.
-
-        Args:
-            request: Update notification from peer
-            context: gRPC context
-
-        Returns:
-            AckResponse indicating success/failure
-        """
-        try:
-            await self.store.update(
-                key=request.data.key,
-                value=request.data.value,
-                version=request.data.version
-            )
-            self.update_count += 1
-            return replication_pb2.AckResponse(success=True)
-        except Exception as e:
-            error_msg = f"Failed to apply update: {str(e)}"
-            print(error_msg)
-            return replication_pb2.AckResponse(
-                success=False,
-                message=error_msg
-            )
-
-    async def GetNodeStatus(
-        self,
-        request: replication_pb2.Empty,
-        context: grpc.aio.ServicerContext
-    ) -> replication_pb2.NodeStatus:
-        """Get current status of the node.
-
-        Args:
-            request: Empty request
-            context: gRPC context
-
-        Returns:
-            NodeStatus containing current data and metadata
-        """
-        try:
-            current_data = []
-            for item in self.store.get_all():
-                current_data.append(replication_pb2.DataItem(
-                    key=item.key,
-                    value=item.value,
-                    version=item.version,
-                    timestamp=int(item.timestamp)
-                ))
-
-            return replication_pb2.NodeStatus(
-                node_id=self.node_id,
-                current_data=current_data,
-                update_count=self.update_count
-            )
-        except Exception as e:
-            print(f"Error getting node status: {e}")
-            context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_details(f"Internal error: {str(e)}")
-            raise
-
+            self._logger.error(f"Failed to connect to first layer: {e}")
 
     async def ExecuteTransaction(
         self,
         request: replication_pb2.Transaction,
         context: grpc.aio.ServicerContext
     ) -> replication_pb2.TransactionResponse:
-        """Execute a transaction with active replication.
+        """Execute a transaction.
 
-        For update transactions:
-        1. Acquire global order (using lock)
-        2. Execute operations in order
-        3. Propagate updates eagerly to all peers
-        4. Wait for acknowledgments before proceeding
-
-        Args:
-            request: The transaction request
-            context: gRPC context
-
-        Returns:
-            TransactionResponse with results or error
+        For update transactions, uses eager replication to ensure all nodes
+        receive and acknowledge updates before proceeding.
         """
         try:
-            results = []
-
             if request.type == replication_pb2.Transaction.UPDATE:
-                async with self.transaction_lock:
-                    self.sequence_number += 1
-                    current_seq = self.sequence_number
+                return await self._execute_update_transaction(request)
+            return await self._execute_read_transaction(request)
 
-                    for op in request.operations:
-                        if op.type == replication_pb2.Operation.WRITE:
-                            try:
-                                current_item = self.store.get(op.key)
-                                new_version = (current_item.version + 1) if current_item else 1
+        except Exception as e:
+            self._logger.error(f"Transaction failed: {e}")
+            return replication_pb2.TransactionResponse(
+                success=False,
+                error_message=str(e)
+            )
 
-                                item = await self.store.update(
-                                    key=op.key,
-                                    value=op.value,
-                                    version=new_version
-                                )
+    async def _execute_update_transaction(
+        self,
+        transaction: replication_pb2.Transaction
+    ) -> replication_pb2.TransactionResponse:
+        """Execute an update transaction with eager replication."""
+        results = []
+        try:
+            for op in transaction.operations:
+                if op.type == replication_pb2.Operation.WRITE:
+                    data_item = replication_pb2.DataItem(
+                        key=op.key,
+                        value=op.value,
+                        version=self.store.get_next_version(),
+                        timestamp=int(asyncio.get_event_loop().time())
+                    )
+                    # Handle eager replication
+                    success = await self.replication_strategy.handle_update(data_item)
+                    if not success:
+                        raise Exception("Update replication failed")
+                    results.append(data_item)
 
-                                data_item = replication_pb2.DataItem(
-                                    key=item.key,
-                                    value=item.value,
-                                    version=item.version,
-                                    timestamp=int(item.timestamp)
-                                )
-                                results.append(data_item)
+                    # Handle update counting and first layer notification
+                    if self.is_first_node:
+                        self._update_counter += 1
+                        if self._update_counter >= 10:
+                            await self._notify_first_layer()
+                            self._update_counter = 0
 
-                                success = await self._propagate_to_peers(data_item)
-                                if not success:
-                                    raise Exception("Failed to propagate update to all peers")
-
-                                self.update_count += 1
-                            except Exception as e:
-                                raise Exception(f"Failed to execute write operation: {e}")
-
-            for op in request.operations:
-                if op.type == replication_pb2.Operation.READ:
-                    try:
-                        item = self.store.get(op.key)
-                        if item:
-                            results.append(replication_pb2.DataItem(
-                                key=item.key,
-                                value=item.value,
-                                version=item.version,
-                                timestamp=int(item.timestamp)
-                            ))
-                    except Exception as e:
-                        raise Exception(f"Failed to execute read operation: {e}")
+                elif op.type == replication_pb2.Operation.READ:
+                    item = await self.store.get(op.key)
+                    if item:
+                        results.append(item)
 
             return replication_pb2.TransactionResponse(
                 success=True,
@@ -255,9 +146,53 @@ class CoreNode(BaseNode):
             )
 
         except Exception as e:
-            error_msg = str(e)
-            print(f"Transaction failed: {error_msg}")
+            self._logger.error(f"Update transaction failed: {e}")
             return replication_pb2.TransactionResponse(
                 success=False,
-                error_message=error_msg
+                error_message=str(e)
             )
+
+    async def _execute_read_transaction(
+        self,
+        transaction: replication_pb2.Transaction
+    ) -> replication_pb2.TransactionResponse:
+        """Execute a read-only transaction."""
+        results = []
+        try:
+            for op in transaction.operations:
+                if op.type == replication_pb2.Operation.READ:
+                    item = await self.store.get(op.key)
+                    if item:
+                        results.append(item)
+
+            return replication_pb2.TransactionResponse(
+                success=True,
+                results=results
+            )
+
+        except Exception as e:
+            self._logger.error(f"Read transaction failed: {e}")
+            return replication_pb2.TransactionResponse(
+                success=False,
+                error_message=str(e)
+            )
+
+    async def _notify_first_layer(self) -> None:
+        """Notify first layer after 10 updates."""
+        try:
+            updates = await self.store.get_recent_updates(10)
+            notification = replication_pb2.UpdateGroup(
+                updates=updates,
+                source_node=self.node_id,
+                layer=0,
+                update_count=self._update_counter
+            )
+
+            if self.first_layer_stub:
+                await self.first_layer_stub.SyncUpdates(notification)
+                self._logger.info(f"Notified first layer with {len(updates)} updates")
+            else:
+                self._logger.warning("No first layer connection available")
+
+        except Exception as e:
+            self._logger.error(f"Failed to notify first layer: {e}")
