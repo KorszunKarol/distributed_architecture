@@ -1,159 +1,97 @@
 """Manual test script for the distributed system."""
 import asyncio
 import logging
-from logging.handlers import RotatingFileHandler
+from pathlib import Path
 import os
-import time
+import sys
+
 from src.node.core_node import CoreNode
 from src.node.first_layer_node import FirstLayerNode
 from src.node.second_layer_node import SecondLayerNode
 from src.proto import replication_pb2
 
-# Remove the basic logging config
-# logging.basicConfig(level=logging.INFO)
+# Create logs directory if it doesn't exist
+log_dir = Path("logs")
+log_dir.mkdir(exist_ok=True)
+
+# Clear/delete existing log file
+log_file = log_dir / "system.log"
+if log_file.exists():
+    log_file.unlink()  # Delete the file if it exists
+
+# Configure logging to both file and console
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(log_file),
+        logging.StreamHandler(sys.stdout),  # Log to stdout
+        logging.StreamHandler(sys.stderr)   # Log to stderr
+    ]
+)
+
 logger = logging.getLogger("manual_test")
 
-# Setup logging
-def setup_logging():
-    """Setup logging to both file and terminal."""
-    # Create logs directory if it doesn't exist
-    os.makedirs("logs", exist_ok=True)
+def handle_exception(exc_type, exc_value, exc_traceback):
+    """Log uncaught exceptions"""
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+    logger.error("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
 
-    # Create formatters
-    file_formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-    console_formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-
-    # Setup file handler
-    file_handler = RotatingFileHandler(
-        'logs/system.log',
-        maxBytes=1024*1024,  # 1MB
-        backupCount=5
-    )
-    file_handler.setFormatter(file_formatter)
-    file_handler.setLevel(logging.DEBUG)
-
-    # Setup console handler
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(console_formatter)
-    console_handler.setLevel(logging.INFO)
-
-    # Setup root logger
-    root_logger = logging.getLogger()
-    root_logger.setLevel(logging.DEBUG)
-    root_logger.addHandler(file_handler)
-    root_logger.addHandler(console_handler)
-
-def setup_log_dirs():
-    """Create log directories if they don't exist."""
-    log_dirs = [
-        "logs/core/a1",
-        "logs/core/a2",
-        "logs/core/a3",
-        "logs/first/b1",
-        "logs/first/b2",
-        "logs/second/c1",
-        "logs/second/c2"
-    ]
-    for dir_path in log_dirs:
-        os.makedirs(dir_path, exist_ok=True)
-        logger.info(f"Created log directory: {dir_path}")
+sys.excepthook = handle_exception
 
 async def test_write_transaction(node: CoreNode, key: int, value: int):
     """Execute a write transaction on a core node."""
-    try:
-        operation = replication_pb2.Operation(
-            type=replication_pb2.Operation.WRITE,
-            key=key,
-            value=value,
-            timestamp=int(time.time())
-        )
-
-        tx = replication_pb2.Transaction(
-            type=replication_pb2.Transaction.UPDATE,
-            operations=[operation]
-        )
-
-        response = await node.ExecuteTransaction(tx, None)
-        if not response.success:
-            logger.error(f"Write failed: {response.error_message}")
-        return response.success
-    except Exception as e:
-        logger.error(f"Write transaction error: {e}")
-        return False
+    tx = replication_pb2.Transaction(
+        type=replication_pb2.Transaction.UPDATE,
+        operations=[
+            replication_pb2.Operation(
+                type=replication_pb2.Operation.WRITE,
+                key=key,
+                value=value
+            )
+        ]
+    )
+    response = await node.ExecuteTransaction(tx, None)
+    logger.info(f"Write response: {response}")
+    return response.success
 
 async def test_read_transaction(node: CoreNode, key: int):
     """Execute a read transaction on any node."""
-    operation = replication_pb2.Operation(
-        type=replication_pb2.Operation.READ,
-        key=key,  # Already an integer
-        timestamp=int(time.time())
-    )
-
     tx = replication_pb2.Transaction(
         type=replication_pb2.Transaction.READ_ONLY,
-        operations=[operation]
+        operations=[
+            replication_pb2.Operation(
+                type=replication_pb2.Operation.READ,
+                key=key
+            )
+        ]
     )
-
     response = await node.ExecuteTransaction(tx, None)
     logger.info(f"Read response: {response}")
     return response.results[0] if response.results else None
 
 async def main():
-    # Setup logging first
-    setup_logging()
-    setup_log_dirs()
+    # Create nodes
+    a1 = CoreNode("A1", "logs/a1", 5001, [], is_first_node=True, first_layer_address="localhost:5004")
+    b1 = FirstLayerNode("B1", "logs/b1", 5004, is_primary=True, backup_address="localhost:5005", second_layer_address="localhost:5006")
+    c1 = SecondLayerNode("C1", "logs/c1", 5006, is_primary=True, backup_address="localhost:5007")
 
-    nodes = []
+    # Start nodes
+    for node in [a1, b1, c1]:
+        await node.start()
+        logger.info(f"Started node {node.node_id}")
+
     try:
-        # Create core layer nodes
-        a1 = CoreNode(
-            "A1",
-            "logs/core/a1",
-            5001,
-            peer_addresses=["localhost:5002", "localhost:5003"],  # Other core nodes
-            is_first_node=True,
-            first_layer_address="localhost:5004"
-        )
-
-        # Create first layer nodes
-        b1 = FirstLayerNode(
-            "B1",
-            "logs/first/b1",
-            5004,
-            is_primary=True,
-            backup_address="localhost:5005",
-            second_layer_address="localhost:5006"
-        )
-
-        # Create second layer nodes
-        c1 = SecondLayerNode(
-            "C1",
-            "logs/second/c1",
-            5006,
-            is_primary=True,
-            backup_address="localhost:5007"
-        )
-
-        nodes = [a1, b1, c1]
-
-        # Start nodes in order
-        for node in nodes:
-            await node.start()
-            await asyncio.sleep(1)  # Give each node time to start
-            logger.info(f"Started node {node.node_id}")
-
-        # Test writes with integers
-        for i in range(12):
-            success = await test_write_transaction(a1, i, i*100)  # Use integers directly
+        # Test writes
+        for i in range(12):  # More than 10 to trigger propagation
+            success = await test_write_transaction(a1, i, i * 100)
             logger.info(f"Write {i} success: {success}")
-            await asyncio.sleep(1)
+            await asyncio.sleep(1)  # Give time for propagation
 
-        # Test reads
-        await asyncio.sleep(5)
+        # Test reads from different layers
+        await asyncio.sleep(5)  # Wait for propagation
         for key in [0, 5, 10]:
             logger.info("Reading from different layers:")
             a1_value = await test_read_transaction(a1, key)
@@ -162,13 +100,10 @@ async def main():
             logger.info(f"key{key}: A1={a1_value}, B1={b1_value}, C1={c1_value}")
 
     finally:
-        # Clean shutdown
-        for node in nodes:
-            try:
-                await node.stop()
-                logger.info(f"Stopped node {node.node_id}")
-            except Exception as e:
-                logger.error(f"Error stopping node: {e}")
+        # Stop nodes
+        for node in [a1, b1, c1]:
+            await node.stop()
+            logger.info(f"Stopped node {node.node_id}")
 
 if __name__ == "__main__":
     asyncio.run(main())
