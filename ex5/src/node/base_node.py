@@ -33,8 +33,8 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
         if hasattr(self, 'replication'):
             await self.replication.stop()
 
-    async def GetNodeStatus(self, request: replication_pb2.Empty, context: grpc.aio.ServicerContext) -> replication_pb2.NodeStatus:
-        current_data = await self.store.get_all()
+    def GetNodeStatus(self, request: replication_pb2.Empty, context: grpc.aio.ServicerContext) -> replication_pb2.NodeStatus:
+        current_data = self.store.get_all()
         return replication_pb2.NodeStatus(
             node_id=self.node_id,
             layer=self.layer,

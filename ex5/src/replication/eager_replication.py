@@ -43,68 +43,53 @@ class EagerReplication(BaseReplication):
         """
         async with self._transaction_lock:
             try:
-                # Phase 1: Propagate to peers
-                success = await self._propagate_to_peers(data_item)
-                if not success:
-                    await self._rollback_update(data_item)
-                    return False
+                # First update local store
+                await self.node.store.update(
+                    key=data_item.key,
+                    value=data_item.value,
+                    version=data_item.version
+                )
 
-                # Phase 2: Apply locally
-                await self._apply_update(data_item)
+                # Then propagate to all peers
+                if self.node.peer_stubs:
+                    notification = replication_pb2.UpdateNotification(
+                        data=data_item,
+                        source_node=self.node.node_id
+                    )
+                    responses = await asyncio.gather(*[
+                        stub.PropagateUpdate(notification)
+                        for stub in self.node.peer_stubs.values()
+                    ])
+
+                    if not all(r.success for r in responses):
+                        await self._rollback(data_item)
+                        return False
+
                 return True
 
             except Exception as e:
                 self._logger.error(f"Update failed: {e}")
-                await self._rollback_update(data_item)
+                await self._rollback(data_item)
                 return False
 
-    async def _propagate_to_peers(self, data_item: replication_pb2.DataItem) -> bool:
-        """Propagate update to all peers and wait for acknowledgments."""
-        if not self.node.peer_stubs:
-            self._logger.warning("No peers available for propagation")
-            return True
-
-        notification = replication_pb2.UpdateNotification(
-            data=data_item,
-            source_node=self.node.node_id
-        )
-
-        try:
-            responses = await asyncio.gather(*[
-                peer_stub.PropagateUpdate(notification)
-                for peer_stub in self.node.peer_stubs.values()
-            ], timeout=self._propagation_timeout)
-
-            success = all(response.success for response in responses)
-            if not success:
-                self._logger.error("Not all peers acknowledged update")
-            return success
-
-        except asyncio.TimeoutError:
-            self._logger.error("Propagation timeout")
-            return False
-
-    async def _apply_update(self, data_item: replication_pb2.DataItem) -> None:
-        """Apply update locally."""
-        await self.node.store.update(
-            key=data_item.key,
-            value=data_item.value,
-            version=data_item.version
-        )
-
-    async def _rollback_update(self, data_item: replication_pb2.DataItem) -> None:
+    async def _rollback(self, data_item: replication_pb2.DataItem) -> None:
         """Rollback a failed update."""
         try:
-            previous = await self.node.store.get(data_item.key)
-            if previous:
-                rollback_notification = replication_pb2.UpdateNotification(
-                    data=previous,
-                    source_node=self.node.node_id
-                )
-                await asyncio.gather(*[
-                    peer_stub.PropagateUpdate(rollback_notification)
-                    for peer_stub in self.node.peer_stubs.values()
-                ])
-                self._logger.info(f"Rolled back update for key {data_item.key}")
+            # Implement rollback logic here
+            # For now, just log the attempt
+            self._logger.warning(f"Rolling back update for key {data_item.key}")
         except Exception as e:
             self._logger.error(f"Rollback failed: {e}")
+
+    async def PropagateUpdate(self, request: replication_pb2.UpdateNotification) -> replication_pb2.AckResponse:
+        """Propagate an update to all peers."""
+        try:
+            update = request.data
+            await self.node.store.update(
+                key=update.key,
+                value=update.value,
+                version=update.version
+            )
+            return replication_pb2.AckResponse(success=True)
+        except Exception as e:
+            return replication_pb2.AckResponse(success=False, message=str(e))

@@ -51,7 +51,7 @@ class CoreNode(BaseNode):
 
     async def _notify_first_layer(self) -> None:
         try:
-            updates = await self.store.get_recent_updates(10)
+            updates = self.store.get_recent_updates(10)
             notification = replication_pb2.UpdateGroup(
                 updates=updates,
                 source_node=self.node_id,
@@ -103,12 +103,6 @@ class CoreNode(BaseNode):
                         raise Exception("Update replication failed")
                     results.append(data_item)
 
-                    if self.is_first_node:
-                        self._update_counter += 1
-                        if self._update_counter >= 10:
-                            await self._notify_first_layer()
-                            self._update_counter = 0
-
             return replication_pb2.TransactionResponse(
                 success=True,
                 results=results
@@ -129,7 +123,7 @@ class CoreNode(BaseNode):
         try:
             for op in transaction.operations:
                 if op.type == replication_pb2.Operation.READ:
-                    item = await self.store.get(op.key)
+                    item = self.store.get(op.key)
                     if item:
                         results.append(item)
 
@@ -143,4 +137,26 @@ class CoreNode(BaseNode):
             return replication_pb2.TransactionResponse(
                 success=False,
                 error_message=str(e)
+            )
+
+    async def PropagateUpdate(self, request: replication_pb2.UpdateNotification, context: grpc.aio.ServicerContext) -> replication_pb2.AckResponse:
+        """Handle update propagation from peer nodes."""
+        try:
+            # Delegate to replication strategy
+            response = await self.replication.PropagateUpdate(request)
+            
+            # Only handle counter in PropagateUpdate
+            if response.success and self.is_first_node:
+                self._update_counter += 1
+                if self._update_counter >= 10:
+                    await self._notify_first_layer()
+                    self._update_counter = 0
+            
+            return response
+
+        except Exception as e:
+            self._logger.error(f"Failed to propagate update: {e}")
+            return replication_pb2.AckResponse(
+                success=False,
+                message=str(e)
             )

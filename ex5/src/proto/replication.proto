@@ -58,6 +58,7 @@ message LayerSyncNotification {
     repeated DataItem updates = 3;
     int32 update_count = 4;
     int64 sync_timestamp = 5;
+    string source_node = 6;
 }
 
 message AckResponse {
@@ -76,4 +77,8 @@ message NodeStatus {
     int32 layer = 2;
     int32 update_count = 3;
     repeated DataItem current_data = 4;
+}
+
+message UpdateRequest {
+    DataItem update = 1;
 }

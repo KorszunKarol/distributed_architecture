@@ -2,11 +2,6 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 import warnings
-import os
-import sys
-
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
 from src.proto import replication_pb2 as replication__pb2
 

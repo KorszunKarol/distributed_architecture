@@ -49,7 +49,7 @@ class FirstLayerNode(BaseNode):
         try:
             for op in request.operations:
                 if op.type == replication_pb2.Operation.READ:
-                    item = await self.store.get(op.key)
+                    item = self.store.get(op.key)
                     if item:
                         results.append(item)
 
@@ -57,6 +57,30 @@ class FirstLayerNode(BaseNode):
         except Exception as e:
             self._logger.error(f"Read transaction failed: {e}")
             return replication_pb2.TransactionResponse(success=False, error_message=str(e))
+
+    async def SyncUpdates(self, request: replication_pb2.UpdateGroup, context: grpc.aio.ServicerContext) -> replication_pb2.AckResponse:
+        try:
+            for update in request.updates:
+                await self.store.update(
+                    key=update.key,
+                    value=update.value,
+                    version=update.version
+                )
+
+            if self.is_primary and self.backup_stub:
+                backup_request = replication_pb2.UpdateGroup(
+                    updates=request.updates,
+                    source_node=self.node_id,
+                    layer=self.layer
+                )
+                await self.backup_stub.SyncUpdates(backup_request)
+
+            return replication_pb2.AckResponse(success=True)
+
+        except Exception as e:
+            self._logger.error(f"Failed to sync updates: {e}")
+            return replication_pb2.AckResponse(success=False, message=str(e))
+        
 
     async def _connect_to_backup(self) -> None:
         try:
@@ -87,11 +111,14 @@ class FirstLayerNode(BaseNode):
 
     async def _notify_second_layer(self) -> None:
         try:
-            updates = await self.store.get_recent_updates(10)
+            updates = self.store.get_recent_updates(10)
             notification = replication_pb2.LayerSyncNotification(
                 updates=updates,
                 source_node=self.node_id,
-                layer=1
+                source_layer=self.layer,
+                target_layer=2,
+                update_count=len(updates),
+                sync_timestamp=int(asyncio.get_event_loop().time())
             )
 
             if self.next_layer_stub:
