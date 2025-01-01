@@ -1,4 +1,11 @@
-pytest
-grpcio
-grpcio-tools
-pytest-asyncio
+grpcio==1.68.1
+grpcio-tools==1.68.1
+protobuf>=5.26.1,<6.0dev
+fastapi==0.110.0
+uvicorn==0.27.1
+websockets==12.0
+pytest>=7.4.0
+pytest-asyncio>=0.21.1
+pytest-grpc>=0.8.0
+pytest-mock>=3.11.1
+grpcio-testing>=1.59.0

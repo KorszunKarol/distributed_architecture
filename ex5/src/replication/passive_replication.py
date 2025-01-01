@@ -1,7 +1,6 @@
 import asyncio
 import logging
-import time
-from typing import List
+from typing import List, Optional
 from src.proto import replication_pb2
 from src.replication.base_replication import BaseReplication
 
@@ -14,6 +13,7 @@ class PassiveReplication(BaseReplication):
     """
 
     def __init__(self) -> None:
+        """Initialize passive replication strategy."""
         super().__init__(propagation_type='passive', consistency_type='lazy')
         self._logger = logging.getLogger("replication.passive")
 
@@ -32,7 +32,7 @@ class PassiveReplication(BaseReplication):
                 notification = replication_pb2.UpdateGroup(
                     updates=updates,
                     source_node=self.node.node_id,
-                    layer=self.node.layer,
+                    layer=getattr(self.node, 'layer', 0),
                     update_count=len(updates)
                 )
                 await self.node.backup_stub.SyncUpdates(notification)
@@ -41,38 +41,43 @@ class PassiveReplication(BaseReplication):
             self._logger.error(f"Sync failed: {e}")
 
     async def handle_update(self, updates: List[replication_pb2.DataItem]) -> bool:
-        """Handle updates from upper layer."""
+        """Handle updates from upper layer.
+
+        Args:
+            updates: List of data items to be replicated
+
+        Returns:
+            bool: True if updates were successfully handled
+        """
         if not self.node.is_primary:
             return False
 
         try:
+            # First update local store
             for item in updates:
                 await self.node.store.update(
                     key=item.key,
                     value=item.value,
                     version=item.version
                 )
-            await self._propagate_to_backup(updates)
+
+            # Then propagate to backup if available
+            if self.node.backup_stub:
+                try:
+                    notification = replication_pb2.UpdateGroup(
+                        updates=updates,
+                        source_node=self.node.node_id,
+                        layer=getattr(self.node, 'layer', 0),
+                        update_count=len(updates)
+                    )
+                    await self.node.backup_stub.SyncUpdates(notification)
+                    self._logger.info(f"Propagated {len(updates)} updates to backup")
+                except Exception as e:
+                    self._logger.error(f"Failed to propagate to backup: {e}")
+                    return False
+
             return True
+
         except Exception as e:
             self._logger.error(f"Failed to handle updates: {e}")
             return False
-
-    async def _propagate_to_backup(self, updates: List[replication_pb2.DataItem]) -> None:
-        """Propagate updates to backup node."""
-        if not self.node.is_primary or not self.node.backup_stub:
-            return
-
-        try:
-            notification = replication_pb2.UpdateGroup(
-                updates=updates,
-                source_node=self.node.node_id,
-                layer=self.node.layer,
-                update_count=len(updates)
-            )
-
-            await self.node.backup_stub.SyncUpdates(notification)
-            self._logger.info(f"Propagated {len(updates)} updates to backup")
-
-        except Exception as e:
-            self._logger.error(f"Failed to propagate to backup: {e}")
