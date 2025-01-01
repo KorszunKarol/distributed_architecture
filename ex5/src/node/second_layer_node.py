@@ -71,9 +71,10 @@ class SecondLayerNode(BaseNode):
                 backup_request = replication_pb2.LayerSyncNotification(
                     updates=request.updates,
                     source_node=self.node_id,
-                    layer=self.layer,
-                    source_layer=request.source_layer,
-                    target_layer=request.target_layer
+                    source_layer=self.layer,
+                    target_layer=request.target_layer,
+                    update_count=len(request.updates),
+                    sync_timestamp=int(asyncio.get_event_loop().time())
                 )
                 await asyncio.gather(*[
                     stub.NotifyLayerSync(backup_request)

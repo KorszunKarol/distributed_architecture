@@ -10,7 +10,6 @@ from src.node.first_layer_node import FirstLayerNode
 from src.node.second_layer_node import SecondLayerNode
 from src.proto import replication_pb2
 
-# Create logs directory if it doesn't exist
 log_dir = Path("logs")
 log_dir.mkdir(exist_ok=True)
 
@@ -19,7 +18,6 @@ log_file = log_dir / "system.log"
 if log_file.exists():
     log_file.unlink()
 
-# Configure logging - Fix double logging by using only one handler per destination
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
