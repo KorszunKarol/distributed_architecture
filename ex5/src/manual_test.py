@@ -9,6 +9,7 @@ from src.node.base_node import BaseNode
 from src.node.first_layer_node import FirstLayerNode
 from src.node.second_layer_node import SecondLayerNode
 from src.proto import replication_pb2
+import time
 
 logger = logging.getLogger("manual_test")
 
@@ -17,39 +18,34 @@ def setup_logging():
     # Create logs directory if it doesn't exist
     log_dir = Path("logs")
     log_dir.mkdir(exist_ok=True)
-    
-    # Create formatters with more detailed information
-    file_formatter = logging.Formatter(
-        '%(asctime)s [%(levelname)s] %(name)s - %(message)s\n'
-        'Node: %(node_id)s | Transaction: %(transaction)s\n'
-        '----------------------------------------'
+
+    # Create detailed formatter
+    detailed_formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
-    console_formatter = logging.Formatter(
-        '%(levelname)s: %(message)s'
-    )
-    
-    # File handler - capture everything at DEBUG level
-    file_handler = logging.FileHandler("logs/system.log", mode='w')  # 'w' mode to start fresh
+
+    # File handler - captures everything
+    file_handler = logging.FileHandler("logs/system.log", mode='w')
     file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(file_formatter)
-    
-    # Console handler - show INFO and above
+    file_handler.setFormatter(detailed_formatter)
+
+    # Console handler - mirrors everything to console
     console_handler = logging.StreamHandler(sys.stdout)
-    console_handler.setLevel(logging.INFO)
-    console_handler.setFormatter(console_formatter)
-    
+    console_handler.setLevel(logging.DEBUG)
+    console_handler.setFormatter(detailed_formatter)
+
     # Root logger configuration
     root_logger = logging.getLogger()
-    root_logger.setLevel(logging.DEBUG)  # Capture all levels
-    
-    # Remove any existing handlers to avoid duplication
+    root_logger.setLevel(logging.DEBUG)
+
+    # Remove any existing handlers
     for handler in root_logger.handlers[:]:
         root_logger.removeHandler(handler)
-    
+
     # Add our handlers
     root_logger.addHandler(file_handler)
     root_logger.addHandler(console_handler)
-    
+
     # Configure specific loggers
     loggers = [
         "manual_test",
@@ -57,75 +53,101 @@ def setup_logging():
         "first_layer_node",
         "second_layer_node",
         "replication",
-        "store"
+        "store",
+        "grpc"
     ]
-    
+
     for logger_name in loggers:
         logger = logging.getLogger(logger_name)
         logger.setLevel(logging.DEBUG)
-        logger.propagate = True  # Allow propagation to root logger
-    
-    # Ensure all uncaught exceptions are logged
+        logger.propagate = True
+
+    # Capture stdout and stderr
+    class StreamToLogger:
+        def __init__(self, logger, level):
+            self.logger = logger
+            self.level = level
+            self.linebuf = ''
+
+        def write(self, buf):
+            for line in buf.rstrip().splitlines():
+                self.logger.log(self.level, line.rstrip())
+
+        def flush(self):
+            pass
+
+    # Replace stdout and stderr with our logging versions
+    sys.stdout = StreamToLogger(root_logger, logging.INFO)
+    sys.stderr = StreamToLogger(root_logger, logging.ERROR)
+
+    # Log uncaught exceptions
     def handle_exception(exc_type, exc_value, exc_traceback):
         if issubclass(exc_type, KeyboardInterrupt):
-            # Call the default handler for keyboard interrupt
             sys.__excepthook__(exc_type, exc_value, exc_traceback)
             return
-        root_logger.error("Uncaught exception", 
-                         exc_info=(exc_type, exc_value, exc_traceback),
-                         extra={'node_id': 'SYSTEM', 'transaction': 'ERROR'})
-    
+        root_logger.error("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
+
     sys.excepthook = handle_exception
 
-async def execute_transaction(node: BaseNode, tx_str: str) -> None:
-    """Execute a transaction from its string representation.
-    
-    Formats supported:
-    - Read-only: "b<f>, r(30), r(49), r(69), c" where f is layer number
-    - Update: "b, r(12), w(49,53), r(69), c"
-    """
-    extra = {'node_id': node.node_id, 'transaction': tx_str}
-    logger.info(f"Executing transaction: {tx_str}", extra=extra)
-    
-    parts = [p.strip() for p in tx_str.split(',')]
+    # Log startup
+    root_logger.info("Logging system initialized")
+    root_logger.info(f"Log files will be written to: {log_dir.absolute()}")
+
+async def execute_transaction(node: BaseNode, tx_str: str):
+    """Execute a transaction described by a string."""
+    logger.info(f"Executing transaction: {tx_str}",
+                extra={'node_id': node.node_id, 'transaction': tx_str})
+
+    # Parse transaction type
     operations = []
-    
-    # Determine transaction type and target layer
-    if parts[0].startswith('b<'):
-        tx_type = replication_pb2.Transaction.READ_ONLY
-        target_layer = int(parts[0][2:-1])
-    else:
-        tx_type = replication_pb2.Transaction.UPDATE
-        target_layer = 0  # Core layer
-    
-    # Parse operations
-    for op in parts[1:-1]:  # Skip begin and commit
-        if op.startswith('r('):
-            key = int(op[2:-1])
-            operations.append(
-                replication_pb2.Operation(
-                    type=replication_pb2.Operation.READ,
-                    key=key
-                )
-            )
-        elif op.startswith('w('):
+    tx_type = replication_pb2.Transaction.READ_ONLY  # Default to read-only
+
+    # Split transaction into operations
+    ops = tx_str.split(", ")
+
+    for op in ops:
+        if op.startswith("b"):  # Begin transaction
+            continue
+        elif op.startswith("c"):  # Commit transaction
+            continue
+        elif op.startswith("w"):  # Write operation
+            tx_type = replication_pb2.Transaction.UPDATE
+            # Parse write operation w(key,value)
             key, value = map(int, op[2:-1].split(','))
             operations.append(
                 replication_pb2.Operation(
                     type=replication_pb2.Operation.WRITE,
                     key=key,
-                    value=value
+                    value=value,
+                    timestamp=int(time.time())
                 )
             )
-    
+        elif op.startswith("r"):  # Read operation
+            # Parse read operation r(key)
+            key = int(op[2:-1])  # Remove r( and )
+            operations.append(
+                replication_pb2.Operation(
+                    type=replication_pb2.Operation.READ,
+                    key=key,
+                    timestamp=int(time.time())
+                )
+            )
+
+    # Create and execute transaction
     tx = replication_pb2.Transaction(
         type=tx_type,
-        operations=operations,
-        target_layer=target_layer
+        operations=operations
     )
-    
-    response = await node.ExecuteTransaction(tx, None)
-    logger.info(f"Transaction '{tx_str}' result: {response}", extra=extra)
+
+    try:
+        response = await node.ExecuteTransaction(tx, None)
+        logger.info(f"Transaction response: {response}",
+                   extra={'node_id': node.node_id, 'transaction': tx_str})
+        return response
+    except Exception as e:
+        logger.error(f"Transaction failed: {e}",
+                    extra={'node_id': node.node_id, 'transaction': tx_str})
+        raise
 
 async def start_nodes_in_order(nodes: list) -> None:
     """Start nodes in the correct order and wait for each to be ready."""
@@ -164,57 +186,37 @@ async def main():
     await start_nodes_in_order(nodes)
 
     try:
-        logger.info("=== Starting replication system test ===", 
+        logger.info("=== Starting replication system test ===",
                    extra={'node_id': 'SYSTEM', 'transaction': 'START'})
-        
-        # Test scenario 1: Update transactions to core layer
+
+        # Test update transactions
         logger.info("=== Testing update transactions to core layer ===",
                    extra={'node_id': 'SYSTEM', 'transaction': 'SCENARIO_1'})
-        update_txs = [
-            "b, w(49,53), r(49), c",
-            "b, w(30,100), r(30), c",
-            "b, w(69,200), r(69), c"
-        ]
-        for tx in update_txs:
-            await execute_transaction(a1, tx)
-            await asyncio.sleep(1)  # Give time for propagation
 
-        # Wait for propagation to other layers
-        logger.info("Waiting for propagation...")
-        await asyncio.sleep(10)
-
-        # Test scenario 2: Read-only transactions to different layers
-        logger.info("=== Testing read-only transactions across layers ===",
-                   extra={'node_id': 'SYSTEM', 'transaction': 'SCENARIO_2'})
-        read_txs = [
-            "b<0>, r(30), r(49), r(69), c",  # Core layer
-            "b<1>, r(30), r(49), r(69), c",  # First layer
-            "b<2>, r(30), r(49), r(69), c"   # Second layer
+        # Write operations
+        write_txs = [
+            "b, w(0,10), c",
+            "b, w(5,15), c",
+            "b, w(10,20), c"
         ]
-        for tx in read_txs:
+        for tx in write_txs:
             await execute_transaction(a1, tx)
             await asyncio.sleep(1)
 
-        # Test scenario 3: More updates to demonstrate propagation
-        logger.info("=== Testing propagation triggers ===",
-                   extra={'node_id': 'SYSTEM', 'transaction': 'SCENARIO_3'})
-        # Generate 10 updates to trigger first layer propagation
-        for i in range(10):
-            tx = f"b, w({i},100), c"
-            await execute_transaction(a1, tx)
-            await asyncio.sleep(0.5)
-
-        # Wait and verify propagation
-        logger.info("Verifying propagation across layers...",
-                   extra={'node_id': 'SYSTEM', 'transaction': 'SCENARIO_4'})
-        await asyncio.sleep(10)
-        verify_txs = [
-            "b<0>, r(0), r(5), r(9), c",  # Core layer
-            "b<1>, r(0), r(5), r(9), c",  # First layer
-            "b<2>, r(0), r(5), r(9), c"   # Second layer
+        # Read operations to verify
+        read_txs = [
+            "b, r(0), c",  # Single read
+            "b, r(5), c",  # Single read
+            "b, r(10), c"  # Single read
         ]
-        for tx in verify_txs:
-            await execute_transaction(a1, tx)
+
+        # Test reads from different layers
+        for tx in read_txs:
+            logger.info("Reading from different layers:",
+                       extra={'node_id': 'SYSTEM', 'transaction': 'READ_TEST'})
+            await execute_transaction(a1, tx)  # Core layer
+            await execute_transaction(b1, tx)  # First layer
+            await execute_transaction(c1, tx)  # Second layer
             await asyncio.sleep(1)
 
     finally:

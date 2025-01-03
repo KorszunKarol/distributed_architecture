@@ -32,11 +32,11 @@ class CoreNode(BaseNode):
     async def start(self):
         self._logger.info(f"Starting core node {self.node_id}")
         await super().start()
-        
+
         for addr in self.peer_addresses:
             self._logger.debug(f"Attempting to connect to peer at {addr}")
             await self._connect_to_peer(addr)
-            
+
         if self.is_first_node and self.first_layer_address:
             # Wait for first layer to be ready
             max_retries = 5
@@ -49,10 +49,10 @@ class CoreNode(BaseNode):
                 if i < max_retries - 1:
                     self._logger.debug(f"Retrying in {retry_delay} seconds...")
                     await asyncio.sleep(retry_delay)
-            
+
             if not self.first_layer_stub:
                 self._logger.error("Failed to establish connection with first layer after all retries")
-            
+
         self._logger.info(f"Core node {self.node_id} started successfully")
 
     async def _connect_to_peer(self, address: str) -> None:
@@ -83,7 +83,7 @@ class CoreNode(BaseNode):
             self._logger.debug("Preparing updates for first layer notification")
             updates = self.store.get_recent_updates(10)
             self._logger.debug(f"Got {len(updates)} recent updates to propagate")
-            
+
             notification = replication_pb2.UpdateGroup(
                 updates=updates,
                 source_node=self.node_id,
@@ -121,7 +121,7 @@ class CoreNode(BaseNode):
     ) -> replication_pb2.TransactionResponse:
         tx_type = "UPDATE" if request.type == replication_pb2.Transaction.UPDATE else "READ_ONLY"
         self._logger.info(f"Executing {tx_type} transaction with {len(request.operations)} operations")
-        
+
         try:
             if request.type == replication_pb2.Transaction.UPDATE:
                 return await self._execute_update_transaction(request)
@@ -147,15 +147,15 @@ class CoreNode(BaseNode):
                         timestamp=int(asyncio.get_event_loop().time())
                     )
                     self._logger.debug(f"Created data item with version {data_item.version}")
-                    
+
                     success = await self.replication.handle_update(data_item)
                     if not success:
                         error_msg = "Replication failed"
                         self._logger.error(error_msg)
                         raise Exception(error_msg)
-                        
+
                     self._logger.debug(f"Successfully replicated update for key={op.key}")
-                    await self.store.update(data_item)  # Update local store
+                    await self.store.update(data_item.key, data_item.value, data_item.version)  # Update local store
                     results.append(data_item)  # Add write result to results list
 
                     # Increment update counter and check for first layer notification
@@ -191,7 +191,7 @@ class CoreNode(BaseNode):
     ) -> replication_pb2.TransactionResponse:
         """Execute a read-only transaction."""
         self._logger.info(f"Processing read transaction with {len(transaction.operations)} operations for layer {transaction.target_layer}")
-        
+
         # If target layer is not 0, forward to appropriate layer
         if transaction.target_layer > 0:
             self._logger.info(f"Forwarding read transaction to layer {transaction.target_layer}")
@@ -237,16 +237,15 @@ class CoreNode(BaseNode):
         except Exception as e:
             error_msg = f"Read transaction failed in core layer: {e}"
             self._logger.error(error_msg, exc_info=True)
-            raise  # Re-raise the exception instead of returning error response
+            raise
 
     async def PropagateUpdate(self, request: replication_pb2.UpdateNotification, context: grpc.aio.ServicerContext) -> replication_pb2.AckResponse:
         """Handle update propagation from peer nodes."""
         self._logger.info(f"Received update propagation from {request.source_node} for key={request.data.key}")
-        
+
         try:
-            # Delegate to replication strategy
             self._logger.debug("Delegating to replication strategy")
-            response = await self.replication.PropagateUpdate(request)
+            response = await self.replication.PropagateUpdate(request, context)
             return response
 
         except Exception as e:
