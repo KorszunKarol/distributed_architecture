@@ -55,7 +55,7 @@ class SecondLayerNode(BaseNode):
         tx_type = "READ_ONLY" if request.type == replication_pb2.Transaction.READ_ONLY else "UPDATE"
         self._logger.info(f"Received {tx_type} transaction with {len(request.operations)} operations")
 
-        # Reject write operations
+        # Reject write transactions
         if request.type == replication_pb2.Transaction.UPDATE:
             error_msg = "Write operations not allowed"
             self._logger.warning(f"Rejected {tx_type} transaction: {error_msg}")
@@ -63,7 +63,7 @@ class SecondLayerNode(BaseNode):
 
         # Also check for write operations in the transaction
         for op in request.operations:
-            if op.type == replication_pb2.Operation.WRITE:
+            if op.HasField('write'):
                 error_msg = "Write operations not allowed"
                 self._logger.warning(f"Rejected transaction with write operation: {error_msg}")
                 raise Exception(error_msg)
@@ -71,21 +71,21 @@ class SecondLayerNode(BaseNode):
         results = []
         try:
             for i, op in enumerate(request.operations):
-                if op.type == replication_pb2.Operation.READ:
-                    self._logger.debug(f"Processing read operation {i+1}/{len(request.operations)}: key={op.key}")
-                    item = await self.store.get(op.key)
+                if op.HasField('read'):
+                    self._logger.debug(f"Processing read operation {i+1}/{len(request.operations)}: key={op.read.key}")
+                    item = await self.store.get(op.read.key)
                     if item:
-                        self._logger.debug(f"Found value for key={op.key}: version={item.version}")
+                        self._logger.debug(f"Found value for key={op.read.key}: version={item.version}")
                         results.append(item)
                     else:
-                        self._logger.debug(f"No value found for key={op.key}")
+                        self._logger.debug(f"No value found for key={op.read.key}")
 
             self._logger.info(f"Successfully completed read transaction with {len(results)} results")
             return replication_pb2.TransactionResponse(success=True, results=results)
-        
+
         except Exception as e:
             self._logger.error(f"Read transaction failed: {e}", exc_info=True)
-            raise  # Re-raise the exception instead of returning error response
+            raise
 
     async def SyncUpdates(self, request: replication_pb2.UpdateGroup, context: grpc.aio.ServicerContext) -> replication_pb2.AckResponse:
         self._logger.info(f"Received sync request from {request.source_node} with {len(request.updates)} updates")
@@ -117,47 +117,31 @@ class SecondLayerNode(BaseNode):
             self._logger.error(f"Failed to sync updates: {e}", exc_info=True)
             return replication_pb2.AckResponse(success=False, message=str(e))
 
-    async def NotifyLayerSync(self, request: replication_pb2.LayerSyncNotification, context: grpc.aio.ServicerContext) -> replication_pb2.AckResponse:
-        self._logger.info(f"Received layer sync from {request.source_node} with {len(request.updates)} updates")
+    async def NotifyLayerSync(
+        self,
+        request: replication_pb2.LayerSyncNotification,
+        context: grpc.aio.ServicerContext
+    ) -> replication_pb2.AckResponse:
+        """Handle layer sync notification."""
         try:
-            for i, update in enumerate(request.updates):
-                self._logger.debug(f"Processing update {i+1}/{len(request.updates)}: key={update.key}, version={update.version}")
-                await self.store.update(
-                    key=update.key,
-                    value=update.value,
-                    version=update.version
-                )
-                self._logger.debug(f"Stored update for key={update.key}")
+            self._logger.info(f"Received layer sync from {request.source_node} "
+                             f"with {len(request.updates)} updates")
 
-            if self.is_primary and self.backup_stubs:
-                self._logger.debug(f"Propagating {len(request.updates)} updates to {len(self.backup_stubs)} backups")
-                backup_request = replication_pb2.LayerSyncNotification(
-                    updates=request.updates,
-                    source_node=self.node_id,
-                    source_layer=self.layer,
-                    target_layer=request.target_layer,
-                    update_count=len(request.updates),
-                    sync_timestamp=int(asyncio.get_event_loop().time())
-                )
-                
-                propagation_tasks = [
-                    stub.NotifyLayerSync(backup_request)
-                    for stub in self.backup_stubs.values()
-                ]
-                
+            for update in request.updates:
+                self._logger.debug(f"Processing update: key={update.key}, "
+                                 f"value={update.value}, version={update.version}")
+                await self.store.update(update.key, update.value, update.version)
+
+            if self.is_primary and self.backup_stub:
+                self._logger.info("Propagating updates to backup")
                 try:
-                    responses = await asyncio.gather(*propagation_tasks, return_exceptions=True)
-                    for i, response in enumerate(responses):
-                        if isinstance(response, Exception):
-                            self._logger.error(f"Backup {i} failed with error: {response}")
-                        elif not response.success:
-                            self._logger.error(f"Backup {i} rejected update: {response.error}")
+                    response = await self.backup_stub.NotifyLayerSync(request)
+                    self._logger.info(f"Backup response: {response.success} - {response.message}")
                 except Exception as e:
-                    self._logger.error(f"Failed to propagate to backups: {e}", exc_info=True)
+                    self._logger.error(f"Failed to propagate to backup: {e}")
 
-            self._logger.info(f"Successfully processed layer sync with {len(request.updates)} updates")
-            return replication_pb2.AckResponse(success=True, message="")
+            return replication_pb2.AckResponse(success=True)
 
         except Exception as e:
-            self._logger.error(f"Failed to sync layer updates: {e}", exc_info=True)
+            self._logger.error(f"Failed to process layer sync: {e}")
             return replication_pb2.AckResponse(success=False, message=str(e))

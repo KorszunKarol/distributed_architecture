@@ -6,6 +6,7 @@ from typing import Dict, List, Optional
 from src.proto import replication_pb2, replication_pb2_grpc
 from src.node.base_node import BaseNode
 from src.replication.eager_replication import EagerReplication
+import time
 
 class CoreNode(BaseNode):
     def __init__(
@@ -18,6 +19,7 @@ class CoreNode(BaseNode):
         first_layer_address: Optional[str] = None
     ):
         super().__init__(node_id, 0, log_dir, port, EagerReplication())
+        self.replication.attach_node(self)
         self.peer_addresses = peer_addresses
         self.peer_stubs: Dict[str, replication_pb2_grpc.NodeServiceStub] = {}
         self.is_first_node = is_first_node
@@ -79,9 +81,10 @@ class CoreNode(BaseNode):
             self.first_layer_stub = None
 
     async def _notify_first_layer(self) -> None:
+        """Notify first layer of accumulated updates."""
         try:
             self._logger.debug("Preparing updates for first layer notification")
-            updates = self.store.get_recent_updates(10)
+            updates = self.store.get_recent_updates(10)  # Get last 10 updates
             self._logger.debug(f"Got {len(updates)} recent updates to propagate")
 
             notification = replication_pb2.UpdateGroup(
@@ -97,7 +100,6 @@ class CoreNode(BaseNode):
                     response = await self.first_layer_stub.SyncUpdates(notification)
                     if response.success:
                         self._logger.info(f"Successfully notified first layer with {len(updates)} updates")
-                        self._update_counter = 0  # Reset counter after successful notification
                     else:
                         self._logger.error(f"First layer rejected updates: {response.message}")
                 except grpc.aio.AioRpcError as e:
@@ -132,58 +134,59 @@ class CoreNode(BaseNode):
 
     async def _execute_update_transaction(
         self,
-        transaction: replication_pb2.Transaction
+        request: replication_pb2.Transaction
     ) -> replication_pb2.TransactionResponse:
-        self._logger.info(f"Processing update transaction with {len(transaction.operations)} operations")
+        """Execute an update transaction."""
         results = []
         try:
-            for i, op in enumerate(transaction.operations):
-                if op.type == replication_pb2.Operation.WRITE:
-                    self._logger.debug(f"Processing write operation {i+1}/{len(transaction.operations)}: key={op.key}, value={op.value}")
+            for op in request.operations:
+                if op.HasField('write'):
+                    # Create DataItem for the update
                     data_item = replication_pb2.DataItem(
-                        key=op.key,
-                        value=op.value,
+                        key=op.write.key,
+                        value=op.write.value,
                         version=self.store.get_next_version(),
-                        timestamp=int(asyncio.get_event_loop().time())
+                        timestamp=int(time.time())
                     )
-                    self._logger.debug(f"Created data item with version {data_item.version}")
 
-                    success = await self.replication.handle_update(data_item)
-                    if not success:
-                        error_msg = "Replication failed"
-                        self._logger.error(error_msg)
-                        raise Exception(error_msg)
+                    # Update local store with individual fields
+                    await self.store.update(
+                        key=data_item.key,
+                        value=data_item.value,
+                        version=data_item.version
+                    )
 
-                    self._logger.debug(f"Successfully replicated update for key={op.key}")
-                    await self.store.update(data_item.key, data_item.value, data_item.version)  # Update local store
-                    results.append(data_item)  # Add write result to results list
+                    # Create UpdateRequest with the correct field name
+                    update_request = replication_pb2.UpdateRequest(
+                        update=data_item
+                    )
 
-                    # Increment update counter and check for first layer notification
-                    if self.is_first_node:
-                        self._update_counter += 1
-                        self._logger.debug(f"Update counter incremented to {self._update_counter}")
-                        if self._update_counter >= 10:
-                            self._logger.info("Update counter threshold reached, notifying first layer")
-                            await self._notify_first_layer()
+                    # Propagate to peers
+                    await self.replication.handle_update(update_request)
+                    results.append(data_item)
 
-                elif op.type == replication_pb2.Operation.READ:
-                    self._logger.debug(f"Processing read operation {i+1}/{len(transaction.operations)}: key={op.key}")
-                    item = await self.store.get(op.key)
+                    # Increment update counter and check if we need to notify first layer
+                    self._update_counter += 1
+                    self._logger.debug(f"Update counter incremented to {self._update_counter}")
+
+                    if self._update_counter >= 10 and self.is_first_node and self.first_layer_stub:
+                        self._logger.info(f"Update threshold reached ({self._update_counter} updates), notifying first layer")
+                        await self._notify_first_layer()
+                        self._update_counter = 0
+                        self._logger.debug("Update counter reset after first layer notification")
+
+                elif op.HasField('read'):
+                    item = await self.store.get(op.read.key)
                     if item:
-                        self._logger.debug(f"Found value for key={op.key}: version={item.version}")
                         results.append(item)
-                    else:
-                        self._logger.debug(f"No value found for key={op.key}")
 
-            self._logger.info(f"Successfully completed update transaction with {len(results)} updates")
             return replication_pb2.TransactionResponse(
                 success=True,
                 results=results
             )
-
         except Exception as e:
             self._logger.error(f"Update transaction failed: {e}", exc_info=True)
-            raise  # Re-raise the exception instead of returning error response
+            raise
 
     async def _execute_read_transaction(
         self,
@@ -219,14 +222,14 @@ class CoreNode(BaseNode):
         results = []
         try:
             for i, op in enumerate(transaction.operations):
-                if op.type == replication_pb2.Operation.READ:
-                    self._logger.info(f"Reading key {op.key} from core layer")
-                    item = await self.store.get(op.key)
+                if op.HasField('read'):  # Check if it's a read operation using HasField
+                    self._logger.info(f"Reading key {op.read.key} from core layer")
+                    item = await self.store.get(op.read.key)
                     if item:
-                        self._logger.info(f"Found value {item.value} for key {op.key} (version {item.version})")
+                        self._logger.info(f"Found value {item.value} for key {op.read.key} (version {item.version})")
                         results.append(item)
                     else:
-                        self._logger.warning(f"No value found for key {op.key} in core layer")
+                        self._logger.warning(f"No value found for key {op.read.key} in core layer")
 
             self._logger.info(f"Successfully completed read transaction with {len(results)} results from core layer")
             return replication_pb2.TransactionResponse(

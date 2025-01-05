@@ -1,153 +1,117 @@
 """Transaction parser module for handling transaction strings."""
-from dataclasses import dataclass
-from typing import List, Optional, Tuple
-from enum import Enum
-
-class OperationType(Enum):
-    """Enum representing different types of operations."""
-    READ = "r"
-    WRITE = "w"
-    BEGIN = "b"
-    COMMIT = "c"
-
-@dataclass
-class Operation:
-    """Represents a single operation in a transaction."""
-    type: OperationType
-    key: Optional[int] = None
-    value: Optional[int] = None
-    layer: Optional[int] = None
+from typing import List
+from src.proto import replication_pb2
 
 class TransactionParser:
-    """Class for parsing transaction strings into operations."""
+    """Class for parsing transaction strings into protobuf Transaction messages."""
 
-    def _parse_begin(self, op_str: str, layer: int) -> Operation:
-        """Parse BEGIN operation."""
-        return Operation(type=OperationType.BEGIN, layer=layer)
+    def _parse_begin(self, op_str: str) -> int:
+        """Parse BEGIN operation and return target layer if specified."""
+        if op_str.startswith('b<') and op_str.endswith('>'):
+            return int(op_str[2:-1])
+        return 0
 
-    def _parse_read(self, op_str: str, layer: int) -> Operation:
-        """Parse READ operation."""
+    def _parse_read(self, op_str: str) -> replication_pb2.Operation:
+        """Parse READ operation into protobuf Operation."""
         try:
             # Extract key between r( and )
             start = op_str.index('(')
             end = op_str.rindex(')')
             key = int(op_str[start + 1:end])
-            return Operation(type=OperationType.READ, key=key, layer=layer)
-        except Exception:
-            raise ValueError(f"Invalid read operation: {op_str}")
 
-    def _parse_write(self, op_str: str, layer: int) -> Operation:
-        """Parse WRITE operation."""
+            # Create operation
+            op = replication_pb2.Operation()
+            # Set read operation
+            op.read.key = key  # This automatically creates the ReadOperation
+            return op
+        except Exception as e:
+            raise ValueError(f"Invalid read operation: {op_str}") from e
+
+    def _parse_write(self, op_str: str) -> replication_pb2.Operation:
+        """Parse WRITE operation into protobuf Operation."""
         try:
+            print("\nDebug _parse_write:")
+            print(f"Input op_str: {op_str}")
+
             # Extract everything between w( and )
             start = op_str.index('(')
-            end = op_str.rindex(')')  # Use rindex to find the last )
+            end = op_str.rindex(')')
             content = op_str[start + 1:end]
-            print(f"Content: {content}")
-
-            # Split into key and value
             key_str, value_str = content.split(',')
-            return Operation(
-                type=OperationType.WRITE,
-                key=int(key_str),
-                value=int(value_str),
-                layer=layer
-            )
-        except Exception:
-            raise ValueError(f"Invalid write operation: {op_str}")
+            print(f"Parsed key_str: {key_str}, value_str: {value_str}")
 
-    def parse_operation(self, op_str: str, layer: int) -> Operation:
-        """
-        Parse a single operation string.
+            # Create operation and its write part
+            op = replication_pb2.Operation()
+            write_op = replication_pb2.WriteOperation()
+            write_op.key = int(key_str.strip())
+            write_op.value = int(value_str.strip())
 
-        Args:
-            op_str: The operation string to parse
-            layer: The layer number from the BEGIN operation
-        """
-        op_str = op_str.strip()
+            # Set the write operation
+            op.write.CopyFrom(write_op)
 
-        if op_str.startswith('b'):
-            return self._parse_begin(op_str, layer)
+            print(f"Final operation: {op}")
+            return op
+        except Exception as e:
+            print(f"\nError in _parse_write:")
+            print(f"Exception type: {type(e)}")
+            print(f"Exception message: {str(e)}")
+            raise ValueError(f"Invalid write operation: {op_str}") from e
 
-        if op_str == 'c':
-            return Operation(type=OperationType.COMMIT, layer=layer)
+    def parse(self, tx_str: str) -> replication_pb2.Transaction:
+        """Parse a complete transaction string into a protobuf Transaction."""
+        print(f"\nParsing transaction: {tx_str}")
+        # Create transaction message
+        tx = replication_pb2.Transaction()
 
-        if op_str.startswith('r'):
-            return self._parse_read(op_str, layer)
-
-        if op_str.startswith('w'):
-            return self._parse_write(op_str, layer)
-
-        raise ValueError(f"Invalid operation format: {op_str}")
-
-    def parse(self, tx_str: str) -> List[Operation]:
-        """Parse a complete transaction string into a list of operations."""
         # First validate basic structure
         if not tx_str.startswith('b') or not tx_str.endswith('c'):
             raise ValueError("Transaction must start with BEGIN and end with COMMIT")
 
-        # Check for write operations
-        has_write = 'w(' in tx_str
-
-        # Get the layer from the first character after 'b'
-        layer = 0
-        if tx_str[1].isdigit():
-            if has_write:
-                raise ValueError("Write transactions must target core layer (use 'b' without layer number)")
-            layer = int(tx_str[1])
-            tx_str = 'b' + tx_str[2:]  # Remove layer number from string
-        elif has_write:
-            layer = 0  # Force core layer for write transactions
-
         # Split the transaction string preserving parentheses content
-        operations = []
-        current_op = ""
+        parts = []
+        current_part = ""
         in_parentheses = False
 
         for char in tx_str:
             if char == '(' and not in_parentheses:
                 in_parentheses = True
-                current_op += char
+                current_part += char
             elif char == ')' and in_parentheses:
                 in_parentheses = False
-                current_op += char
+                current_part += char
             elif char == ',' and not in_parentheses:
-                if current_op:
-                    operations.append(current_op.strip())
-                current_op = ""
+                if current_part:
+                    parts.append(current_part.strip())
+                current_part = ""
             else:
-                current_op += char
+                current_part += char
 
-        if current_op:
-            operations.append(current_op.strip())
+        if current_part:
+            parts.append(current_part.strip())
 
-        return [self.parse_operation(op, layer) for op in operations]
+        # Parse BEGIN operation and set transaction type
+        begin_op = parts[0]
+        target_layer = self._parse_begin(begin_op)
 
+        # Check for write operations
+        has_write = any(p.startswith('w(') for p in parts)
 
-def main():
-    parser = TransactionParser()
-    test_cases = [
-        "b0,r(1),r(2),c",                    # Basic read transaction
-        "b1,w(1,100),w(2,200),c",            # Basic write transaction
-        "b,r(12),w(49,53),r(69),c",          # Mixed transaction
-        "b2,r(30),r(49),r(69),c",            # Multi-read transaction
-        "b0,w(1,100),w(2,200),w(3,300),c",   # Multi-write transaction
-        "b0,r(1,c",                          # Malformed read
-        "b0,w(1:100),c",                     # Invalid write format
-        "r(1),r(2),c",                       # Missing BEGIN
-        "b0,r(1),r(2)"                       # Missing COMMIT
-    ]
+        if has_write and target_layer != 0:
+            raise ValueError("Write transactions must target core layer (use 'b' without layer number)")
 
-    for tx in test_cases:
-        print(f"\nTesting transaction: {tx}")
-        try:
-            result = parser.parse(tx)
-            print("Parsed operations:")
-            for op in result:
-                print(f"  {op}")
-        except ValueError as e:
-            print(f"Error: {e}")
+        # Set transaction type and target layer
+        tx.type = (replication_pb2.Transaction.UPDATE if has_write
+                  else replication_pb2.Transaction.READ_ONLY)
+        tx.target_layer = target_layer
 
+        # Parse operations (skip BEGIN and COMMIT)
+        for op_str in parts[1:-1]:
+            op_str = op_str.strip()
+            if op_str.startswith('r('):
+                tx.operations.append(self._parse_read(op_str))
+            elif op_str.startswith('w('):
+                tx.operations.append(self._parse_write(op_str))
+            else:
+                raise ValueError(f"Invalid operation: {op_str}")
 
-if __name__ == "__main__":
-    main()
+        return tx

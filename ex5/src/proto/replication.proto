@@ -30,14 +30,19 @@ message Transaction {
 }
 
 message Operation {
-    enum Type {
-        READ = 0;
-        WRITE = 1;
+    oneof operation {
+        WriteOperation write = 1;
+        ReadOperation read = 2;
     }
-    Type type = 1;
-    int32 key = 2;
-    optional int32 value = 3;
-    int64 timestamp = 4;
+}
+
+message WriteOperation {
+    int32 key = 1;
+    int32 value = 2;
+}
+
+message ReadOperation {
+    int32 key = 1;
 }
 
 message UpdateNotification {

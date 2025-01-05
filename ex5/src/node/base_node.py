@@ -4,10 +4,11 @@ import grpc
 from src.storage.data_store import DataStore
 from src.proto import replication_pb2, replication_pb2_grpc
 import logging
+import time
 
 class BaseNode(replication_pb2_grpc.NodeServiceServicer):
     """Base node implementation for all layers.
-    
+
     Attributes:
         node_id: Unique identifier for the node
         layer: Layer number (0=core, 1=first, 2=second)
@@ -19,7 +20,7 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
 
     def __init__(self, node_id: str, layer: int, log_dir: str, port: int, replication_strategy):
         """Initialize base node.
-        
+
         Args:
             node_id: Unique identifier for the node
             layer: Layer number (0=core, 1=first, 2=second)
@@ -61,10 +62,10 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
 
     async def wait_for_ready(self, timeout: float = 5.0):
         """Wait for the node to be ready.
-        
+
         Args:
             timeout: Maximum time to wait in seconds
-            
+
         Returns:
             bool: True if node is ready, False if timeout occurred
         """
@@ -98,14 +99,14 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
 
     async def GetNodeStatus(self, request: replication_pb2.Empty, context: grpc.aio.ServicerContext) -> replication_pb2.NodeStatus:
         """Get the current status of the node.
-        
+
         Args:
             request: Empty request
             context: gRPC service context
-            
+
         Returns:
             NodeStatus containing current node information
-            
+
         Raises:
             Exception: If there's an error getting node status
         """
@@ -121,4 +122,46 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
             return status
         except Exception as e:
             self._logger.error(f"Failed to get node status: {e}", exc_info=True)
+            raise
+
+    async def ExecuteTransaction(
+        self,
+        request: replication_pb2.Transaction,
+        context: grpc.aio.ServicerContext
+    ) -> replication_pb2.TransactionResponse:
+        """Execute a transaction on this node."""
+        tx_type = "READ_ONLY" if request.type == replication_pb2.Transaction.READ_ONLY else "UPDATE"
+
+        # Create transaction record
+        transaction = {
+            'timestamp': time.time(),
+            'command': str(request),  # Convert protobuf to string
+            'node_id': self.node_id,
+            'status': 'pending',
+            'target_layer': self.layer,
+            'error': None
+        }
+
+        try:
+            # Execute transaction logic...
+            response = await self._execute_transaction_logic(request)
+
+            # Update transaction status
+            transaction['status'] = 'success'
+
+            # Send to monitor (assuming monitor is accessible)
+            if hasattr(self, 'monitor'):
+                await self.monitor.add_transaction(transaction)
+
+            return response
+
+        except Exception as e:
+            # Update transaction status on error
+            transaction['status'] = 'failed'
+            transaction['error'] = str(e)
+
+            # Send failed transaction to monitor
+            if hasattr(self, 'monitor'):
+                await self.monitor.add_transaction(transaction)
+
             raise

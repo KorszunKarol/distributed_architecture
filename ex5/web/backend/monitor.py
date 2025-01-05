@@ -5,6 +5,15 @@ from fastapi import WebSocket
 import json
 
 @dataclass
+class Transaction:
+    timestamp: float
+    command: str
+    node_id: str
+    status: str  # 'success' or 'failed'
+    target_layer: int
+    error: str = None
+
+@dataclass
 class NodeState:
     node_id: str
     layer: int
@@ -13,6 +22,7 @@ class NodeState:
     last_sync_time: float
     last_sync_count: int
     operation_log: List[Dict]
+    transactions: List[Transaction]  # Add transaction history
 
     def to_dict(self):
         return asdict(self)
@@ -21,6 +31,7 @@ class NodeMonitor:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
         self.node_states: Dict[str, NodeState] = {}
+        self.transaction_history: List[Transaction] = []  # Global transaction history
 
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
@@ -63,3 +74,13 @@ class NodeMonitor:
     async def update_node_state(self, node_id: str, state: NodeState):
         self.node_states[node_id] = state
         await self.broadcast_state()
+
+    async def add_transaction(self, transaction: Transaction):
+        # Add to global history
+        self.transaction_history.append(transaction)
+
+        # Add to node-specific history
+        if transaction.node_id in self.node_states:
+            state = self.node_states[transaction.node_id]
+            state.transactions = state.transactions[-99:] + [transaction]  # Keep last 100
+            await self.broadcast_state()

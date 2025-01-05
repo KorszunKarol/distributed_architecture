@@ -20,7 +20,13 @@ class EagerReplication(BaseReplication):
         self._transaction_lock = asyncio.Lock()
         self._logger = logging.getLogger("replication.eager")
         self._propagation_timeout = 5.0
+        self.node = None  # Will be set when attached to a node
         self._logger.info("Initialized eager replication strategy")
+
+    def attach_node(self, node):
+        """Attach this replication strategy to a node."""
+        self.node = node
+        self._logger.info(f"Attached to node {node.node_id}")
 
     async def sync(self) -> None:
         """Synchronize state with peers.
@@ -31,73 +37,35 @@ class EagerReplication(BaseReplication):
         self._logger.debug("Sync called - no action needed for eager replication")
         pass  # No sync needed for eager replication
 
-    async def handle_update(self, data_item: replication_pb2.DataItem) -> bool:
-        """Handle an update with eager replication protocol.
+    async def handle_update(self, update_request: replication_pb2.UpdateRequest):
+        """Handle an update request."""
+        try:
+            data_item = update_request.update
+            if not data_item:
+                raise ValueError("No data item in update request")
 
-        Implements two-phase update process:
-        1. Propagate to all peers and wait for acknowledgments
-        2. If all acknowledge, commit; otherwise rollback
+            self._logger.info(
+                f"Handling update for key={data_item.key}, "
+                f"value={data_item.value}, "
+                f"version={data_item.version}"
+            )
 
-        Args:
-            data_item: The data item to be replicated
-
-        Returns:
-            bool: True if update was successfully propagated and applied
-        """
-        self._logger.info(f"Handling update for key={data_item.key}, value={data_item.value}, version={data_item.version}")
-        
-        async with self._transaction_lock:
-            try:
-                # First update local store
-                self._logger.debug(f"Updating local store for key={data_item.key}")
-                await self.node.store.update(
-                    key=data_item.key,
-                    value=data_item.value,
-                    version=data_item.version
-                )
-                self._logger.debug(f"Local store updated successfully for key={data_item.key}")
-
-                # Then propagate to all peers
-                if self.node.peer_stubs:
-                    self._logger.debug(f"Propagating update to {len(self.node.peer_stubs)} peers")
+            # Propagate to peers using node's peer_stubs
+            for peer_stub in self.node.peer_stubs.values():
+                try:
                     notification = replication_pb2.UpdateNotification(
                         data=data_item,
                         source_node=self.node.node_id
                     )
-                    
-                    propagation_tasks = [
-                        stub.PropagateUpdate(notification)
-                        for stub in self.node.peer_stubs.values()
-                    ]
-                    
-                    self._logger.debug("Waiting for peer acknowledgments")
-                    responses = await asyncio.gather(*propagation_tasks, return_exceptions=True)
-                    
-                    # Check responses
-                    success = True
-                    for i, response in enumerate(responses):
-                        if isinstance(response, Exception):
-                            self._logger.error(f"Peer {i} failed with error: {response}")
-                            success = False
-                        elif not response.success:
-                            self._logger.error(f"Peer {i} rejected update: {response.message}")
-                            success = False
-                    
-                    if not success:
-                        self._logger.warning("Rolling back due to peer propagation failure")
-                        await self._rollback(data_item)
-                        return False
+                    await peer_stub.PropagateUpdate(notification)
+                except Exception as e:
+                    self._logger.error(f"Failed to propagate to peer: {e}")
+                    raise
 
-                    self._logger.info(f"Successfully propagated update to all peers for key={data_item.key}")
-                    return True
-                else:
-                    self._logger.info("No peers to propagate to, update considered successful")
-                    return True
-
-            except Exception as e:
-                self._logger.error(f"Update failed with error: {e}", exc_info=True)
-                await self._rollback(data_item)
-                return False
+            return True
+        except Exception as e:
+            self._logger.error(f"Failed to handle update: {e}")
+            raise
 
     async def _rollback(self, data_item: replication_pb2.DataItem) -> None:
         """Rollback a failed update."""
@@ -111,17 +79,17 @@ class EagerReplication(BaseReplication):
 
     async def PropagateUpdate(self, request: replication_pb2.UpdateNotification, context: grpc.aio.ServicerContext) -> replication_pb2.AckResponse:
         """Handle update propagation from peer nodes.
-        
+
         Args:
             request: The update notification from a peer
             context: The gRPC service context
-            
+
         Returns:
             AckResponse indicating success or failure
         """
         update = request.data
         self._logger.info(f"Received update propagation from {request.source_node} for key={update.key}")
-        
+
         try:
             self._logger.debug(f"Applying propagated update to local store: key={update.key}, value={update.value}, version={update.version}")
             await self.node.store.update(
