@@ -53,7 +53,7 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
             await self.server.start()
             self._logger.debug("Starting replication strategy")
             await self.replication.start()
-            self._ready.set()  # Mark the node as ready
+            self._ready.set()
             self._logger.info(f"Base node {self.node_id} started successfully")
             return self
         except Exception as e:
@@ -90,8 +90,8 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
             if hasattr(self, 'replication'):
                 self._logger.debug("Stopping replication strategy")
                 await self.replication.stop()
-            self._ready.clear()  # Mark the node as not ready
-            self._closed = True  # Mark the node as closed
+            self._ready.clear()
+            self._closed = True
             self._logger.info(f"Base node {self.node_id} stopped successfully")
         except Exception as e:
             self._logger.error(f"Error during node shutdown: {e}")
@@ -132,10 +132,9 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
         """Execute a transaction on this node."""
         tx_type = "READ_ONLY" if request.type == replication_pb2.Transaction.READ_ONLY else "UPDATE"
 
-        # Create transaction record
         transaction = {
             'timestamp': time.time(),
-            'command': str(request),  # Convert protobuf to string
+            'command': str(request),
             'node_id': self.node_id,
             'status': 'pending',
             'target_layer': self.layer,
@@ -143,24 +142,19 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
         }
 
         try:
-            # Execute transaction logic...
             response = await self._execute_transaction_logic(request)
 
-            # Update transaction status
             transaction['status'] = 'success'
 
-            # Send to monitor (assuming monitor is accessible)
             if hasattr(self, 'monitor'):
                 await self.monitor.add_transaction(transaction)
 
             return response
 
         except Exception as e:
-            # Update transaction status on error
             transaction['status'] = 'failed'
             transaction['error'] = str(e)
 
-            # Send failed transaction to monitor
             if hasattr(self, 'monitor'):
                 await self.monitor.add_transaction(transaction)
 

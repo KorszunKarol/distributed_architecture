@@ -44,7 +44,6 @@ class DebugClientInterceptor(grpc.aio.UnaryUnaryClientInterceptor):
             method = method.decode()
 
         try:
-            # Log request
             req_dict = MessageToDict(request)
             self.logger.debug(
                 f"Outgoing Request:\n"
@@ -52,10 +51,8 @@ class DebugClientInterceptor(grpc.aio.UnaryUnaryClientInterceptor):
                 f"Payload: {json.dumps(req_dict, indent=2)}"
             )
 
-            # Make the call
             response = await continuation(client_call_details, request)
 
-            # Log response
             resp_dict = MessageToDict(response)
             self.logger.debug(
                 f"Received Response:\n"
@@ -80,7 +77,6 @@ async def create_channel(address: str, node_id: str) -> grpc.aio.Channel:
     logger = logging.getLogger(f"grpc.channel.{node_id}")
     logger.info(f"Creating channel to {address}")
 
-    # Create channel with debugging options
     channel = grpc.aio.insecure_channel(
         address,
         options=[
@@ -94,16 +90,13 @@ async def create_channel(address: str, node_id: str) -> grpc.aio.Channel:
         ]
     )
 
-    # Instead of using intercept_channel, create an interceptor chain
     interceptor = DebugClientInterceptor(node_id)
 
-    # Wrap the channel with the interceptor
     wrapped_channel = grpc.aio.Channel(
         channel._channel,
         interceptors=[interceptor]
     )
 
-    # Start monitoring connectivity
     asyncio.create_task(_log_connectivity_changes(channel, node_id, address))
 
     return wrapped_channel

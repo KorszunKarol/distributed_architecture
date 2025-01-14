@@ -7,8 +7,14 @@ class TransactionParser:
 
     def _parse_begin(self, op_str: str) -> int:
         """Parse BEGIN operation and return target layer if specified."""
-        if op_str.startswith('b<') and op_str.endswith('>'):
-            return int(op_str[2:-1])
+        if op_str.startswith('b') and len(op_str) > 1:
+            try:
+                if op_str.startswith('b<') and op_str.endswith('>'):
+                    return int(op_str[2:-1])
+                layer = int(op_str[1:])
+                return layer
+            except ValueError:
+                return 0
         return 0
 
     def _parse_read(self, op_str: str) -> replication_pb2.Operation:

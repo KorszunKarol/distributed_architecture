@@ -79,6 +79,26 @@ async def execute_transaction(node: BaseNode, tx_str: str) -> None:
         logger.error(f"Transaction failed: {e}")
         raise
 
+async def read_transactions_file() -> List[str]:
+    """Read transactions from transactions.txt file."""
+    transactions_file = Path(__file__).parent.parent / "transactions.txt"
+    logger.info(f"Reading transactions from {transactions_file}")
+
+    try:
+        with open(transactions_file, 'r') as f:
+            transactions = [
+                line.strip() for line in f
+                if line.strip() and not line.startswith('#')
+            ]
+        logger.info(f"Found {len(transactions)} transactions")
+        return transactions
+    except FileNotFoundError:
+        logger.error(f"Transactions file not found at {transactions_file}")
+        raise
+    except Exception as e:
+        logger.error(f"Error reading transactions file: {e}")
+        raise
+
 async def main():
     c2 = SecondLayerNode("C2", "logs/c2", 5007, is_primary=False)
     c1 = SecondLayerNode("C1", "logs/c1", 5006, is_primary=True,
@@ -113,26 +133,33 @@ async def main():
         logger.info("=== Starting replication system test ===",
                    extra={'node_id': 'SYSTEM', 'transaction': 'START'})
 
-        logger.info("=== Testing update transactions to core layer ===",
-                   extra={'node_id': 'SYSTEM', 'transaction': 'SCENARIO_1'})
+        transactions = await read_transactions_file()
 
-        for i in range(12):
-            tx_str = f"b, w({i},10), c"
-            await execute_transaction(a1, tx_str)
-            logger.info(f"Write {i} completed")
-            await asyncio.sleep(0.1)
+        logger.info("=== Executing transactions from file ===",
+                   extra={'node_id': 'SYSTEM', 'transaction': 'EXECUTE'})
+
+        for i, tx_str in enumerate(transactions, 1):
+            logger.info(f"\nExecuting transaction {i}/{len(transactions)}")
+
+            if tx_str.startswith('b0'):
+                target_node = a1
+            elif tx_str.startswith('b1'):
+                target_node = b1
+            elif tx_str.startswith('b2'):
+                target_node = c1
+            else:
+                target_node = a1
+
+            try:
+                await execute_transaction(target_node, tx_str)
+                await asyncio.sleep(2.0)
+            except Exception as e:
+                logger.error(f"Failed to execute transaction {tx_str}: {e}")
+                continue
+
+        logger.info("=== All transactions completed ===")
 
         await asyncio.sleep(5)
-        logger.info("Reading from different layers to verify propagation")
-        for i in [0, 5, 10]:
-            logger.info(f"Reading key {i} from all layers")
-            tx_str = f"b, r({i}), c"
-            await execute_transaction(a1, tx_str)
-            await asyncio.sleep(1)
-            await execute_transaction(b1, tx_str)
-            await asyncio.sleep(1)
-            await execute_transaction(c1, tx_str)
-            await asyncio.sleep(0.1)
 
     finally:
         logger.info("=== Shutting down replication system ===",

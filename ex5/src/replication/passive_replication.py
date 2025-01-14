@@ -43,7 +43,7 @@ class PassiveReplication(BaseReplication):
                 return
 
             notification = replication_pb2.UpdateGroup(
-                updates=list(updates),  # Convert to list if it's not already
+                updates=list(updates),
                 source_node=self.node.node_id,
                 layer=getattr(self.node, 'layer', 0),
                 update_count=len(updates)
@@ -72,7 +72,6 @@ class PassiveReplication(BaseReplication):
             return False
 
         try:
-            # First update local store
             for item in update_group.updates:
                 await self.node.store.update(
                     key=item.key,
@@ -80,7 +79,6 @@ class PassiveReplication(BaseReplication):
                     version=item.version
                 )
 
-            # Then propagate to backups if available
             if self.backup_stubs:
                 for stub in self.backup_stubs:
                     try:

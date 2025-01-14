@@ -39,7 +39,6 @@ class SecondLayerNode(BaseNode):
             self._logger.debug(f"Creating channel to backup at {address}")
             channel = grpc.aio.insecure_channel(address)
             stub = replication_pb2_grpc.NodeServiceStub(channel)
-            # Test the connection
             empty = replication_pb2.Empty()
             await stub.GetNodeStatus(empty)
             self.backup_stubs[address] = stub
@@ -55,13 +54,11 @@ class SecondLayerNode(BaseNode):
         tx_type = "READ_ONLY" if request.type == replication_pb2.Transaction.READ_ONLY else "UPDATE"
         self._logger.info(f"Received {tx_type} transaction with {len(request.operations)} operations")
 
-        # Reject write transactions
         if request.type == replication_pb2.Transaction.UPDATE:
             error_msg = "Write operations not allowed"
             self._logger.warning(f"Rejected {tx_type} transaction: {error_msg}")
             raise Exception(error_msg)
 
-        # Also check for write operations in the transaction
         for op in request.operations:
             if op.HasField('write'):
                 error_msg = "Write operations not allowed"
@@ -90,7 +87,6 @@ class SecondLayerNode(BaseNode):
     async def SyncUpdates(self, request: replication_pb2.UpdateGroup, context: grpc.aio.ServicerContext) -> replication_pb2.AckResponse:
         self._logger.info(f"Received sync request from {request.source_node} with {len(request.updates)} updates")
         try:
-            # Store updates locally
             for i, update in enumerate(request.updates):
                 self._logger.debug(f"Processing update {i+1}/{len(request.updates)}: key={update.key}, version={update.version}")
                 await self.store.update(
@@ -100,7 +96,6 @@ class SecondLayerNode(BaseNode):
                 )
                 self._logger.debug(f"Stored update for key={update.key}")
 
-            # Propagate to backups if we're primary
             if self.is_primary and self.backup_stubs:
                 self._logger.debug(f"Propagating {len(request.updates)} updates to {len(self.backup_stubs)} backups")
                 success = await self.replication.handle_update(request)

@@ -40,7 +40,6 @@ class CoreNode(BaseNode):
             await self._connect_to_peer(addr)
 
         if self.is_first_node and self.first_layer_address:
-            # Wait for first layer to be ready
             max_retries = 5
             retry_delay = 1.0
             for i in range(max_retries):
@@ -71,7 +70,6 @@ class CoreNode(BaseNode):
             self._logger.debug(f"Creating channel to first layer at {self.first_layer_address}")
             channel = grpc.aio.insecure_channel(self.first_layer_address)
             stub = replication_pb2_grpc.NodeServiceStub(channel)
-            # Test the connection
             empty = replication_pb2.Empty()
             await stub.GetNodeStatus(empty)
             self.first_layer_stub = stub
@@ -84,7 +82,7 @@ class CoreNode(BaseNode):
         """Notify first layer of accumulated updates."""
         try:
             self._logger.debug("Preparing updates for first layer notification")
-            updates = self.store.get_recent_updates(10)  # Get last 10 updates
+            updates = self.store.get_recent_updates(10)
             self._logger.debug(f"Got {len(updates)} recent updates to propagate")
 
             notification = replication_pb2.UpdateGroup(
@@ -104,16 +102,13 @@ class CoreNode(BaseNode):
                         self._logger.error(f"First layer rejected updates: {response.message}")
                 except grpc.aio.AioRpcError as e:
                     self._logger.error(f"gRPC error while notifying first layer: {e.code()}: {e.details()}")
-                    # Try to reconnect
                     await self._connect_to_first_layer()
             else:
                 self._logger.warning("No first layer connection available for notification")
-                # Try to reconnect
                 await self._connect_to_first_layer()
 
         except Exception as e:
             self._logger.error(f"Failed to notify first layer: {e}", exc_info=True)
-            # Try to reconnect
             await self._connect_to_first_layer()
 
     async def ExecuteTransaction(
@@ -130,7 +125,7 @@ class CoreNode(BaseNode):
             return await self._execute_read_transaction(request)
         except Exception as e:
             self._logger.error(f"Transaction failed: {e}", exc_info=True)
-            raise  # Re-raise the exception instead of returning error response
+            raise
 
     async def _execute_update_transaction(
         self,
@@ -141,7 +136,6 @@ class CoreNode(BaseNode):
         try:
             for op in request.operations:
                 if op.HasField('write'):
-                    # Create DataItem for the update
                     data_item = replication_pb2.DataItem(
                         key=op.write.key,
                         value=op.write.value,
@@ -149,23 +143,19 @@ class CoreNode(BaseNode):
                         timestamp=int(time.time())
                     )
 
-                    # Update local store with individual fields
                     await self.store.update(
                         key=data_item.key,
                         value=data_item.value,
                         version=data_item.version
                     )
 
-                    # Create UpdateRequest with the correct field name
                     update_request = replication_pb2.UpdateRequest(
                         update=data_item
                     )
 
-                    # Propagate to peers
                     await self.replication.handle_update(update_request)
                     results.append(data_item)
 
-                    # Increment update counter and check if we need to notify first layer
                     self._update_counter += 1
                     self._logger.debug(f"Update counter incremented to {self._update_counter}")
 
@@ -195,7 +185,6 @@ class CoreNode(BaseNode):
         """Execute a read-only transaction."""
         self._logger.info(f"Processing read transaction with {len(transaction.operations)} operations for layer {transaction.target_layer}")
 
-        # If target layer is not 0, forward to appropriate layer
         if transaction.target_layer > 0:
             self._logger.info(f"Forwarding read transaction to layer {transaction.target_layer}")
             if transaction.target_layer == 1 and self.is_first_node and self.first_layer_stub:
@@ -217,12 +206,11 @@ class CoreNode(BaseNode):
                 self._logger.error(error_msg)
                 raise Exception(error_msg)
 
-        # Execute in core layer
         self._logger.info("Executing read transaction in core layer")
         results = []
         try:
             for i, op in enumerate(transaction.operations):
-                if op.HasField('read'):  # Check if it's a read operation using HasField
+                if op.HasField('read'):
                     self._logger.info(f"Reading key {op.read.key} from core layer")
                     item = await self.store.get(op.read.key)
                     if item:
@@ -248,12 +236,9 @@ class CoreNode(BaseNode):
 
         try:
             self._logger.debug("Delegating to replication strategy")
-            response = await self.replication.PropagateUpdate(request, context)
-            return response
-
+            await self.replication.PropagateUpdate(request, context)
+            return replication_pb2.AckResponse(success=True)
         except Exception as e:
-            self._logger.error(f"Failed to propagate update: {e}", exc_info=True)
-            return replication_pb2.AckResponse(
-                success=False,
-                message=str(e)
-            )
+            error_msg = f"Failed to handle propagated update: {e}"
+            self._logger.error(error_msg, exc_info=True)
+            return replication_pb2.AckResponse(success=False, message=error_msg)

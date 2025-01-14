@@ -14,7 +14,6 @@ interface Transaction {
 }
 
 export const TransactionLog = ({ nodes }: Props) => {
-    // In real app, this would come from the backend
     const recentTransactions: Transaction[] = [
         {
             timestamp: new Date().toISOString(),

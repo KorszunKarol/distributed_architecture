@@ -5,7 +5,7 @@ export const useWebSocket = () => {
     const [nodes, setNodes] = useState<Record<string, NodeData>>({})
     const [connected, setConnected] = useState(false)
     const lastUpdateTime = useRef<number>(0)
-    const THROTTLE_MS = 1000 // Update max once per second
+    const THROTTLE_MS = 1000
 
     const connect = useCallback(() => {
         const ws = new WebSocket('ws://localhost:8000/ws')

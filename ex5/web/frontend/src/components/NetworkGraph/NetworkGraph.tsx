@@ -38,20 +38,17 @@ export const NetworkGraph = ({ nodes, links }: Props) => {
 
         const baseRadius = 25 * pulseScale
 
-        // Draw node circle
         ctx.beginPath()
         ctx.arc(pos.x, pos.y, baseRadius, 0, Math.PI * 2)
 
-        // Color based on layer with lighter opacity
-        ctx.fillStyle = node.layer === 0 ? 'rgba(255, 182, 182, 0.8)' :    // Light red
-                       node.layer === 1 ? 'rgba(182, 182, 255, 0.8)' :    // Light blue
-                       'rgba(182, 255, 182, 0.8)'                         // Light green
+        ctx.fillStyle = node.layer === 0 ? 'rgba(255, 182, 182, 0.8)' :
+                       node.layer === 1 ? 'rgba(182, 182, 255, 0.8)' :
+                       'rgba(182, 255, 182, 0.8)'
         ctx.fill()
 
-        // Node border
-        ctx.strokeStyle = node.layer === 0 ? 'rgba(255, 0, 0, 0.8)' :    // Red
-                         node.layer === 1 ? 'rgba(0, 0, 255, 0.8)' :    // Blue
-                         'rgba(0, 255, 0, 0.8)'                         // Green
+        ctx.strokeStyle = node.layer === 0 ? 'rgba(255, 0, 0, 0.8)' :
+                         node.layer === 1 ? 'rgba(0, 0, 255, 0.8)' :
+                         'rgba(0, 255, 0, 0.8)'
         ctx.lineWidth = 2
         ctx.stroke()
 
@@ -127,7 +124,6 @@ export const NetworkGraph = ({ nodes, links }: Props) => {
             drawLink(ctx, from, to, active)
         })
 
-        // Draw nodes
         nodes.forEach(node => {
             const pos = nodePositions[node.id]
             const hovered = isNodeHovered(pos, 20)

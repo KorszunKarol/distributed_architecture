@@ -8,7 +8,7 @@ from src.transaction.parser import TransactionParser, Operation, OperationType
 @dataclass
 class ParsedOperation:
     """Represents a parsed operation from a transaction string."""
-    op_type: str  # 'r' for read, 'w' for write
+    op_type: str
     key: int
     value: Optional[int] = None
 
@@ -38,7 +38,6 @@ class TransactionProcessor:
         """
         operations = self.parser.parse(tx_str)
 
-        # Extract transaction metadata
         target_layer = 0
         is_read_only = True
         grpc_operations = []

@@ -20,7 +20,7 @@ class EagerReplication(BaseReplication):
         self._transaction_lock = asyncio.Lock()
         self._logger = logging.getLogger("replication.eager")
         self._propagation_timeout = 5.0
-        self.node = None  # Will be set when attached to a node
+        self.node = None
         self._logger.info("Initialized eager replication strategy")
 
     def attach_node(self, node):
@@ -35,7 +35,7 @@ class EagerReplication(BaseReplication):
         propagated immediately.
         """
         self._logger.debug("Sync called - no action needed for eager replication")
-        pass  # No sync needed for eager replication
+        pass
 
     async def handle_update(self, update_request: replication_pb2.UpdateRequest):
         """Handle an update request."""
@@ -50,7 +50,6 @@ class EagerReplication(BaseReplication):
                 f"version={data_item.version}"
             )
 
-            # Propagate to peers using node's peer_stubs
             for peer_stub in self.node.peer_stubs.values():
                 try:
                     notification = replication_pb2.UpdateNotification(
@@ -71,8 +70,6 @@ class EagerReplication(BaseReplication):
         """Rollback a failed update."""
         try:
             self._logger.warning(f"Starting rollback for key={data_item.key}")
-            # Implement rollback logic here
-            # For now, just log the attempt
             self._logger.warning(f"Rolling back update for key {data_item.key}")
         except Exception as e:
             self._logger.error(f"Rollback failed: {e}", exc_info=True)

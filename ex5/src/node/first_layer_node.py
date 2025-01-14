@@ -17,16 +17,12 @@ class FirstLayerNode(BaseNode):
         backup_addresses: List[str] = None,
         second_layer_address: Optional[str] = None
     ):
-        # Create log directory path
         log_dir = f"logs/{node_id.lower()}"
-
-        # Initialize passive replication strategy
         replication = PassiveReplication()
 
-        # Call parent constructor with all required arguments
         super().__init__(
             node_id=node_id,
-            layer=1,  # First layer
+            layer=1,
             log_dir=log_dir,
             port=port,
             replication_strategy=replication
@@ -70,13 +66,11 @@ class FirstLayerNode(BaseNode):
         tx_type = "READ_ONLY" if request.type == replication_pb2.Transaction.READ_ONLY else "UPDATE"
         self._logger.info(f"Received {tx_type} transaction with {len(request.operations)} operations")
 
-        # Reject write transactions
         if request.type == replication_pb2.Transaction.UPDATE:
             error_msg = "Write operations not allowed"
             self._logger.warning(f"Rejected {tx_type} transaction: {error_msg}")
             raise Exception(error_msg)
 
-        # Also check for write operations in the transaction
         for op in request.operations:
             if op.HasField('write'):
                 error_msg = "Write operations not allowed"
@@ -104,7 +98,6 @@ class FirstLayerNode(BaseNode):
     async def SyncUpdates(self, request: replication_pb2.UpdateGroup, context: grpc.aio.ServicerContext) -> replication_pb2.AckResponse:
         self._logger.info(f"Received sync request from {request.source_node} with {len(request.updates)} updates")
         try:
-            # Store updates locally
             for i, update in enumerate(request.updates):
                 self._logger.debug(f"Processing update {i+1}/{len(request.updates)}: key={update.key}, version={update.version}")
                 await self.store.update(
@@ -116,7 +109,6 @@ class FirstLayerNode(BaseNode):
                 if self.is_primary:
                     self._pending_updates.append(update)
 
-            # Propagate to backups if we're primary
             if self.is_primary and self.backup_stubs:
                 self._logger.debug(f"Propagating {len(request.updates)} updates to backups")
                 success = await self.replication.handle_update(request)
@@ -127,7 +119,6 @@ class FirstLayerNode(BaseNode):
 
                 self._logger.info(f"Successfully propagated {len(request.updates)} updates to backups")
 
-                # Check if we should notify second layer
                 if len(self._pending_updates) >= 10:
                     self._logger.info("Pending updates threshold reached, notifying second layer")
                     await self._notify_second_layer()
@@ -142,20 +133,18 @@ class FirstLayerNode(BaseNode):
     async def _connect_to_backup(self) -> None:
         """Connect to backup nodes."""
         try:
-            self.backup_stubs = []  # Clear existing stubs
+            self.backup_stubs = []
             for backup_address in self.backup_addresses:
                 self._logger.debug(f"Creating channel to backup at {backup_address}")
                 channel = grpc.aio.insecure_channel(backup_address)
                 stub = replication_pb2_grpc.NodeServiceStub(channel)
 
-                # Test the connection
                 empty = replication_pb2.Empty()
                 await stub.GetNodeStatus(empty)
 
                 self.backup_stubs.append(stub)
                 self._logger.info(f"Connected to backup at {backup_address}")
 
-            # Set the backup stubs in the replication strategy
             self.replication.set_backup_stubs(self.backup_stubs)
 
         except Exception as e:
@@ -167,7 +156,6 @@ class FirstLayerNode(BaseNode):
             self._logger.debug(f"Creating channel to second layer at {self.second_layer_address}")
             channel = grpc.aio.insecure_channel(self.second_layer_address)
             self.next_layer_stub = replication_pb2_grpc.NodeServiceStub(channel)
-            # Test the connection
             empty = replication_pb2.Empty()
             await self.next_layer_stub.GetNodeStatus(empty)
             self._logger.info(f"Connected to second layer at {self.second_layer_address}")
@@ -183,7 +171,6 @@ class FirstLayerNode(BaseNode):
                 await asyncio.sleep(self._sync_interval)
                 current_time = time.time()
 
-                # Always notify second layer every 10 seconds
                 if current_time - self._last_sync_time >= self._sync_interval:
                     self._logger.info("Time sync interval reached (10s), notifying second layer")
                     await self._notify_second_layer()
@@ -228,7 +215,7 @@ class FirstLayerNode(BaseNode):
         """Periodically sync with second layer every 10 seconds."""
         while True:
             try:
-                await asyncio.sleep(10)  # Wait 10 seconds between syncs
+                await asyncio.sleep(10)
                 self._logger.debug("Time sync interval reached, notifying second layer")
                 await self._notify_second_layer()
 
@@ -237,4 +224,4 @@ class FirstLayerNode(BaseNode):
                 break
             except Exception as e:
                 self._logger.error(f"Error in periodic sync: {e}", exc_info=True)
-                await asyncio.sleep(1)  # Wait before retrying
+                await asyncio.sleep(1)
