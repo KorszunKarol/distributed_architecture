@@ -1,61 +1,66 @@
-import { NetworkGraph } from './components/NetworkGraph/NetworkGraph'
-import { Dashboard } from './components/Dashboard/Dashboard'
-import { TransactionLog } from './components/TransactionLog/TransactionLog'
-import { RightPanel } from './components/RightPanel/RightPanel'
+import { useEffect } from 'react'
+import { AppShell, Group, Title, Button, Stack, Paper, Text, Badge } from '@mantine/core'
+import { IconPlayCircle, IconStopCircle } from '@tabler/icons-react'
 import { useWebSocket } from './hooks/useWebSocket'
-import { NetworkNode, NetworkLink } from './types/node'
-import { useMemo } from 'react'
-import { DebugPanel } from './components/Debug/DebugPanel'
+import { NodeCard } from './components/NodeCard'
 
-const NETWORK_LINKS: NetworkLink[] = [
-    { source: 'A1', target: 'A2' },
-    { source: 'A2', target: 'A3' },
-    { source: 'A1', target: 'A3' },
-    { source: 'A2', target: 'B1' },
-    { source: 'A3', target: 'B2' },
-    { source: 'B2', target: 'C1' },
-    { source: 'B2', target: 'C2' }
-]
+export function App() {
+  const { nodes, connected, isMonitoring, connect, disconnect } = useWebSocket()
 
-export const App = () => {
-    const { nodes, connected } = useWebSocket()
+  useEffect(() => {
+    console.log('WebSocket connection state:', { connected, isMonitoring })
+  }, [connected, isMonitoring])
 
-    const networkNodes: NetworkNode[] = useMemo(() => {
-        return Object.entries(nodes).map(([id, data]) => ({
-            id,
-            layer: data.layer,
-            data
-        }))
-    }, [nodes])
+  // Group nodes by layer
+  const nodesByLayer = Object.values(nodes).reduce((acc, node) => {
+    const layer = `Layer ${node.layer}`
+    if (!acc[layer]) acc[layer] = []
+    acc[layer].push(node)
+    return acc
+  }, {} as Record<string, typeof nodes[keyof typeof nodes][]>)
 
-    return (
-        <div className="h-screen w-screen flex flex-col bg-gray-100">
-            <nav className="bg-white shadow-lg shrink-0">
-                <div className="px-6 py-4">
-                    <h1 className="text-2xl font-bold text-gray-800">
-                        Distributed System Monitor
-                    </h1>
-                    <div className={`mt-1 text-sm font-medium ${connected ? 'text-green-600' : 'text-red-600'}`}>
-                        {connected ? '● Connected' : '○ Disconnected'}
-                    </div>
-                </div>
-            </nav>
+  return (
+    <AppShell
+      padding="md"
+      header={{ height: 60 }}
+    >
+      <AppShell.Header>
+        <Group justify="space-between" h="100%" px="md">
+          <Title order={3}>Distributed System Monitor</Title>
+          <Group>
+            <Badge
+              color={connected ? 'green' : 'red'}
+              variant="dot"
+            >
+              {connected ? 'Connected' : 'Disconnected'}
+            </Badge>
+            <Button
+              leftSection={isMonitoring ? <IconStopCircle /> : <IconPlayCircle />}
+              onClick={isMonitoring ? disconnect : connect}
+              color={isMonitoring ? 'red' : 'blue'}
+            >
+              {isMonitoring ? 'Stop Monitoring' : 'Start Monitoring'}
+            </Button>
+          </Group>
+        </Group>
+      </AppShell.Header>
 
-            <main className="flex-1 p-6 min-h-0">
-                <div className="flex gap-6 h-full">
-                    <div className="w-3/4 h-full">
-                        <div className="bg-white rounded-lg shadow-lg w-full h-full">
-                            <NetworkGraph
-                                nodes={networkNodes}
-                                links={NETWORK_LINKS}
-                            />
-                        </div>
-                    </div>
-                    <div className="w-1/4 h-full">
-                        <RightPanel nodes={nodes} />
-                    </div>
-                </div>
-            </main>
-        </div>
-    )
+      <AppShell.Main>
+        <Stack gap="md">
+          {Object.entries(nodesByLayer).map(([layer, layerNodes]) => (
+            <Paper key={layer} shadow="sm" p="md">
+              <Stack gap="sm">
+                <Title order={4}>{layer}</Title>
+                <Group grow>
+                  {layerNodes.map(node => (
+                    <NodeCard key={node.node_id} node={node} />
+                  ))}
+                </Group>
+              </Stack>
+            </Paper>
+          ))}
+        </Stack>
+      </AppShell.Main>
+    </AppShell>
+  )
 }

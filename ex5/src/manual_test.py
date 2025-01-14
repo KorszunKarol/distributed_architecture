@@ -47,16 +47,6 @@ def setup_logging():
     root_logger.info("Logging system initialized")
     root_logger.info(f"Log files will be written to: {log_dir.absolute()}")
 
-async def start_websocket_server():
-    """Start the WebSocket monitoring server."""
-    from src.monitor.test_server import handle_client
-    import websockets
-
-    logger.info("Starting WebSocket monitoring server")
-    server = await websockets.serve(handle_client, "localhost", 8000)
-    logger.info("WebSocket server started on ws://localhost:8000")
-    return server
-
 async def start_nodes_in_order(nodes: list) -> None:
     """Start nodes in the correct order and wait for each to be ready."""
     for node in nodes:
@@ -89,9 +79,7 @@ async def execute_transaction(node: BaseNode, tx_str: str) -> None:
         raise
 
 async def main():
-    # Start WebSocket server first
-    websocket_server = await start_websocket_server()
-
+    # Initialize nodes
     c2 = SecondLayerNode("C2", "logs/c2", 5007, is_primary=False)
     c1 = SecondLayerNode("C1", "logs/c1", 5006, is_primary=True,
                          backup_addresses=["localhost:5007"])
@@ -125,27 +113,43 @@ async def main():
         logger.info("=== Starting replication system test ===",
                    extra={'node_id': 'SYSTEM', 'transaction': 'START'})
 
-        logger.info("=== Testing update transactions to core layer ===",
-                   extra={'node_id': 'SYSTEM', 'transaction': 'SCENARIO_1'})
-
-        for i in range(12):
+        # Write initial data to ensure nodes have something to show
+        logger.info("Writing initial data...")
+        for i in range(5):
             tx_str = f"b, w({i},10), c"
             await execute_transaction(a1, tx_str)
-            logger.info(f"Write {i} completed")
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(0.5)  # Small delay between writes
 
-        await asyncio.sleep(5)
-        logger.info("Reading from different layers to verify propagation")
-        for i in [0, 5, 10]:
-            logger.info(f"Reading key {i} from all layers")
-            tx_str = f"b, r({i}), c"
+        counter = 0
+        while True:  # Run indefinitely
+            logger.info(f"=== Starting test iteration {counter} ===",
+                       extra={'node_id': 'SYSTEM', 'transaction': 'ITERATION'})
+
+            # Write some data
+            value = (counter % 10) + 10  # Values from 10-19 to distinguish from initial data
+            tx_str = f"b, w({value},20), c"
+            await execute_transaction(a1, tx_str)
+            logger.info(f"Write {value} completed")
+            await asyncio.sleep(2)  # Wait 2 seconds between writes
+
+            # Read from different layers to verify propagation
+            logger.info(f"Reading key {value} from all layers")
+            tx_str = f"b, r({value}), c"
+
             await execute_transaction(a1, tx_str)
             await asyncio.sleep(1)
+
             await execute_transaction(b1, tx_str)
             await asyncio.sleep(1)
-            await execute_transaction(c1, tx_str)
-            await asyncio.sleep(0.1)
 
+            await execute_transaction(c1, tx_str)
+            await asyncio.sleep(1)
+
+            counter += 1
+            await asyncio.sleep(5)  # Wait 5 seconds before next iteration
+
+    except KeyboardInterrupt:
+        logger.info("Received keyboard interrupt, shutting down...")
     finally:
         logger.info("=== Shutting down replication system ===",
                    extra={'node_id': 'SYSTEM', 'transaction': 'SHUTDOWN'})
@@ -153,11 +157,6 @@ async def main():
             extra = {'node_id': node.node_id, 'transaction': 'SHUTDOWN'}
             await node.stop()
             logger.info(f"Stopped node {node.node_id}", extra=extra)
-
-        # Close WebSocket server
-        websocket_server.close()
-        await websocket_server.wait_closed()
-        logger.info("WebSocket server closed")
 
 if __name__ == "__main__":
     setup_logging()

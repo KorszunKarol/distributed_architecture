@@ -3,14 +3,14 @@ import asyncio
 import json
 import logging
 import websockets
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Callable
 from datetime import datetime
 
 class NodeWebSocketClient:
     def __init__(self, node_id: str, layer: int, websocket_url: str = "ws://localhost:8000"):
+        self.websocket_url = websocket_url + "/ws"
         self.node_id = node_id
         self.layer = layer
-        self.websocket_url = websocket_url
         self.websocket: Optional[websockets.WebSocketClientProtocol] = None
         self.is_connected = False
         self.last_sync_time = None
@@ -19,6 +19,8 @@ class NodeWebSocketClient:
         self._closed = False
         self._reconnect_task = None
         self._send_state_task = None
+        self._get_current_data: Callable[[], Dict[str, Any]] = lambda: {}
+        self._get_operation_log: Callable[[], list] = lambda: []
 
     async def start(self):
         """Start the WebSocket client."""
@@ -41,18 +43,23 @@ class NodeWebSocketClient:
 
     async def _maintain_connection(self):
         """Maintain WebSocket connection with reconnection logic."""
+        retry_count = 0
         while not self._closed:
             try:
                 if not self.is_connected:
                     self._logger.info(f"Connecting to WebSocket server at {self.websocket_url}")
                     self.websocket = await websockets.connect(self.websocket_url)
+                    initial_state = await self._gather_node_state()
+                    await self.websocket.send(json.dumps(initial_state))
                     self.is_connected = True
+                    retry_count = 0
                     self._logger.info("Successfully connected to WebSocket server")
-                await asyncio.sleep(1)  # Check connection status periodically
+                await asyncio.sleep(0.1)  # Check connection status more frequently
             except Exception as e:
                 self._logger.error(f"WebSocket connection error: {e}")
                 self.is_connected = False
-                await asyncio.sleep(5)  # Wait before reconnecting
+                retry_count += 1
+                await asyncio.sleep(min(1 * retry_count, 5))  # Exponential backoff up to 5 seconds
 
     async def _send_state_periodically(self):
         """Send node state periodically."""
@@ -60,29 +67,43 @@ class NodeWebSocketClient:
             try:
                 if self.is_connected and self.websocket:
                     state = await self._gather_node_state()
-                    await self.websocket.send(json.dumps(state))
-                await asyncio.sleep(0.5)  # Send state every 0.5 seconds
+                    if state["current_data"]:  # Only send if we have data
+                        self._logger.debug(f"Sending state update: {state}")
+                        await self.websocket.send(json.dumps(state))
+                await asyncio.sleep(0.1)  # Send state more frequently
+            except websockets.exceptions.ConnectionClosed:
+                self._logger.warning("WebSocket connection closed")
+                self.is_connected = False
             except Exception as e:
                 self._logger.error(f"Error sending state: {e}")
                 self.is_connected = False
-                await asyncio.sleep(1)
+            finally:
+                await asyncio.sleep(0.1)
 
     async def _gather_node_state(self) -> Dict[str, Any]:
         """Gather current node state."""
-        return {
-            "node_id": self.node_id,
-            "layer": self.layer,
-            "timestamp": datetime.now().isoformat(),
-            "is_connected": self.is_connected,
-            "last_sync_time": self.last_sync_time,
-            "update_count": self.update_count,
-            "current_data": await self._get_current_data()
-        }
-
-    async def _get_current_data(self) -> Dict[str, Any]:
-        """Get current data from the node's store."""
-        # This will be implemented by the node instance
-        return {}
+        try:
+            current_data = await self._get_current_data()
+            return {
+                "node_id": self.node_id,
+                "layer": self.layer,
+                "timestamp": datetime.now().isoformat(),
+                "is_connected": self.is_connected,
+                "last_sync_time": self.last_sync_time,
+                "update_count": self.update_count,
+                "current_data": current_data
+            }
+        except Exception as e:
+            self._logger.error(f"Error gathering node state: {e}")
+            return {
+                "node_id": self.node_id,
+                "layer": self.layer,
+                "timestamp": datetime.now().isoformat(),
+                "is_connected": False,
+                "last_sync_time": None,
+                "update_count": self.update_count,
+                "current_data": {}
+            }
 
     def update_sync_time(self):
         """Update the last sync time."""

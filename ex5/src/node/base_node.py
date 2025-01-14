@@ -174,6 +174,11 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
 
             transaction['status'] = 'success'
 
+            # Update WebSocket metrics
+            if tx_type == "UPDATE":
+                self.websocket_client.increment_update_count()
+            self.websocket_client.update_sync_time()
+
             if hasattr(self, 'monitor'):
                 await self.monitor.add_transaction(transaction)
 
