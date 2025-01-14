@@ -3,8 +3,10 @@ import asyncio
 import grpc
 from src.storage.data_store import DataStore
 from src.proto import replication_pb2, replication_pb2_grpc
+from src.monitor.websocket_client import NodeWebSocketClient
 import logging
 import time
+from typing import Dict, Any
 
 class BaseNode(replication_pb2_grpc.NodeServiceServicer):
     """Base node implementation for all layers.
@@ -16,6 +18,7 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
         store: Data store instance
         replication: Replication strategy
         server: gRPC server instance
+        websocket_client: WebSocket client for monitoring
     """
 
     def __init__(self, node_id: str, layer: int, log_dir: str, port: int, replication_strategy):
@@ -39,6 +42,26 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
         self._ready = asyncio.Event()
         self._logger = logging.getLogger(f"node.base.{node_id}")
         self._logger.info(f"Initializing base node {node_id} at layer {layer} on port {port}")
+        self.websocket_client = NodeWebSocketClient(node_id, layer)
+        self.websocket_client._get_current_data = self._get_websocket_data
+        self.websocket_client._get_operation_log = self._get_websocket_operation_log
+
+    async def _get_websocket_data(self) -> Dict[str, Any]:
+        """Get current data for WebSocket monitoring."""
+        try:
+            data = await self.store.get_all()
+            return {str(item.key): str(item.value) for item in data}
+        except Exception as e:
+            self._logger.error(f"Error getting WebSocket data: {e}")
+            return {}
+
+    async def _get_websocket_operation_log(self) -> list:
+        """Get operation log for WebSocket monitoring."""
+        try:
+            return await self.store.get_operation_log()
+        except Exception as e:
+            self._logger.error(f"Error getting operation log: {e}")
+            return []
 
     async def start(self):
         """Start the node's gRPC server and replication strategy."""
@@ -53,6 +76,8 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
             await self.server.start()
             self._logger.debug("Starting replication strategy")
             await self.replication.start()
+            self._logger.debug("Starting WebSocket client")
+            await self.websocket_client.start()
             self._ready.set()
             self._logger.info(f"Base node {self.node_id} started successfully")
             return self
@@ -81,6 +106,9 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
         """Stop the node's gRPC server and cleanup resources."""
         self._logger.info(f"Stopping base node {self.node_id}")
         try:
+            if hasattr(self, 'websocket_client'):
+                self._logger.debug("Stopping WebSocket client")
+                await self.websocket_client.stop()
             if hasattr(self, 'server') and self.server is not None:
                 self._logger.debug("Stopping gRPC server")
                 await self.server.stop(5)

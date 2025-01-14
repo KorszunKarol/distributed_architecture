@@ -47,6 +47,15 @@ def setup_logging():
     root_logger.info("Logging system initialized")
     root_logger.info(f"Log files will be written to: {log_dir.absolute()}")
 
+async def start_websocket_server():
+    """Start the WebSocket monitoring server."""
+    from src.monitor.test_server import handle_client
+    import websockets
+
+    logger.info("Starting WebSocket monitoring server")
+    server = await websockets.serve(handle_client, "localhost", 8000)
+    logger.info("WebSocket server started on ws://localhost:8000")
+    return server
 
 async def start_nodes_in_order(nodes: list) -> None:
     """Start nodes in the correct order and wait for each to be ready."""
@@ -80,6 +89,9 @@ async def execute_transaction(node: BaseNode, tx_str: str) -> None:
         raise
 
 async def main():
+    # Start WebSocket server first
+    websocket_server = await start_websocket_server()
+
     c2 = SecondLayerNode("C2", "logs/c2", 5007, is_primary=False)
     c1 = SecondLayerNode("C1", "logs/c1", 5006, is_primary=True,
                          backup_addresses=["localhost:5007"])
@@ -142,6 +154,10 @@ async def main():
             await node.stop()
             logger.info(f"Stopped node {node.node_id}", extra=extra)
 
+        # Close WebSocket server
+        websocket_server.close()
+        await websocket_server.wait_closed()
+        logger.info("WebSocket server closed")
 
 if __name__ == "__main__":
     setup_logging()

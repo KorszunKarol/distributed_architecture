@@ -172,32 +172,6 @@ In message handling functions:
     Log received messages and any processing errors
 ```
 
-## 10. Testing the WebSocket Implementation
-
-Ensure that the WebSocket client functions correctly within each node.
-
-### Tasks:
-
-- **Unit Testing**: Write tests to verify individual components of the WebSocket client.
-- **Integration Testing**: Test the WebSocket connection in the context of the entire node to ensure seamless data transmission.
-- **Mock Backend**: Utilize a mock WebSocket server to simulate backend responses and commands.
-- **Simulate Failures**: Test how the client handles connection drops, data transmission failures, and reconnection attempts.
-
-### Pseudocode:
-
-```
-Create a mock WebSocket server to simulate backend behavior
-
-Write tests to:
-    Verify successful connection establishment
-    Verify data is sent at correct intervals
-    Verify incoming messages are handled appropriately
-    Simulate disconnections and ensure reconnection logic works
-    Check that logs are recorded as expected
-```
-
-*Note*: Use asynchronous testing frameworks to handle the asynchronous nature of WebSocket communications.
-
 ## 11. Documentation and Code Review
 
 Maintain clear documentation to aid future development and facilitate code reviews.
@@ -206,7 +180,7 @@ Maintain clear documentation to aid future development and facilitate code revie
 
 - **Document Functions**: Provide descriptions for each function and its purpose.
 - **Explain Data Structures**: Clearly outline the structure of the data being sent and received.
-- **Code Comments**: Add inline comments to clarify complex logic or important sections.
+- **Code Comments**: DO NOT EVER ADD INLINE COMMENTS.
 - **Review for Consistency**: Ensure that the implementation aligns with the overall system architecture and replication strategies.
 
 ### Pseudocode:
@@ -218,35 +192,7 @@ For each function:
 For data structures:
     Describe the fields and their meanings
 
-In complex logic sections:
-    Add comments explaining the steps and reasoning
 ```
-
-## 12. Security Enhancements (Optional but Recommended)
-
-Enhance the security of WebSocket communications to protect data integrity and confidentiality.
-
-### Tasks:
-
-- **Authentication**: Implement authentication mechanisms to verify node identities before allowing data transmission.
-- **Encryption**: Use secure WebSockets (`wss://`) to encrypt data in transit.
-- **Validate Incoming Data**: Ensure that the data received from the backend is sanitized and validated to prevent malicious injections.
-
-### Pseudocode:
-
-```
-In connection initialization:
-    Include authentication tokens or credentials as part of the connection request
-
-In data handling:
-    Validate the structure and content of incoming messages
-
-Ensure all data transmissions occur over encrypted channels
-```
-
-*Note*: Manage authentication tokens securely, ensuring they are stored and transmitted safely.
-
----
 
 ## Summary of Tasks
 
@@ -267,9 +213,6 @@ Ensure all data transmissions occur over encrypted channels
 
 6. **Handle Incoming Messages**
    - Implement handlers for any messages or commands from the backend.
-
-7. **Implement Reconnection Logic**
-   - Detect disconnections and attempt to reconnect with defined strategies.
 
 8. **Integrate WebSocket Client into Node Lifecycle**
    - Start the WebSocket client during node initialization and ensure graceful shutdown.
