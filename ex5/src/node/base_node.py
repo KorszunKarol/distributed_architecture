@@ -170,7 +170,7 @@ class BaseNode(replication_pb2_grpc.NodeServiceServicer):
         }
 
         try:
-            response = await self._execute_transaction_logic(request)
+            response = await self._execute_update_transaction(request)
 
             transaction['status'] = 'success'
 

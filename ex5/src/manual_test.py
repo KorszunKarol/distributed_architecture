@@ -2,17 +2,12 @@
 import asyncio
 import logging
 from pathlib import Path
-import sys
-from typing import List
 from src.node.core_node import CoreNode
-from src.node.base_node import BaseNode
 from src.node.first_layer_node import FirstLayerNode
 from src.node.second_layer_node import SecondLayerNode
-from src.proto import replication_pb2
-import time
-import re
+from src.node.base_node import BaseNode  # Also needed for execute_transaction
 from src.transaction.parser import TransactionParser
-
+import sys
 logger = logging.getLogger("manual_test")
 
 def setup_logging():
@@ -20,9 +15,27 @@ def setup_logging():
     root_logger = logging.getLogger()
     root_logger.handlers = []
 
+    # Clean up old logs and data files
     log_dir = Path("logs")
-    log_dir.mkdir(exist_ok=True, parents=True)
+    if log_dir.exists():
+        # Remove all log files and directories
+        for item in log_dir.glob("**/*"):
+            if item.is_file():
+                item.unlink()
+            elif item.is_dir():
+                for subitem in item.glob("*"):
+                    subitem.unlink()
+                item.rmdir()
+        log_dir.rmdir()
 
+    # Remove any .jsonl or version_history files in the current directory
+    for file in Path(".").glob("*.jsonl"):
+        file.unlink()
+    for file in Path(".").glob("*version_history*"):
+        file.unlink()
+
+    # Create fresh log directories
+    log_dir.mkdir(exist_ok=True, parents=True)
     for node in ['a1', 'a2', 'a3', 'b1', 'b2', 'c1', 'c2']:
         node_dir = log_dir / node
         node_dir.mkdir(exist_ok=True, parents=True)
@@ -78,6 +91,13 @@ async def execute_transaction(node: BaseNode, tx_str: str) -> None:
         logger.error(f"Transaction failed: {e}")
         raise
 
+def cleanup_files():
+    """Clean up any remaining data files."""
+    for file in Path(".").glob("*.jsonl"):
+        file.unlink()
+    for file in Path(".").glob("*version_history*"):
+        file.unlink()
+
 async def main():
     # Initialize nodes
     c2 = SecondLayerNode("C2", "logs/c2", 5007, is_primary=False)
@@ -110,53 +130,61 @@ async def main():
     await start_nodes_in_order(nodes)
 
     try:
-        logger.info("=== Starting replication system test ===",
-                   extra={'node_id': 'SYSTEM', 'transaction': 'START'})
+        logger.info("=== Starting replication system test ===")
 
-        # Write initial data to ensure nodes have something to show
-        logger.info("Writing initial data...")
-        for i in range(5):
-            tx_str = f"b, w({i},10), c"
-            await execute_transaction(a1, tx_str)
-            await asyncio.sleep(0.5)  # Small delay between writes
+        # Initialize parser
+        parser = TransactionParser()
 
-        counter = 0
-        while True:  # Run indefinitely
-            logger.info(f"=== Starting test iteration {counter} ===",
-                       extra={'node_id': 'SYSTEM', 'transaction': 'ITERATION'})
+        # Read transactions from file
+        tx_file = Path("transactions.txt")
+        if not tx_file.exists():
+            raise FileNotFoundError("transactions.txt not found")
 
-            # Write some data
-            value = (counter % 10) + 10  # Values from 10-19 to distinguish from initial data
-            tx_str = f"b, w({value},20), c"
-            await execute_transaction(a1, tx_str)
-            logger.info(f"Write {value} completed")
-            await asyncio.sleep(2)  # Wait 2 seconds between writes
+        transactions = tx_file.read_text().splitlines()
 
-            # Read from different layers to verify propagation
-            logger.info(f"Reading key {value} from all layers")
-            tx_str = f"b, r({value}), c"
+        for i, tx_line in enumerate(transactions, 1):
+            if not tx_line.strip():  # Skip empty lines
+                continue
 
-            await execute_transaction(a1, tx_str)
-            await asyncio.sleep(1)
+            logger.info(f"\n=== Executing transaction {i}: {tx_line} ===\n")
 
-            await execute_transaction(b1, tx_str)
-            await asyncio.sleep(1)
+            # Parse transaction
+            tx = parser.parse(tx_line)
 
-            await execute_transaction(c1, tx_str)
-            await asyncio.sleep(1)
+            # Select target node based on layer
+            target_node = None
+            if tx.target_layer == 0:
+                target_node = a1
+            elif tx.target_layer == 1:
+                target_node = b1
+            elif tx.target_layer == 2:
+                target_node = c1
+            else:
+                logger.error(f"Invalid target layer: {tx.target_layer}")
+                continue
 
-            counter += 1
-            await asyncio.sleep(5)  # Wait 5 seconds before next iteration
+            # Execute transaction on target node
+            response = await target_node.ExecuteTransaction(tx, None)  # Pass None as context
+
+            # Log results
+            if response and response.results:
+                logger.info("Read results:")
+                for result in response.results:
+                    logger.info(f"  key={result.key}: value={result.value} (version={result.version})")
+
+            # Wait 1 second between transactions
+            await asyncio.sleep(1.0)  # Changed from 0.1 to 1.0
 
     except KeyboardInterrupt:
         logger.info("Received keyboard interrupt, shutting down...")
+    except Exception as e:
+        logger.error(f"Error executing transactions: {e}")
+        raise
     finally:
-        logger.info("=== Shutting down replication system ===",
-                   extra={'node_id': 'SYSTEM', 'transaction': 'SHUTDOWN'})
+        logger.info("=== Shutting down replication system ===")
         for node in reversed(nodes):
-            extra = {'node_id': node.node_id, 'transaction': 'SHUTDOWN'}
             await node.stop()
-            logger.info(f"Stopped node {node.node_id}", extra=extra)
+        cleanup_files()
 
 if __name__ == "__main__":
     setup_logging()

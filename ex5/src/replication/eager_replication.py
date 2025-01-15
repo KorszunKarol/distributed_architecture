@@ -37,12 +37,12 @@ class EagerReplication(BaseReplication):
         self._logger.debug("Sync called - no action needed for eager replication")
         pass
 
-    async def handle_update(self, update_request: replication_pb2.UpdateRequest):
-        """Handle an update request."""
+    async def handle_update(self, update_notification: replication_pb2.UpdateNotification) -> bool:
+        """Handle an update notification for replication."""
         try:
-            data_item = update_request.update
+            data_item = update_notification.data
             if not data_item:
-                raise ValueError("No data item in update request")
+                raise ValueError("No data item in update notification")
 
             self._logger.info(
                 f"Handling update for key={data_item.key}, "
@@ -52,11 +52,7 @@ class EagerReplication(BaseReplication):
 
             for peer_stub in self.node.peer_stubs.values():
                 try:
-                    notification = replication_pb2.UpdateNotification(
-                        data=data_item,
-                        source_node=self.node.node_id
-                    )
-                    await peer_stub.PropagateUpdate(notification)
+                    await peer_stub.PropagateUpdate(update_notification)
                 except Exception as e:
                     self._logger.error(f"Failed to propagate to peer: {e}")
                     raise
@@ -94,6 +90,9 @@ class EagerReplication(BaseReplication):
                 value=update.value,
                 version=update.version
             )
+            self.node.websocket_client.increment_update_count()
+            self.node.websocket_client.update_sync_time()
+
             self._logger.info(f"Successfully applied propagated update for key={update.key}")
             return replication_pb2.AckResponse(success=True)
         except Exception as e:

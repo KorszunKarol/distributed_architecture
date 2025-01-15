@@ -30,16 +30,12 @@ app.add_middleware(
 )
 
 async def broadcast_node_state(node_id: str):
-    """Broadcast a node's state to all monitoring clients."""
-    if node_id not in node_states:
-        return
-
-    state = node_states[node_id]
+    """Broadcast all node states to all monitoring clients."""
     disconnected_clients = set()
 
     for client in monitoring_clients:
         try:
-            await client.send_json(state)
+            await client.send_json(node_states)
         except Exception as e:
             logger.error(f"Error broadcasting to client: {e}")
             disconnected_clients.add(client)
@@ -88,11 +84,9 @@ async def websocket_endpoint(websocket: WebSocket):
                 logger.info("Monitor client connected")
                 monitoring_clients.add(websocket)
 
-                # Send current state of all nodes
+                # Send current state of all nodes as a single object
                 logger.info(f"Sending initial state to monitor: {node_states}")
-                for state in node_states.values():
-                    await websocket.send_json(state)
-                    logger.info(f"Sent state to monitor: {state}")
+                await websocket.send_json(node_states)
 
                 # Keep connection alive
                 try:

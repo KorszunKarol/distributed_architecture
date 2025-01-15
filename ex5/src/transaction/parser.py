@@ -7,9 +7,11 @@ class TransactionParser:
 
     def _parse_begin(self, op_str: str) -> int:
         """Parse BEGIN operation and return target layer if specified."""
-        if op_str.startswith('b<') and op_str.endswith('>'):
-            return int(op_str[2:-1])
-        return 0
+        if op_str.startswith('b'):
+            # If there's a number after 'b', use it as layer
+            if len(op_str) > 1 and op_str[1].isdigit():
+                return int(op_str[1])
+        return 0  # Default to layer 0 if no layer specified
 
     def _parse_read(self, op_str: str) -> replication_pb2.Operation:
         """Parse READ operation into protobuf Operation."""
@@ -102,3 +104,42 @@ class TransactionParser:
                 raise ValueError(f"Invalid operation: {op_str}")
 
         return tx
+
+def main():
+    """Test transaction parsing by reading from transactions.txt"""
+    parser = TransactionParser()
+
+    try:
+        with open('transactions.txt', 'r') as f:
+            transactions = f.readlines()
+
+        print("\n=== Parsing Transactions ===\n")
+        for i, tx_str in enumerate(transactions, 1):
+            tx_str = tx_str.strip()
+            if not tx_str:  # Skip empty lines
+                continue
+
+            print(f"\nTransaction {i}: {tx_str}")
+            print("-" * 50)
+
+            tx = parser.parse(tx_str)
+
+            print(f"Type: {'UPDATE' if tx.type == 1 else 'READ_ONLY'}")
+            print(f"Target Layer: {tx.target_layer}")
+            print("\nOperations:")
+
+            for op in tx.operations:
+                if op.HasField('read'):
+                    print(f"  READ: key={op.read.key}")
+                elif op.HasField('write'):
+                    print(f"  WRITE: key={op.write.key}, value={op.write.value}")
+
+            print("-" * 50)
+
+    except FileNotFoundError:
+        print("Error: transactions.txt not found")
+    except Exception as e:
+        print(f"Error parsing transactions: {e}")
+
+if __name__ == "__main__":
+    main()

@@ -1,118 +1,64 @@
 """Data store implementation for version management."""
-from typing import Dict, Optional, List, Deque
-import time
-from pathlib import Path
-import json
+from typing import Dict, Optional, List
 import logging
-from src.proto import replication_pb2
+import json
+from pathlib import Path
+import time
 from collections import deque
+from src.proto import replication_pb2
 
 class DataStore:
-    """Stores versioned data items and maintains a version log."""
-
     def __init__(self, node_id: str, log_dir: str):
         self._data: Dict[int, replication_pb2.DataItem] = {}
-        self._update_history: Deque[replication_pb2.DataItem] = deque(maxlen=100)
-        self._log_dir = Path(log_dir)
-        self._log_dir.mkdir(parents=True, exist_ok=True)
-
-        self._log_file = self._log_dir / f"{node_id}_data.jsonl"
-        self._version_file = self._log_dir / f"{node_id}_version_history.jsonl"
-
+        self._update_history = deque(maxlen=100)  # Keep last 100 updates
         self.node_id = node_id
         self.current_version = 0
         self._logger = logging.getLogger(f"storage.{node_id}")
-        self._logger.info(f"Initializing data store for node {node_id} with log file {self._log_file}")
+
+        self._log_dir = Path(log_dir)
+        self._log_dir.mkdir(parents=True, exist_ok=True)
+        self._log_file = self._log_dir / f"{node_id}_operations.jsonl"
 
     async def get(self, key: int) -> Optional[replication_pb2.DataItem]:
-        """Get a data item by key."""
-        self._logger.debug(f"Getting value for key={key}")
-        item = self._data.get(key)
-        if item:
-            self._logger.debug(f"Found value for key={key}: version={item.version}, value={item.value}")
-        else:
-            self._logger.debug(f"No value found for key={key}")
-        return item
+        return self._data.get(key)
 
     async def get_all(self) -> List[replication_pb2.DataItem]:
-        """Get all data items."""
-        items = list(self._data.values())
-        self._logger.debug(f"Retrieved all {len(items)} data items")
-        return items
+        return list(self._data.values())
 
     async def update(self, key: int, value: int, version: int) -> replication_pb2.DataItem:
-        """Update or create a data item.
+        if key < 0 or version < 0:
+            raise ValueError("Key and version must be non-negative")
 
-        Args:
-            key: The key of the data item
-            value: The value to store
-            version: The version number of the update
+        item = replication_pb2.DataItem(
+            key=key,
+            value=value,
+            version=version
+        )
+        self._data[key] = item
+        self._update_history.append(item)
 
-        Returns:
-            The updated data item
+        log_entry = {
+            'operation': 'UPDATE',
+            'timestamp': int(time.time()),
+            'node_id': self.node_id,
+            'key': key,
+            'value': value,
+            'version': version
+        }
 
-        Raises:
-            ValueError: If key or version is invalid
-        """
-        if key < 0:
-            raise ValueError(f"Invalid key: {key}. Key must be non-negative.")
-        if version < 0:
-            raise ValueError(f"Invalid version: {version}. Version must be non-negative.")
+        with self._log_file.open('a') as f:
+            json.dump(log_entry, f)
+            f.write('\n')
 
-        self._logger.info(f"Updating key={key} with value={value} and version={version}")
-
-        try:
-            item = replication_pb2.DataItem(
-                key=key,
-                value=value,
-                version=version,
-                timestamp=int(time.time())
-            )
-            self._data[key] = item
-            self._update_history.append(item)
-
-            log_entry = {
-                'key': item.key,
-                'value': item.value,
-                'version': item.version,
-                'timestamp': item.timestamp,
-                'node_id': self.node_id
-            }
-
-            self._logger.debug(f"Writing log entries: {log_entry}")
-            try:
-                with self._version_file.open('a') as f:
-                    json.dump(log_entry, f)
-                    f.write('\n')
-
-                with self._log_file.open('a') as f:
-                    json.dump(log_entry, f)
-                    f.write('\n')
-
-                self._logger.debug("Successfully wrote to log files")
-            except Exception as e:
-                self._logger.error(f"Failed to write to log files: {e}", exc_info=True)
-                raise
-
-            self._logger.info(f"Successfully updated key={key} to version={version}")
-            return item
-
-        except Exception as e:
-            self._logger.error(f"Failed to update key={key}: {e}", exc_info=True)
-            raise
+        return item
 
     def get_next_version(self) -> int:
-        """Get the next version number."""
         self.current_version += 1
-        self._logger.debug(f"Generated new version number: {self.current_version}")
         return self.current_version
 
     def get_recent_updates(self, count: int) -> List[replication_pb2.DataItem]:
-        """Get the most recent updates in order."""
-        updates = list(self._update_history)[-count:]
-        self._logger.debug(f"Retrieved {len(updates)} recent updates")
-        return updates
+        """Get the most recent updates."""
+        return list(self._update_history)[-count:]
 
     async def close(self):
-        """Close the data store."""
-        self._logger.info("Closing data store")
+        self._data.clear()

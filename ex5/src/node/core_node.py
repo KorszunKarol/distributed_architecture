@@ -98,7 +98,6 @@ class CoreNode(BaseNode):
                     response = await self.first_layer_stub.SyncUpdates(notification)
                     if response.success:
                         self._logger.info(f"Successfully notified first layer with {len(updates)} updates")
-                        self.websocket_client.update_sync_time()  # Update sync time for monitoring
                     else:
                         self._logger.error(f"First layer rejected updates: {response.message}")
                 except grpc.aio.AioRpcError as e:
@@ -150,15 +149,15 @@ class CoreNode(BaseNode):
                         version=data_item.version
                     )
 
-                    update_request = replication_pb2.UpdateRequest(
-                        update=data_item
+                    update_notification = replication_pb2.UpdateNotification(
+                        data=data_item,
+                        source_node=self.node_id
                     )
 
-                    await self.replication.handle_update(update_request)
+                    await self.replication.handle_update(update_notification)
                     results.append(data_item)
 
                     self._update_counter += 1
-                    self.websocket_client.increment_update_count()  # Update counter for monitoring
                     self._logger.debug(f"Update counter incremented to {self._update_counter}")
 
                     if self._update_counter >= 10 and self.is_first_node and self.first_layer_stub:

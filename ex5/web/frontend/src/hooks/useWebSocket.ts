@@ -1,105 +1,95 @@
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
 export interface NodeData {
-    node_id: string
-    layer: number
-    timestamp: string
-    is_connected: boolean
-    last_sync_time: string | null
-    update_count: number
-    current_data: Record<string, string>
+  node_id: string
+  is_connected: boolean
+  current_data: Record<string, any>
+  update_count: number
+  last_sync_time?: string
 }
 
-export const useWebSocket = () => {
-    const [nodes, setNodes] = useState<Record<string, NodeData>>({})
-    const [connected, setConnected] = useState(false)
-    const [isMonitoring, setIsMonitoring] = useState(false)
-    const wsRef = useRef<WebSocket | null>(null)
-    const reconnectTimeoutRef = useRef<number>()
+export function useWebSocket() {
+  const [nodes, setNodes] = useState<Record<string, NodeData>>({})
+  const [connected, setConnected] = useState(false)
+  const ws = useRef<WebSocket | null>(null)
+  const reconnectTimeout = useRef<number>()
 
-    const disconnect = useCallback(() => {
-        console.log('Disconnecting WebSocket monitor')
-        if (wsRef.current) {
-            wsRef.current.close()
-            wsRef.current = null
-        }
-        if (reconnectTimeoutRef.current) {
-            clearTimeout(reconnectTimeoutRef.current)
-            reconnectTimeoutRef.current = undefined
-        }
+  const connect = useCallback(() => {
+    try {
+      // Clear any existing connection
+      if (ws.current) {
+        ws.current.close()
+        ws.current = null
+      }
+
+      // Clear any existing timeout
+      if (reconnectTimeout.current) {
+        window.clearTimeout(reconnectTimeout.current)
+      }
+
+      ws.current = new WebSocket('ws://localhost:8000/ws')
+
+      ws.current.onopen = () => {
+        console.log('WebSocket connected')
+        setConnected(true)
+        ws.current?.send(JSON.stringify({ type: 'monitor' }))
+      }
+
+      ws.current.onclose = () => {
+        console.log('WebSocket closed')
         setConnected(false)
-        setIsMonitoring(false)
         setNodes({})
-    }, [])
+      }
 
-    const connect = useCallback(() => {
-        if (wsRef.current?.readyState === WebSocket.OPEN) {
-            console.log('WebSocket monitor already connected')
-            setIsMonitoring(true)
-            return
+      ws.current.onerror = (error) => {
+        console.error('WebSocket error:', error)
+        if (ws.current) {
+          ws.current.close()
         }
+      }
 
-        if (wsRef.current?.readyState === WebSocket.CONNECTING) {
-            console.log('WebSocket monitor already connecting')
-            setIsMonitoring(true)
-            return
+      ws.current.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data)
+          console.log('Received data:', data) // Debug log
+          if (typeof data === 'object' && data !== null) {
+            setNodes(data)
+          }
+        } catch (error) {
+          console.error('Error parsing message:', error)
         }
-
-        console.log('Connecting WebSocket monitor...')
-        const ws = new WebSocket('ws://localhost:8000/ws')
-        wsRef.current = ws
-
-        ws.onopen = () => {
-            console.log('WebSocket monitor connected successfully')
-            setConnected(true)
-            setIsMonitoring(true)
-            ws.send(JSON.stringify({ type: 'monitor' }))
-        }
-
-        ws.onmessage = (event) => {
-            try {
-                console.log('Received raw message:', event.data)
-                const data: NodeData = JSON.parse(event.data)
-                console.log(`Received update for node ${data.node_id}:`, data)
-                setNodes(prev => {
-                    const newNodes = {
-                        ...prev,
-                        [data.node_id]: data
-                    }
-                    console.log('Updated nodes state:', newNodes)
-                    return newNodes
-                })
-            } catch (error) {
-                console.error('Error parsing WebSocket message:', error)
-                console.error('Raw message:', event.data)
-            }
-        }
-
-        ws.onerror = (error) => {
-            console.error('WebSocket monitor error:', error)
-            setConnected(false)
-            setIsMonitoring(false)
-        }
-
-        ws.onclose = (event) => {
-            console.log(`WebSocket monitor disconnected: ${event.code} ${event.reason}`)
-            setConnected(false)
-            setIsMonitoring(false)
-            // Optional: Implement reconnection logic here
-        }
-    }, [isMonitoring])
-
-    useEffect(() => {
-        return () => {
-            disconnect()
-        }
-    }, [disconnect])
-
-    return {
-        nodes,
-        connected,
-        isMonitoring,
-        connect,
-        disconnect
+      }
+    } catch (error) {
+      console.error('Error creating WebSocket:', error)
+      setConnected(false)
     }
+  }, [])
+
+  const disconnect = useCallback(() => {
+    // Clear any reconnection timeout
+    if (reconnectTimeout.current) {
+      window.clearTimeout(reconnectTimeout.current)
+    }
+
+    if (ws.current) {
+      ws.current.close()
+      ws.current = null
+      setConnected(false)
+      setNodes({})
+    }
+  }, [])
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (reconnectTimeout.current) {
+        window.clearTimeout(reconnectTimeout.current)
+      }
+      if (ws.current) {
+        ws.current.close()
+      }
+    }
+  }, [])
+
+  return { nodes, connected, connect, disconnect }
 }

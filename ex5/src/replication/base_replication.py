@@ -35,18 +35,8 @@ class BaseReplication(ABC):
         self.node = node
 
     @abstractmethod
-    async def handle_update(self, data_item: replication_pb2.DataItem) -> bool:
-        """Handle an update to be replicated.
-
-        Args:
-            data_item: The data item to be replicated
-
-        Returns:
-            bool: True if update was handled successfully
-
-        Raises:
-            NotImplementedError: Must be implemented by subclasses
-        """
+    async def handle_update(self, update_notification: replication_pb2.UpdateNotification) -> bool:
+        """Handle an update notification for replication."""
         raise NotImplementedError
 
     @abstractmethod
